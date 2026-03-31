@@ -357,6 +357,38 @@ async function generateThought(messages: { role: string; content: string }[], us
   }
 }
 
+// Generate a personalized intro sentence for the email
+async function generateIntro(messages: { role: string; content: string }[], userName: string): Promise<string> {
+  try {
+    const userMessages = messages
+      .filter(m => m.role === 'user')
+      .map(m => m.content)
+      .join(' ');
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': process.env.ANTHROPIC_API_KEY || '',
+        'anthropic-version': '2023-06-01',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 80,
+        messages: [{
+          role: 'user',
+          content: `Based on this conversation context: "${userMessages}" — write ONE warm sentence (max 20 words) that captures what this person is doing tonight and why they talked to Photi. Start with "You're" or "Tonight" or similar. No mention of cannabis. Just the human moment. Examples: "You're headed to opening day with your brother and some friends — here's what Photi would reach for." or "Tonight you're making art and need your inner critic to take the night off." Keep it to one sentence.`
+        }]
+      }),
+    });
+
+    const data = await response.json();
+    return data.content?.[0]?.text?.trim() || '';
+  } catch {
+    return '';
+  }
+}
+
 // Format transcript for email
 function formatTranscript(messages: { role: string; content: string }[]): string {
   return messages.map(m => {
@@ -430,6 +462,8 @@ async function sendDailyDose(
     "what part of michigan",
     "what kind of product",
     "what's your email",
+    "any questions about",
+    "any questions for",
   ];
   
   for (const phrase of stripTrailingPhrases) {
@@ -460,8 +494,11 @@ async function sendDailyDose(
     recommendation = recommendation.charAt(0).toUpperCase() + recommendation.slice(1);
   }
 
-  // Generate personalized thought
-  const thought = await generateThought(messages, userName);
+  // Generate personalized thought and intro in parallel
+  const [thought, intro] = await Promise.all([
+    generateThought(messages, userName),
+    generateIntro(messages, userName),
+  ]);
   const thoughtSection = thought
     ? `<div style="padding:20px 36px;text-align:center;border-top:1px solid rgba(30,77,53,0.12);">
         <p style="color:#B5873A;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px;">A thought for tonight</p>
@@ -487,9 +524,10 @@ async function sendDailyDose(
       <p style="color:#9DC4B0;font-size:13px;margin:6px 0 0;font-style:italic;">from Photi</p>
     </div>
 
-    <!-- Promise callback -->
-    <div style="background:#163829;padding:20px 36px;text-align:center;border-bottom:1px solid rgba(181,135,58,0.2);">
-      <p style="color:#9DC4B0;font-size:14px;margin:0 0 10px;">Hey ${userName} —</p>
+    <!-- Personal greeting + promise -->
+    <div style="background:#163829;padding:24px 36px;">
+      <p style="color:#9DC4B0;font-size:15px;margin:0 0 12px;">Hey ${userName} —</p>
+      ${intro ? `<p style="color:#F5F0E8;font-size:15px;line-height:1.7;margin:0 0 16px;">${intro}</p>` : ''}
       ${promiseCallback}
       <p style="color:#9DC4B0;font-size:13px;margin:0;opacity:0.75;font-style:italic;">I'm holding you to it.</p>
     </div>
@@ -507,14 +545,18 @@ async function sendDailyDose(
 
     <!-- Before you go -->
     <div style="padding:20px 36px;">
-      <p style="color:#1E4D35;font-size:13px;margin:0;line-height:1.7;opacity:0.8;">
-        <strong>Before you go:</strong> Michigan's deals change every morning. 
+      <p style="color:#3D3D3A;font-size:13px;margin:0;line-height:1.7;">
+        <strong style="color:#1E4D35;">Before you go:</strong> Michigan's deals change every morning. 
         Check the dispensary menu before you head out — what's featured today may not be there tomorrow.
       </p>
     </div>
 
     <!-- Thought for the day -->
-    ${thoughtSection}
+    ${thought ? `
+    <div style="padding:20px 36px;text-align:center;border-top:1px solid rgba(30,77,53,0.1);">
+      <p style="color:#B5873A;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px;">A thought for tonight</p>
+      <p style="color:#1E4D35;font-size:15px;font-style:italic;line-height:1.8;margin:0;">${thought}</p>
+    </div>` : ''}
 
     <!-- Return CTA -->
     <div style="background:#1E4D35;padding:24px 36px;text-align:center;">
