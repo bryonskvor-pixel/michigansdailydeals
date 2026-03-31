@@ -272,11 +272,33 @@ async function sendDailyDose(
   promise: string | null,
   messages: { role: string; content: string }[]
 ) {
-  // Get the last Photi recommendation message
-  const lastPhotiMessage = [...messages].reverse().find(
-    m => m.role === 'assistant' && m.content.length > 100
-  );
-  const recommendation = lastPhotiMessage?.content || '';
+  // Get the recommendation — the last Photi message that contains product/terpene info
+  // but NOT the Daily Dose ask message (which contains "What's your email")
+  const assistantMessages = [...messages]
+    .filter(m => m.role === 'assistant' && m.content.length > 100)
+    .reverse();
+  
+  const recommendationMessage = assistantMessages.find(m => 
+    !m.content.toLowerCase().includes("what's your email") &&
+    !m.content.toLowerCase().includes("what is your email") &&
+    !m.content.toLowerCase().includes("daily dose") &&
+    (m.content.toLowerCase().includes('terpene') || 
+     m.content.toLowerCase().includes('strain') ||
+     m.content.toLowerCase().includes('flower') ||
+     m.content.toLowerCase().includes('vape') ||
+     m.content.toLowerCase().includes('edible') ||
+     m.content.toLowerCase().includes('concentrate') ||
+     m.content.toLowerCase().includes('myrcene') ||
+     m.content.toLowerCase().includes('look for') ||
+     m.content.toLowerCase().includes("i'd reach for"))
+  ) || assistantMessages[0];
+  
+  // Clean up the recommendation — remove any trailing Daily Dose ask if present
+  let recommendation = recommendationMessage?.content || '';
+  const dailyDoseIdx = recommendation.toLowerCase().indexOf("want me to send");
+  if (dailyDoseIdx > 0) {
+    recommendation = recommendation.substring(0, dailyDoseIdx).trim();
+  }
 
   const promiseCallback = promise
     ? `<p style="font-style:italic;color:#B5873A;font-size:16px;margin-bottom:24px;">"${promise}"</p>`
@@ -285,65 +307,56 @@ async function sendDailyDose(
   const html = `
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#F5F0E8;font-family:Georgia,serif;">
-  <div style="max-width:600px;margin:0 auto;background:#F5F0E8;">
-    
+  <div style="max-width:580px;margin:0 auto;background:#F5F0E8;">
+
     <!-- Header -->
-    <div style="background:#1E4D35;padding:32px 40px;text-align:center;">
-      <p style="color:#B5873A;font-size:12px;letter-spacing:3px;text-transform:uppercase;margin:0 0 8px;">MiQuest presents</p>
-      <h1 style="color:#F5F0E8;font-size:28px;margin:0;font-weight:bold;">Your Daily Dose</h1>
-      <p style="color:#9DC4B0;font-size:14px;margin:8px 0 0;font-style:italic;">from Photi</p>
+    <div style="background:#1E4D35;padding:28px 36px;text-align:center;">
+      <p style="color:#B5873A;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin:0 0 6px;">MiQuest presents</p>
+      <h1 style="color:#F5F0E8;font-size:24px;margin:0;font-weight:bold;">Your Daily Dose</h1>
+      <p style="color:#9DC4B0;font-size:13px;margin:6px 0 0;font-style:italic;">from Photi</p>
     </div>
 
     <!-- Promise callback -->
-    <div style="background:#163829;padding:24px 40px;text-align:center;">
-      <p style="color:#9DC4B0;font-size:15px;margin:0 0 8px;">Hey ${userName} —</p>
+    <div style="background:#163829;padding:20px 36px;text-align:center;border-bottom:1px solid rgba(181,135,58,0.2);">
+      <p style="color:#9DC4B0;font-size:14px;margin:0 0 10px;">Hey ${userName} —</p>
       ${promiseCallback}
-      <p style="color:#9DC4B0;font-size:14px;margin:0;opacity:0.8;">I'm holding you to it.</p>
+      <p style="color:#9DC4B0;font-size:13px;margin:0;opacity:0.75;font-style:italic;">I'm holding you to it.</p>
     </div>
 
     <!-- Recommendation -->
-    <div style="padding:36px 40px;">
-      <h2 style="color:#1E4D35;font-size:20px;margin:0 0 16px;border-bottom:2px solid #B5873A;padding-bottom:12px;">
-        What Photi would reach for tonight
-      </h2>
-      <div style="color:#3D3D3A;font-size:15px;line-height:1.8;">
+    <div style="padding:28px 36px;">
+      <p style="color:#B5873A;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:0 0 14px;">What Photi would reach for</p>
+      <div style="color:#3D3D3A;font-size:15px;line-height:1.8;border-left:3px solid #B5873A;padding-left:16px;">
         ${recommendation.replace(/\n/g, '<br>')}
       </div>
     </div>
 
-    <!-- Dispensary reminder -->
-    <div style="background:#fff;margin:0 40px;padding:20px 24px;border-radius:8px;border-left:4px solid #B5873A;">
-      <p style="color:#1E4D35;font-size:14px;margin:0;font-weight:bold;">Before you go</p>
-      <p style="color:#3D3D3A;font-size:14px;margin:8px 0 0;line-height:1.6;">
-        Michigan's deals change every morning. Check the dispensary menu before you head out — 
-        what's featured today may not be there tomorrow.
-      </p>
-    </div>
+    <!-- Divider -->
+    <div style="height:1px;background:rgba(30,77,53,0.12);margin:0 36px;"></div>
 
-    <!-- Today's thought -->
-    <div style="padding:32px 40px;text-align:center;">
-      <p style="color:#B5873A;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0 0 12px;">Today's thought</p>
-      <p style="color:#1E4D35;font-size:16px;font-style:italic;line-height:1.7;margin:0;">
-        "In the history of cannabis, people never had options. Now there are a thousand of them. 
-        Understanding them is the whole job."
+    <!-- Before you go -->
+    <div style="padding:20px 36px;">
+      <p style="color:#1E4D35;font-size:13px;margin:0;line-height:1.7;opacity:0.8;">
+        <strong>Before you go:</strong> Michigan's deals change every morning. 
+        Check the dispensary menu before you head out — what's featured today may not be there tomorrow.
       </p>
     </div>
 
     <!-- Return CTA -->
-    <div style="background:#1E4D35;padding:28px 40px;text-align:center;">
-      <p style="color:#9DC4B0;font-size:14px;margin:0 0 16px;">
+    <div style="background:#1E4D35;padding:24px 36px;text-align:center;">
+      <p style="color:#9DC4B0;font-size:13px;margin:0 0 14px;opacity:0.8;">
         Michigan's deals change every day. Come back tomorrow.
       </p>
-      <a href="https://michigansdailydeals.com/chat" 
-         style="background:#B5873A;color:#1E4D35;text-decoration:none;padding:12px 32px;border-radius:50px;font-size:15px;font-weight:bold;display:inline-block;">
+      <a href="https://michigansdailydeals.com/chat"
+         style="background:#B5873A;color:#1E4D35;text-decoration:none;padding:11px 28px;border-radius:50px;font-size:14px;font-weight:bold;display:inline-block;">
         Talk to Photi again
       </a>
     </div>
 
     <!-- Footer -->
-    <div style="padding:20px 40px;text-align:center;">
+    <div style="padding:16px 36px;text-align:center;">
       <p style="color:#888;font-size:11px;margin:0;line-height:1.6;">
         Photi powered by MiQuest · michigansdailydeals.com<br>
         For adults 21 and older. Please consume responsibly.
@@ -354,7 +367,7 @@ async function sendDailyDose(
 </body>
 </html>`;
 
-  const res = await fetch('https://api.resend.com/emails', {
+    const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
