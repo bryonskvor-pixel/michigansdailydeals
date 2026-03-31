@@ -257,6 +257,39 @@ function extractPromise(messages: { role: string; content: string }[]): string |
   return null;
 }
 
+// Generate a personalized thought for the day based on the conversation
+async function generateThought(messages: { role: string; content: string }[], userName: string): Promise<string> {
+  try {
+    // Build a brief summary of what the person is doing tonight
+    const conversationSummary = messages
+      .filter(m => m.role === 'user')
+      .map(m => m.content)
+      .join(' ');
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': process.env.ANTHROPIC_API_KEY || '',
+        'anthropic-version': '2023-06-01',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 150,
+        messages: [{
+          role: 'user',
+          content: `Based on this person's evening — "${conversationSummary}" — write a single short thought (1-2 sentences max) from world philosophy, poetry, or wisdom traditions that relates to what they're doing tonight. Not about cannabis. About the human experience they described — the fire, the creative work, the studying, the people they're with, the rest they need. Something that lands quietly. No attribution needed. Just the thought itself. Keep it under 40 words.`
+        }]
+      }),
+    });
+
+    const data = await response.json();
+    return data.content?.[0]?.text?.trim() || '';
+  } catch {
+    return '';
+  }
+}
+
 // Format transcript for email
 function formatTranscript(messages: { role: string; content: string }[]): string {
   return messages.map(m => {
@@ -293,12 +326,34 @@ async function sendDailyDose(
      m.content.toLowerCase().includes("i'd reach for"))
   ) || assistantMessages[0];
   
-  // Clean up the recommendation — remove any trailing Daily Dose ask if present
+  // Clean up the recommendation — strip trailing Promise, Daily Dose ask, or email confirmation
   let recommendation = recommendationMessage?.content || '';
-  const dailyDoseIdx = recommendation.toLowerCase().indexOf("want me to send");
-  if (dailyDoseIdx > 0) {
-    recommendation = recommendation.substring(0, dailyDoseIdx).trim();
+  
+  // Strip anything that comes after these phrases
+  const stripPhrases = [
+    "want me to send",
+    "promise me you've got",
+    "promise me you're",
+    "promise me you ",
+    "before i make this rec",
+    "i will absolutely help",
+  ];
+  
+  for (const phrase of stripPhrases) {
+    const idx = recommendation.toLowerCase().indexOf(phrase);
+    if (idx > 80) { // Only strip if there's real content before it
+      recommendation = recommendation.substring(0, idx).trim();
+    }
   }
+
+  // Generate personalized thought
+  const thought = await generateThought(messages, userName);
+  const thoughtSection = thought
+    ? `<div style="padding:20px 36px;text-align:center;border-top:1px solid rgba(30,77,53,0.12);">
+        <p style="color:#B5873A;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px;">A thought for tonight</p>
+        <p style="color:#1E4D35;font-size:15px;font-style:italic;line-height:1.8;margin:0;">${thought}</p>
+      </div>`
+    : '';
 
   const promiseCallback = promise
     ? `<p style="font-style:italic;color:#B5873A;font-size:16px;margin-bottom:24px;">"${promise}"</p>`
@@ -343,6 +398,9 @@ async function sendDailyDose(
         Check the dispensary menu before you head out — what's featured today may not be there tomorrow.
       </p>
     </div>
+
+    <!-- Thought for the day -->
+    ${thoughtSection}
 
     <!-- Return CTA -->
     <div style="background:#1E4D35;padding:24px 36px;text-align:center;">
