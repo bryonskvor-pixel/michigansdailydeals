@@ -48,8 +48,8 @@ export default function Home() {
             <Image
               src="/photi-emblem.png"
               alt="Photi"
-              width={90}
-              height={90}
+              width={140}
+              height={140}
               priority
             />
           </div>
@@ -143,8 +143,8 @@ export default function Home() {
           <Image
             src="/photi-emblem.png"
             alt="Photi — Michigan's cannabis companion"
-            width={130}
-            height={130}
+            width={180}
+            height={180}
             priority
           />
         </div>
@@ -423,7 +423,7 @@ export default function Home() {
             color: COLORS.gold, fontFamily: S.font,
             fontSize: '22px', fontStyle: 'italic', marginBottom: '48px',
           }}>
-            &ldquo;Don&apos;t forget you promised, Photi.&rdquo;
+            &ldquo;Don&apos;t forget, you promised Photi.&rdquo;
           </p>
           <a href="/chat" style={{
             backgroundColor: 'transparent', color: COLORS.gold,
