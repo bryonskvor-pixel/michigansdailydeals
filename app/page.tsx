@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 const COLORS = {
   green: '#1E4D35',
@@ -42,15 +43,16 @@ export default function Home() {
         style={{ backgroundColor: COLORS.green }}>
         <div className="text-center px-8" style={{ maxWidth: '440px' }}>
 
-          {/* Emblem */}
-          <div style={{
-            width: '80px', height: '80px', borderRadius: '50%',
-            backgroundColor: COLORS.gold, border: '2px solid #F5F0E8',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 28px',
-            fontSize: '32px', fontWeight: 'bold',
-            color: COLORS.green, fontFamily: S.font,
-          }}>P</div>
+          {/* Photi Emblem */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px' }}>
+            <Image
+              src="/photi-emblem.png"
+              alt="Photi"
+              width={90}
+              height={90}
+              priority
+            />
+          </div>
 
           <p style={{ color: COLORS.gold, fontFamily: S.font, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>
             MiQuest presents
@@ -61,7 +63,7 @@ export default function Home() {
           </h1>
 
           <p style={{ color: COLORS.sage, fontFamily: S.font, fontSize: '16px', lineHeight: '1.7', marginBottom: '40px' }}>
-            Michigan's cannabis companion. You must be 21 or older to enter.
+            Michigan&apos;s cannabis companion. You must be 21 or older to enter.
           </p>
 
           <div className="flex flex-col gap-3" style={{ maxWidth: '300px', margin: '0 auto' }}>
@@ -103,13 +105,12 @@ export default function Home() {
       {/* Header */}
       <header className="flex items-center justify-between px-8 py-6">
         <div className="flex items-center gap-3">
-          <div style={{
-            width: '40px', height: '40px', borderRadius: '50%',
-            backgroundColor: COLORS.gold,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '18px', fontWeight: 'bold',
-            color: COLORS.green, fontFamily: S.font,
-          }}>P</div>
+          <Image
+            src="/photi-emblem.png"
+            alt="Photi"
+            width={40}
+            height={40}
+          />
           <span style={{ color: COLORS.gold, fontFamily: S.font, fontSize: '20px', fontWeight: 'bold' }}>
             MiQuest
           </span>
@@ -137,15 +138,16 @@ export default function Home() {
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center px-8 py-20">
 
-        {/* Photi Emblem */}
-        <div style={{
-          width: '110px', height: '110px', borderRadius: '50%',
-          backgroundColor: COLORS.gold, border: '3px solid #F5F0E8',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          marginBottom: '28px',
-          fontSize: '44px', fontFamily: S.font,
-          color: COLORS.green, fontWeight: 'bold',
-        }}>P</div>
+        {/* Photi Emblem — hero size */}
+        <div style={{ marginBottom: '28px' }}>
+          <Image
+            src="/photi-emblem.png"
+            alt="Photi — Michigan's cannabis companion"
+            width={130}
+            height={130}
+            priority
+          />
+        </div>
 
         <p style={{
           color: COLORS.gold, fontFamily: S.font,
@@ -294,9 +296,21 @@ export default function Home() {
 
           <div className="flex flex-col gap-8" style={{ maxWidth: '560px', margin: '0 auto', textAlign: 'left' }}>
             {[
-              { step: '01', title: 'Photi meets you', body: 'A quick check-in on your headspace, your plans, what kind of night you\'re after. No quiz. Just a real conversation.' },
-              { step: '02', title: 'Photi matches you', body: 'Flower, live resin, concentrates, edibles — the right product for your specific situation today, with the terpene science to back it up.' },
-              { step: '03', title: 'You get The Daily Dose', body: 'Your recommendations, dispensary links, and a thought for the day — delivered to your inbox before you walk in the door.' },
+              {
+                step: '01',
+                title: 'Photi meets you',
+                body: "A quick check-in on your headspace, your plans, what kind of night you're after. No quiz. Just a real conversation."
+              },
+              {
+                step: '02',
+                title: 'Photi matches you',
+                body: "Flower, live resin, concentrates, edibles — the right product for your specific situation today, with the terpene science to back it up."
+              },
+              {
+                step: '03',
+                title: 'You get The Daily Dose',
+                body: "Your recommendations, dispensary links, and a thought for the day — delivered to your inbox before you walk in the door."
+              },
             ].map(({ step, title, body }) => (
               <div key={step} className="flex gap-6 items-start">
                 <div style={{
@@ -427,13 +441,12 @@ export default function Home() {
       <footer style={{ backgroundColor: COLORS.green, borderTop: '1px solid rgba(255,255,255,0.08)' }} className="px-8 py-12">
         <div className="max-w-4xl mx-auto flex flex-col items-center gap-4">
           <div className="flex items-center gap-3 mb-2">
-            <div style={{
-              width: '32px', height: '32px', borderRadius: '50%',
-              backgroundColor: COLORS.gold,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '14px', fontWeight: 'bold',
-              color: COLORS.green, fontFamily: S.font,
-            }}>P</div>
+            <Image
+              src="/photi-emblem.png"
+              alt="Photi"
+              width={32}
+              height={32}
+            />
             <span style={{ color: COLORS.gold, fontFamily: S.font, fontSize: '16px', fontWeight: 'bold' }}>
               MiQuest presents michigansdailydeals.com
             </span>
