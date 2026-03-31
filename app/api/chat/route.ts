@@ -213,10 +213,228 @@ Acknowledge it clearly, share what you do know that's adjacent, point toward bet
 
 Never make medical claims. Never make legal claims. Never predict individual response with certainty.`;
 
+// Extract user's name from conversation
+function extractName(messages: { role: string; content: string }[]): string {
+  // First user message is typically their name
+  const firstUserMsg = messages.find(m => m.role === 'user');
+  if (firstUserMsg) {
+    const name = firstUserMsg.content.trim().split(' ')[0];
+    if (name.length < 20 && !name.includes(' ') && name.length > 1) return name;
+  }
+  return 'Friend';
+}
+
+// Extract user's email from conversation
+function extractEmail(messages: { role: string; content: string }[]): string | null {
+  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+  for (const msg of [...messages].reverse()) {
+    const match = msg.content.match(emailRegex);
+    if (match) return match[0];
+  }
+  return null;
+}
+
+// Extract the promise from conversation
+function extractPromise(messages: { role: string; content: string }[]): string | null {
+  for (const msg of messages) {
+    if (msg.role === 'assistant') {
+      const content = msg.content;
+      if (content.toLowerCase().includes('promise me')) {
+        // Get the promise sentence
+        const sentences = content.split(/[.!?]/);
+        for (const s of sentences) {
+          if (s.toLowerCase().includes('promise me')) {
+            return s.trim();
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
+
+// Format transcript for email
+function formatTranscript(messages: { role: string; content: string }[]): string {
+  return messages.map(m => {
+    const speaker = m.role === 'assistant' ? 'Photi' : 'User';
+    return `<strong>${speaker}:</strong> ${m.content.replace(/\n/g, '<br>')}`;
+  }).join('<br><br>');
+}
+
+// Send Daily Dose to user
+async function sendDailyDose(
+  userEmail: string,
+  userName: string,
+  promise: string | null,
+  messages: { role: string; content: string }[]
+) {
+  // Get the last Photi recommendation message
+  const lastPhotiMessage = [...messages].reverse().find(
+    m => m.role === 'assistant' && m.content.length > 100
+  );
+  const recommendation = lastPhotiMessage?.content || '';
+
+  const promiseCallback = promise
+    ? `<p style="font-style:italic;color:#B5873A;font-size:16px;margin-bottom:24px;">"${promise}"</p>`
+    : '';
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background:#F5F0E8;font-family:Georgia,serif;">
+  <div style="max-width:600px;margin:0 auto;background:#F5F0E8;">
+    
+    <!-- Header -->
+    <div style="background:#1E4D35;padding:32px 40px;text-align:center;">
+      <p style="color:#B5873A;font-size:12px;letter-spacing:3px;text-transform:uppercase;margin:0 0 8px;">MiQuest presents</p>
+      <h1 style="color:#F5F0E8;font-size:28px;margin:0;font-weight:bold;">Your Daily Dose</h1>
+      <p style="color:#9DC4B0;font-size:14px;margin:8px 0 0;font-style:italic;">from Photi</p>
+    </div>
+
+    <!-- Promise callback -->
+    <div style="background:#163829;padding:24px 40px;text-align:center;">
+      <p style="color:#9DC4B0;font-size:15px;margin:0 0 8px;">Hey ${userName} —</p>
+      ${promiseCallback}
+      <p style="color:#9DC4B0;font-size:14px;margin:0;opacity:0.8;">I'm holding you to it.</p>
+    </div>
+
+    <!-- Recommendation -->
+    <div style="padding:36px 40px;">
+      <h2 style="color:#1E4D35;font-size:20px;margin:0 0 16px;border-bottom:2px solid #B5873A;padding-bottom:12px;">
+        What Photi would reach for tonight
+      </h2>
+      <div style="color:#3D3D3A;font-size:15px;line-height:1.8;">
+        ${recommendation.replace(/\n/g, '<br>')}
+      </div>
+    </div>
+
+    <!-- Dispensary reminder -->
+    <div style="background:#fff;margin:0 40px;padding:20px 24px;border-radius:8px;border-left:4px solid #B5873A;">
+      <p style="color:#1E4D35;font-size:14px;margin:0;font-weight:bold;">Before you go</p>
+      <p style="color:#3D3D3A;font-size:14px;margin:8px 0 0;line-height:1.6;">
+        Michigan's deals change every morning. Check the dispensary menu before you head out — 
+        what's featured today may not be there tomorrow.
+      </p>
+    </div>
+
+    <!-- Today's thought -->
+    <div style="padding:32px 40px;text-align:center;">
+      <p style="color:#B5873A;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0 0 12px;">Today's thought</p>
+      <p style="color:#1E4D35;font-size:16px;font-style:italic;line-height:1.7;margin:0;">
+        "In the history of cannabis, people never had options. Now there are a thousand of them. 
+        Understanding them is the whole job."
+      </p>
+    </div>
+
+    <!-- Return CTA -->
+    <div style="background:#1E4D35;padding:28px 40px;text-align:center;">
+      <p style="color:#9DC4B0;font-size:14px;margin:0 0 16px;">
+        Michigan's deals change every day. Come back tomorrow.
+      </p>
+      <a href="https://michigansdailydeals.com/chat" 
+         style="background:#B5873A;color:#1E4D35;text-decoration:none;padding:12px 32px;border-radius:50px;font-size:15px;font-weight:bold;display:inline-block;">
+        Talk to Photi again
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div style="padding:20px 40px;text-align:center;">
+      <p style="color:#888;font-size:11px;margin:0;line-height:1.6;">
+        Photi powered by MiQuest · michigansdailydeals.com<br>
+        For adults 21 and older. Please consume responsibly.
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>`;
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'Photi <photi@michigansdailydeals.com>',
+      to: userEmail,
+      reply_to: 'hello@michigansdailydeals.com',
+      subject: "Don't forget, you promised Photi",
+      html,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('Resend Daily Dose error:', err);
+  }
+}
+
+// Send transcript to hello@
+async function sendTranscript(
+  userName: string,
+  userEmail: string | null,
+  messages: { role: string; content: string }[]
+) {
+  const date = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<body style="font-family:Georgia,serif;max-width:700px;margin:0 auto;padding:32px;background:#F5F0E8;color:#3D3D3A;">
+  <div style="background:#1E4D35;padding:24px 32px;border-radius:8px;margin-bottom:24px;">
+    <h2 style="color:#B5873A;margin:0;font-size:20px;">Photi Conversation</h2>
+    <p style="color:#9DC4B0;margin:8px 0 0;font-size:14px;">
+      ${userName} · ${userEmail || 'No email given'} · ${date}
+    </p>
+  </div>
+  <div style="background:#fff;padding:24px 32px;border-radius:8px;line-height:1.8;font-size:14px;">
+    ${formatTranscript(messages)}
+  </div>
+</body>
+</html>`;
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'Photi <photi@michigansdailydeals.com>',
+      to: 'hello@michigansdailydeals.com',
+      subject: `Photi conversation — ${userName} — ${date}`,
+      html,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('Resend transcript error:', err);
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const { messages } = await req.json();
+    const { messages, triggerEmail } = await req.json();
 
+    // If this is an email trigger call (not a chat message)
+    if (triggerEmail) {
+      const { allMessages, userEmail, userName } = triggerEmail;
+      const promise = extractPromise(allMessages);
+
+      await Promise.all([
+        sendDailyDose(userEmail, userName, promise, allMessages),
+        sendTranscript(userName, userEmail, allMessages),
+      ]);
+
+      return NextResponse.json({ success: true });
+    }
+
+    // Normal chat message
     const response = await client.messages.create({
       model: "claude-sonnet-4-20250514",
       max_tokens: 1024,
@@ -226,6 +444,26 @@ export async function POST(req: NextRequest) {
         content: m.content,
       })),
     });
+
+    const replyText = response.content?.[0]?.type === 'text' ? response.content[0].text : '';
+
+    // Check if Photi just confirmed an email address in this response
+    // Photi confirms email when it says "watch for an email from photi@"
+    const emailConfirmed = replyText.toLowerCase().includes('photi@michigansdailydeals.com');
+
+    if (emailConfirmed) {
+      const userEmail = extractEmail(messages);
+      const userName = extractName(messages);
+
+      if (userEmail) {
+        const promise = extractPromise(messages);
+        // Fire emails async — don't wait for them
+        Promise.all([
+          sendDailyDose(userEmail, userName, promise, messages),
+          sendTranscript(userName, userEmail, messages),
+        ]).catch(err => console.error('Email send error:', err));
+      }
+    }
 
     return NextResponse.json(response);
   } catch (error) {
