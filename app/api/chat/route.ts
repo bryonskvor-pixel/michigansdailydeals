@@ -56,6 +56,10 @@ After headspace, ask ONE genuine question about their actual situation. Choose b
 
 Respond genuinely to their answer. If they mention a band, engage with it. If they mention a hike, ask where. One natural follow-up is fine. Two is the limit.
 
+CRITICAL — ONE QUESTION PER MESSAGE. ALWAYS. Never ask two questions in the same message under any circumstances. If you need to know two things, pick the most important one and ask it. Get the answer. Then ask the next one. This applies everywhere in the conversation — life check, headspace branches, product question, city question. One at a time. Every time. No exceptions.
+
+CRITICAL — DO NOT CONFIRM WHAT THE PERSON ALREADY TOLD YOU. If they said yard work, go straight to the physical branch. If they said Monroe, don't ask what part of Michigan. If they said flower, don't ask what kind of product. Trust what they told you and move forward.
+
 **EXCHANGE 4 — THE GENTLE REFRAME**
 Before every product recommendation. Always. Once. Never repeated. ALWAYS personalize this line to what you already learned about the person. Do not use the generic version if you know something specific about them.
 
@@ -142,13 +146,17 @@ Before every recommendation — The Promise. One small ask. Not preachy. Just ca
 - Balanced/microdosing: "Promise me you check in with yourself an hour in. Not to assess whether it's working — just to notice how you actually feel."
 - Balanced/returning: "Promise me you start with less than you think you need and wait longer than feels necessary. Your tolerance is not what you remember and that's actually a gift."
 
-CRITICAL — The Promise requires an actual response from the person. After delivering The Promise, STOP and WAIT. Do not deliver the recommendation until they have responded. The commitment must come from them, not be assumed by you.
+CRITICAL — The Promise is its own exchange. Full stop.
 
-If they say yes, agree, or make any affirmative response: "Good. I'm holding you to that. Now — here's what I'd reach for tonight..."
-If they push back or decline: "Fair enough. Here's what I'd reach for..."
-If they ignore it and ask about product: Gently note the promise first, then move forward: "Ha — I'll take that as a yes. Here's what I'd reach for..."
+Deliver The Promise. End your message there. Do not add the recommendation. Do not add anything after it. Just The Promise and nothing else.
 
-Never deliver the recommendation in the same message as The Promise. They are two separate exchanges.
+Wait for their response. The recommendation only comes AFTER they respond to The Promise.
+
+If they say yes, agree, or anything affirmative: "Good. I'm holding you to that. Now — here's what I'd reach for tonight..." then give the recommendation.
+If they push back or decline: "Fair enough. Here's what I'd reach for..." then give the recommendation.
+If they ignore it and ask about product directly: "Ha — I'll take that as a yes." then give the recommendation.
+
+THE PROMISE AND THE RECOMMENDATION ARE NEVER IN THE SAME MESSAGE. EVER. This is non-negotiable. The Promise lands because it stands alone. The moment you bundle it with the recommendation it becomes a footnote instead of a moment.
 
 ## THE DAILY DOSE ASK
 
@@ -311,20 +319,34 @@ async function sendDailyDose(
     .filter(m => m.role === 'assistant' && m.content.length > 100)
     .reverse();
   
-  const recommendationMessage = assistantMessages.find(m => 
+  // Find the best recommendation message:
+  // Must contain product/terpene info, must NOT be the Daily Dose ask,
+  // must NOT be the email confirmation, and ideally contains a location or dispensary name
+  // We want the MOST SPECIFIC recommendation — filter all qualifying messages and take the last one
+  // (last in reverse = most recent qualifying message before the email ask)
+  const qualifyingMessages = assistantMessages.filter(m => 
     !m.content.toLowerCase().includes("what's your email") &&
     !m.content.toLowerCase().includes("what is your email") &&
+    !m.content.toLowerCase().includes("watch for an email") &&
     !m.content.toLowerCase().includes("daily dose") &&
     (m.content.toLowerCase().includes('terpene') || 
      m.content.toLowerCase().includes('strain') ||
-     m.content.toLowerCase().includes('flower') ||
-     m.content.toLowerCase().includes('vape') ||
-     m.content.toLowerCase().includes('edible') ||
-     m.content.toLowerCase().includes('concentrate') ||
-     m.content.toLowerCase().includes('myrcene') ||
      m.content.toLowerCase().includes('look for') ||
-     m.content.toLowerCase().includes("i'd reach for"))
-  ) || assistantMessages[0];
+     m.content.toLowerCase().includes("i'd reach for") ||
+     m.content.toLowerCase().includes('dispensar') ||
+     m.content.toLowerCase().includes('myrcene') ||
+     m.content.toLowerCase().includes('limonene') ||
+     m.content.toLowerCase().includes('pinene') ||
+     m.content.toLowerCase().includes('terpinolene'))
+  );
+  
+  // Prefer messages that mention a specific location (dispensary/city recs) over general education
+  const locationSpecificMsg = qualifyingMessages.find(m =>
+    m.content.toLowerCase().includes('dispensar') &&
+    (m.content.toLowerCase().includes('look for') || m.content.toLowerCase().includes("i'd"))
+  );
+  
+  const recommendationMessage = locationSpecificMsg || qualifyingMessages[0] || assistantMessages[0];
   
   // Clean up the recommendation — strip trailing Promise, Daily Dose ask, or email confirmation
   let recommendation = recommendationMessage?.content || '';
