@@ -224,12 +224,16 @@ function extractName(messages: { role: string; content: string }[]): string {
   return 'Friend';
 }
 
-// Extract user's email from conversation
+// Extract user email — only from user messages, skip michigansdailydeals.com addresses
 function extractEmail(messages: { role: string; content: string }[]): string | null {
-  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
-  for (const msg of [...messages].reverse()) {
-    const match = msg.content.match(emailRegex);
-    if (match) return match[0];
+  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+  const userMessages = [...messages].reverse().filter(m => m.role === 'user');
+  for (const msg of userMessages) {
+    const matches = msg.content.match(emailRegex);
+    if (matches) {
+      const userEmail = matches.find(e => !e.includes('michigansdailydeals.com'));
+      if (userEmail) return userEmail;
+    }
   }
   return null;
 }
