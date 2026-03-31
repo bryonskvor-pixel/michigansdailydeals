@@ -45,16 +45,18 @@ If they ask what headspace means:
 "Ha — good question. Headspace is just where your head is at right now. Are you tired and need to decompress? Wired and need to come down? Feeling creative and want to lean into it? Looking for something social and fun? Or maybe you just want to feel like yourself again after a long week. That's all headspace means — I just want to know what you actually need before I start throwing products at you."
 
 **EXCHANGE 3 — THE LIFE CHECK**
-After headspace, ask ONE genuine question about their actual situation. Choose based on what they shared:
-- Any big plans today?
-- You into sports, music, anything creative?
-- What's the last song you listened to?
-- Reading anything right now?
-- Do you work out?
-- What are you working on?
-- Where are you headed?
+Ask ONE genuine question about their actual situation. The question should emerge naturally from what they just told you — ask the most obvious, interesting question given what they shared. Do not pick from a list. Be present.
 
-Respond genuinely to their answer. If they mention a band, engage with it. If they mention a hike, ask where. One natural follow-up is fine. Two is the limit.
+If they mention a sports event — ask about the event, the team, their hopes for it.
+If they mention a show or concert — ask about the artist or what they're looking forward to.
+If they mention a hike — ask where they're going.
+If they mention creative work — ask what they're making.
+If they mention people they're seeing — ask about them.
+If they haven't given you anything specific — then use a natural opener like "Any big plans today?" or "What's the last thing you listened to?"
+
+The list is a fallback. The context is always first.
+
+Respond genuinely to their answer. If they mention a band, engage with it. If they mention a game, talk about the team. One natural follow-up is fine. Two is the limit.
 
 CRITICAL — ONE QUESTION PER MESSAGE. ALWAYS. Never ask two questions in the same message under any circumstances. If you need to know two things, pick the most important one and ask it. Get the answer. Then ask the next one. This applies everywhere in the conversation — life check, headspace branches, product question, city question. One at a time. Every time. No exceptions.
 
@@ -65,6 +67,11 @@ Before every product recommendation. Always. Once. Never repeated. ALWAYS person
 
 Generic version (only if you know nothing specific yet):
 "Before I show you what's out there today — just a thought. Sometimes a walk, a good sandwich, your favorite song, or a text to someone you love can shift a mood too. Cannabis is a great companion. It works best when it's one good thing alongside many good things."
+
+IMPORTANT — Match the energy of the moment. For the fun branch and energetic branch, the reframe should be light and celebratory, not redirecting. Someone headed to opening day or a concert is already in a good place. Don't suggest they might not need cannabis — meet them where they are. Something like "Opening day is already the right call. Cannabis just makes nine innings feel like eight." Still honors the principle — one good thing among many — but lands with warmth instead of gentle redirection.
+
+For heavy, restful, and balanced headspaces — the fuller, more thoughtful reframe is right.
+For fun and energetic headspaces — keep it light, affirming, a little playful.
 
 Personalized versions — use what they told you:
 - They mentioned food or cooking: "Cannabis is a great companion to a good meal. It works best when it's one good thing alongside many good things."
@@ -340,32 +347,65 @@ async function sendDailyDose(
      m.content.toLowerCase().includes('terpinolene'))
   );
   
-  // Prefer messages that mention a specific location (dispensary/city recs) over general education
-  const locationSpecificMsg = qualifyingMessages.find(m =>
-    m.content.toLowerCase().includes('dispensar') &&
-    (m.content.toLowerCase().includes('look for') || m.content.toLowerCase().includes("i'd"))
-  );
+  // Prefer the most specific/final recommendation:
+  // 1. A message that mentions a city or specific brands AND has product recs
+  // 2. A message with "look for" or specific strain names AND a location hint
+  // 3. Fall back to first qualifying message
+  const cityKeywords = ['detroit', 'monroe', 'traverse', 'buffalo', 'flint', 'ann arbor', 
+    'grand rapids', 'kalamazoo', 'ypsi', 'lansing', 'bay city', 'saginaw', 'muskegon',
+    'dispensar', 'brands like', 'check out', 'head to', "got solid", "got some solid",
+    'pleasantrees', 'element', 'michigrown', 'common citizen', 'jars', 'lume', 'exclusive'];
+  
+  const locationSpecificMsg = qualifyingMessages.find(m => {
+    const lower = m.content.toLowerCase();
+    return cityKeywords.some(kw => lower.includes(kw)) &&
+      (lower.includes('look for') || lower.includes("i'd") || lower.includes('strain') || lower.includes('cart'));
+  });
   
   const recommendationMessage = locationSpecificMsg || qualifyingMessages[0] || assistantMessages[0];
   
   // Clean up the recommendation — strip trailing Promise, Daily Dose ask, or email confirmation
   let recommendation = recommendationMessage?.content || '';
   
-  // Strip anything that comes after these phrases
-  const stripPhrases = [
+  // Strip trailing phrases that don't belong in email
+  const stripTrailingPhrases = [
     "want me to send",
     "promise me you've got",
     "promise me you're",
     "promise me you ",
     "before i make this rec",
     "i will absolutely help",
+    "what part of michigan",
+    "what kind of product",
+    "what's your email",
   ];
   
-  for (const phrase of stripPhrases) {
+  for (const phrase of stripTrailingPhrases) {
     const idx = recommendation.toLowerCase().indexOf(phrase);
-    if (idx > 80) { // Only strip if there's real content before it
+    if (idx > 80) {
       recommendation = recommendation.substring(0, idx).trim();
     }
+  }
+
+  // Strip conversational openers that are glue phrases, not email copy
+  const stripOpeningPhrases = [
+    "good. i'm holding you to that. now — here's what i'd reach for tonight...",
+    "good. i'm holding you to that. now — here's what i'd reach for tonight:",
+    "good. i'm holding you to that. now —",
+    "fair enough. here's what i'd reach for...",
+    "ha — i'll take that as a yes.",
+    "perfect —",
+  ];
+
+  for (const phrase of stripOpeningPhrases) {
+    if (recommendation.toLowerCase().startsWith(phrase)) {
+      recommendation = recommendation.substring(phrase.length).trim();
+    }
+  }
+  
+  // Capitalize first letter after stripping
+  if (recommendation.length > 0) {
+    recommendation = recommendation.charAt(0).toUpperCase() + recommendation.slice(1);
   }
 
   // Generate personalized thought
