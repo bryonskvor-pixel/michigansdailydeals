@@ -451,21 +451,33 @@ export async function POST(req: NextRequest) {
 
     const replyText = response.content?.[0]?.type === 'text' ? response.content[0].text : '';
 
+    // Debug logging
+    console.log('Photi reply length:', replyText.length);
+    console.log('Contains photi@:', replyText.toLowerCase().includes('photi@michigansdailydeals.com'));
+    console.log('RESEND_API_KEY set:', !!process.env.RESEND_API_KEY);
+
     // Check if Photi just confirmed an email address in this response
-    // Photi confirms email when it says "watch for an email from photi@"
     const emailConfirmed = replyText.toLowerCase().includes('photi@michigansdailydeals.com');
 
     if (emailConfirmed) {
       const userEmail = extractEmail(messages);
       const userName = extractName(messages);
+      console.log('Email trigger fired. User email found:', userEmail, '| Name:', userName);
 
       if (userEmail) {
         const promise = extractPromise(messages);
-        // Fire emails async — don't wait for them
-        Promise.all([
-          sendDailyDose(userEmail, userName, promise, messages),
-          sendTranscript(userName, userEmail, messages),
-        ]).catch(err => console.error('Email send error:', err));
+        // Fire emails and wait for them so errors are caught
+        try {
+          await Promise.all([
+            sendDailyDose(userEmail, userName, promise, messages),
+            sendTranscript(userName, userEmail, messages),
+          ]);
+          console.log('Both emails sent successfully');
+        } catch (err) {
+          console.error('Email send error:', err);
+        }
+      } else {
+        console.log('No user email found in messages');
       }
     }
 
