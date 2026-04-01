@@ -259,15 +259,15 @@ export default function TerpenesPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 padding: '24px 16px',
-                backgroundColor: 'rgba(181,135,58,0.08)',
+                backgroundColor: 'rgba(181,135,58,0.15)',
                 textDecoration: 'none',
                 transition: 'background-color 0.2s',
                 cursor: 'pointer',
                 gap: '16px',
-                border: '1px dashed rgba(181,135,58,0.3)',
+                border: '1px dashed rgba(181,135,58,0.4)',
               }}
-              onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.18)')}
-              onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.08)')}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.28)')}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.15)')}
             >
               <img
                 src="/photi-emblem.png"
