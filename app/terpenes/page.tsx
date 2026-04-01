@@ -197,6 +197,63 @@ export default function TerpenesPage() {
         </p>
       </section>
 
+      {/* Terpene Navigation Grid */}
+      <section style={{ backgroundColor: COLORS.darkGreen, padding: '48px 48px 56px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '32px' }}>
+            Explore the Library
+          </p>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '2px',
+            backgroundColor: 'rgba(181,135,58,0.15)',
+            border: '1px solid rgba(181,135,58,0.15)',
+            borderRadius: '8px',
+            overflow: 'hidden',
+          }}>
+            {TERPENES.map((t) => (
+              <a
+                key={t.name}
+                href={`#${t.name.toLowerCase()}`}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '24px 16px',
+                  backgroundColor: 'rgba(22,56,41,0.95)',
+                  textDecoration: 'none',
+                  transition: 'background-color 0.2s',
+                  cursor: 'pointer',
+                  gap: '12px',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.12)')}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'rgba(22,56,41,0.95)')}
+              >
+                <img
+                  src={t.image}
+                  alt={t.name}
+                  width="80"
+                  height="80"
+                  style={{ borderRadius: '50%', display: 'block' }}
+                />
+                <span style={{
+                  color: COLORS.gold,
+                  fontSize: '11px',
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  fontFamily: S.font,
+                  textAlign: 'center',
+                }}>
+                  {t.name}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Intro section — cream */}
       <section style={{ backgroundColor: COLORS.cream, padding: '64px 48px' }}>
         <div style={{ maxWidth: '780px', margin: '0 auto' }}>
@@ -224,7 +281,8 @@ export default function TerpenesPage() {
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
             {TERPENES.map((t, i) => (
-              <div key={t.name} style={{
+              <div key={t.name} id={t.name.toLowerCase()} style={{
+                scrollMarginTop: '80px',
                 display: 'flex',
                 flexDirection: i % 2 === 0 ? 'row' : 'row-reverse',
                 gap: '0',
