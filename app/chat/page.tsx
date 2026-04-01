@@ -73,8 +73,44 @@ export default function ChatPage() {
   return (
     <div style={{ display: 'flex', height: '100vh', fontFamily: S.font, overflow: 'hidden' }}>
 
+      <style>{`
+        @media (max-width: 768px) {
+          .chat-left-panel { display: none !important; }
+          .chat-right-panel { width: 100% !important; }
+          .chat-header { display: none !important; }
+          .chat-messages { padding: 16px 16px 12px !important; padding-top: 72px !important; }
+          .chat-input-area { padding: 10px 16px 20px !important; }
+          .chat-bubble { max-width: 88% !important; font-size: 14px !important; }
+          .chat-mobile-header { display: flex !important; }
+        }
+        @media (min-width: 769px) {
+          .chat-mobile-header { display: none !important; }
+        }
+      `}</style>
+
+      {/* Mobile top bar — shows on phone only */}
+      <div className="chat-mobile-header" style={{
+        display: 'none',
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        backgroundColor: COLORS.darkGreen,
+        padding: '12px 16px',
+        alignItems: 'center', justifyContent: 'space-between',
+        borderBottom: '1px solid rgba(181,135,58,0.2)',
+      }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+          <Image src="/photi-emblem.png" alt="Photi" width={28} height={28} />
+          <span style={{ color: COLORS.gold, fontFamily: S.font, fontSize: '14px', fontWeight: 'bold' }}>
+            michigansdailydeals.com
+          </span>
+        </Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#4CAF50' }} />
+          <span style={{ color: COLORS.sage, fontFamily: S.font, fontSize: '12px' }}>Photi</span>
+        </div>
+      </div>
+
       {/* LEFT PANEL */}
-      <div style={{
+      <div className="chat-left-panel" style={{
         width: '42%', backgroundColor: COLORS.darkGreen,
         display: 'flex', flexDirection: 'column',
         justifyContent: 'space-between',
@@ -145,13 +181,16 @@ export default function ChatPage() {
       </div>
 
       {/* RIGHT PANEL — Chat */}
-      <div style={{
+      <div className="chat-right-panel" style={{
         flex: 1, backgroundColor: COLORS.cream,
         display: 'flex', flexDirection: 'column',
       }}>
 
-        {/* Chat header */}
-        <div style={{
+        {/* Spacer for mobile fixed header */}
+        <div style={{ height: 0 }} className="chat-mobile-spacer" />
+
+        {/* Chat header — hidden on mobile, replaced by fixed top bar */}
+        <div className="chat-header" style={{
           display: 'flex', alignItems: 'center', gap: '12px',
           padding: '20px 28px',
           borderBottom: `1px solid rgba(30,77,53,0.12)`,
@@ -168,7 +207,7 @@ export default function ChatPage() {
         </div>
 
         {/* Messages */}
-        <div style={{
+        <div className="chat-messages" style={{
           flex: 1, overflowY: 'auto',
           padding: '28px 28px 16px',
           display: 'flex', flexDirection: 'column', gap: '16px',
@@ -183,7 +222,7 @@ export default function ChatPage() {
                 <Image src="/photi-emblem.png" alt="Photi" width={32} height={32}
                   style={{ marginTop: '4px', flexShrink: 0 }} />
               )}
-              <div style={{
+              <div className="chat-bubble" style={{
                 maxWidth: '72%',
                 backgroundColor: msg.role === 'assistant' ? '#FFFFFF' : COLORS.green,
                 color: msg.role === 'assistant' ? COLORS.text : COLORS.cream,
@@ -223,7 +262,7 @@ export default function ChatPage() {
         </div>
 
         {/* Input */}
-        <div style={{
+        <div className="chat-input-area" style={{
           padding: '16px 28px 24px',
           borderTop: `1px solid rgba(30,77,53,0.1)`,
           backgroundColor: '#FDFAF4',
@@ -247,6 +286,7 @@ export default function ChatPage() {
                 fontFamily: S.font, fontSize: '15px', color: COLORS.text,
                 backgroundColor: 'transparent', lineHeight: '1.5',
                 maxHeight: '120px', overflowY: 'auto',
+                className: 'chat-input',
               }}
             />
             <button
