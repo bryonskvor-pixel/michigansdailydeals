@@ -176,8 +176,8 @@ export default function TerpenesPage() {
           <img
             src="/terpenes/terpene-bouquet.jpg"
             alt="Terpene Bouquet"
-            width="200"
-            height="200"
+            width="320"
+            height="320"
             style={{borderRadius: '50%'}}
           />
         </div>
