@@ -16,27 +16,27 @@ const S = { font: 'Georgia, serif' };
 
 const VOICES = [
   {
-    image: '/photi/the-professor.jpg',
+    image: '/photi/card-professor.jpg',
     name: 'The Professor',
     description: 'Explains processes, terpene science, extraction methods, and the why behind things without being condescending. Knows the difference between live resin and distillate and can explain it to anyone in a way that actually lands.',
   },
   {
-    image: '/photi/the-guide.jpg',
+    image: '/photi/card-guide.jpg',
     name: 'The Guide',
     description: 'Meets you where you are. Checks in on your body and your headspace. Understands that cannabis is often about regulation — rest, presence, pain, anxiety, the need to feel like yourself again. Reads the room.',
   },
   {
-    image: '/photi/the-sage.jpg',
+    image: '/photi/card-sage.jpg',
     name: 'The Sage',
     description: 'Asks good questions before giving answers. Holds wisdom lightly. Comfortable with mystery and ambiguity. Knows that the question is sometimes more valuable than the answer.',
   },
   {
-    image: '/photi/the-insider.jpg',
+    image: '/photi/card-insider.jpg',
     name: 'The Insider',
     description: 'Knows the Michigan market specifically. Knows which processors are doing things right, which extraction methods produce which results, which terpene profiles tend toward which experiences. Has opinions and shares them warmly.',
   },
   {
-    image: '/photi/michigan.jpg',
+    image: '/photi/card-michigan.jpg',
     name: 'Michigan',
     description: 'Photi was born here. The chaos of Monroe dispensaries, the craft of Traverse City processors, the volume of Detroit, the border crossings at New Buffalo — Photi knows this market not from a database but from genuine presence in it.',
   },
@@ -71,7 +71,7 @@ export default function AboutPage() {
           .about-section { padding: 40px 24px !important; }
           .about-section h2 { font-size: 26px !important; }
           .about-section p { font-size: 15px !important; }
-          .voices-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .voices-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
           .beats-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .beat-cell { padding: 16px 12px !important; }
           .promise-section { padding: 40px 24px !important; }
@@ -187,22 +187,22 @@ export default function AboutPage() {
           </div>
 
           <div className="voices-grid" style={{
-            display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px',
+            display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px',
           }}>
             {VOICES.map((v) => (
               <div key={v.name} style={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center',
-                textAlign: 'center', padding: '32px 24px',
-                backgroundColor: 'rgba(255,255,255,0.04)',
-                borderRadius: '12px',
-                border: '1px solid rgba(181,135,58,0.12)',
+                textAlign: 'center',
               }}>
-                <img src={v.image} alt={v.name} width="140" height="140"
-                  style={{ borderRadius: '50%', marginBottom: '20px', display: 'block' }} />
-                <h3 style={{ color: COLORS.gold, fontSize: '20px', fontWeight: 'bold', marginBottom: '12px' }}>
-                  {v.name}
-                </h3>
-                <p style={{ color: COLORS.sage, fontSize: '14px', lineHeight: '1.75' }}>
+                <img src={v.image} alt={v.name}
+                  style={{
+                    width: '100%', height: 'auto',
+                    borderRadius: '8px',
+                    marginBottom: '16px',
+                    display: 'block',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                  }} />
+                <p style={{ color: COLORS.sage, fontSize: '13px', lineHeight: '1.75', padding: '0 4px' }}>
                   {v.description}
                 </p>
               </div>
