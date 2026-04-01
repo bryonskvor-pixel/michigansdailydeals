@@ -286,7 +286,6 @@ export default function ChatPage() {
                 fontFamily: S.font, fontSize: '15px', color: COLORS.text,
                 backgroundColor: 'transparent', lineHeight: '1.5',
                 maxHeight: '120px', overflowY: 'auto',
-                className: 'chat-input',
               }}
             />
             <button
