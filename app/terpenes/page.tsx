@@ -173,12 +173,12 @@ export default function TerpenesPage() {
       {/* Hero */}
       <section style={{ padding: '64px 48px 48px', textAlign: 'center', position: 'relative' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
-          <Image
+          <img
             src="/terpenes/terpene-bouquet.jpg"
             alt="Terpene Bouquet"
-            width={200}
-            height={200}
-            priority
+            width="200"
+            height="200"
+            style={{borderRadius: '50%'}}
           />
         </div>
         <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>
@@ -239,12 +239,12 @@ export default function TerpenesPage() {
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   padding: '32px',
                 }}>
-                  <Image
+                  <img
                     src={t.image}
                     alt={t.name}
-                    width={200}
-                    height={200}
-                    style={{ borderRadius: '50%' }}
+                    width="200"
+                    height="200"
+                    style={{borderRadius: '50%', display: 'block'}}
                   />
                 </div>
 
