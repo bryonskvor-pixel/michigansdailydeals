@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -147,45 +146,11 @@ const headspaceLabel: Record<string, { label: string; color: string }> = {
 };
 
 export default function TerpenesPage() {
-  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <main style={{ backgroundColor: COLORS.green, minHeight: '100vh', fontFamily: S.font }}>
 
-      <style>{`
-        @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .mobile-menu-btn { display: flex !important; }
-          .mobile-menu { display: ${menuOpen ? 'flex' : 'none'} !important; }
-          .terpene-hero { padding: 40px 24px 32px !important; }
-          .terpene-hero h1 { font-size: 32px !important; }
-          .terpene-hero p { font-size: 15px !important; }
-          .intro-section { padding: 40px 24px !important; }
-          .intro-section h2 { font-size: 24px !important; }
-          .intro-section p { font-size: 15px !important; }
-          .terpene-cards { padding: 32px 16px !important; }
-          .terpene-card { flex-direction: column !important; }
-          .terpene-card-reverse { flex-direction: column !important; }
-          .terpene-card-img { width: 100% !important; padding: 24px 24px 8px !important; }
-          .terpene-card-img img { width: 140px !important; height: 140px !important; }
-          .terpene-card-content { padding: 16px 24px 28px !important; }
-          .terpene-card-title { font-size: 26px !important; }
-          .terpene-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .terpene-grid-cell { padding: 16px 8px !important; }
-          .terpene-grid-cell img { width: 60px !important; height: 60px !important; }
-          .terpene-grid-label { font-size: '10px' !important; }
-          .cta-section { padding: 48px 24px !important; }
-          .cta-section h2 { font-size: 26px !important; }
-          .cta-section p { font-size: 15px !important; }
-          .header-outer { padding: 16px 24px !important; }
-        }
-        @media (min-width: 769px) {
-          .mobile-menu-btn { display: none !important; }
-          .mobile-menu { display: none !important; }
-        }
-      `}</style>
-
       {/* Header */}
-      <header className="header-outer" style={{
+      <header style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '24px 48px', borderBottom: '1px solid rgba(181,135,58,0.15)',
       }}>
@@ -193,7 +158,7 @@ export default function TerpenesPage() {
           <Image src="/photi-emblem.png" alt="Photi" width={40} height={40} />
           <span style={{ color: COLORS.gold, fontSize: '20px', fontWeight: 'bold' }}>MiQuest</span>
         </Link>
-        <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+        <nav style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
           <Link href="/about" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Who is Photi?</Link>
           <Link href="/terpenes" style={{ color: COLORS.gold, fontSize: '15px', textDecoration: 'none', borderBottom: `1px solid ${COLORS.gold}`, paddingBottom: '2px' }}>The Science</Link>
           <Link href="/deals" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
@@ -203,38 +168,10 @@ export default function TerpenesPage() {
             borderRadius: '20px', textDecoration: 'none',
           }}>Talk to Photi</Link>
         </nav>
-        <button
-          className="mobile-menu-btn"
-          onClick={() => setMenuOpen(!menuOpen)}
-          style={{
-            display: 'none', flexDirection: 'column', gap: '5px',
-            background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
-          }}>
-          {[0,1,2].map(i => (
-            <div key={i} style={{ width: '24px', height: '2px', backgroundColor: COLORS.gold }} />
-          ))}
-        </button>
       </header>
-      <div className="mobile-menu" style={{
-        display: 'none', flexDirection: 'column',
-        backgroundColor: COLORS.darkGreen,
-        padding: '16px 24px 24px',
-        borderBottom: `1px solid rgba(181,135,58,0.2)`,
-        gap: '16px',
-      }}>
-        <Link href="/about" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</Link>
-        <Link href="/terpenes" style={{ color: COLORS.gold, fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
-        <Link href="/deals" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
-        <Link href="/chat" style={{
-          color: COLORS.green, backgroundColor: COLORS.gold,
-          fontSize: '16px', fontWeight: 'bold',
-          padding: '12px 24px', borderRadius: '50px', textDecoration: 'none',
-          textAlign: 'center',
-        }}>Talk to Photi</Link>
-      </div>
 
       {/* Hero */}
-      <section className="terpene-hero" style={{ padding: '64px 48px 48px', textAlign: 'center', position: 'relative' }}>
+      <section style={{ padding: '64px 48px 48px', textAlign: 'center', position: 'relative' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
           <img
             src="/terpenes/terpene-bouquet.jpg"
@@ -261,19 +198,34 @@ export default function TerpenesPage() {
       </section>
 
       {/* Terpene Navigation Grid */}
-      <section style={{ backgroundColor: COLORS.darkGreen, padding: '48px 48px 56px' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+      <section style={{
+        backgroundColor: COLORS.darkGreen,
+        padding: '48px 48px 56px',
+        backgroundImage: 'url(/terpene-grid-bg.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        position: 'relative',
+      }}>
+        {/* Dark overlay so grid cells remain readable */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundColor: 'rgba(22,56,41,0.55)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '32px' }}>
             Explore the Library
           </p>
-          <div className="terpene-grid" style={{
+          <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '2px',
-            backgroundColor: 'rgba(181,135,58,0.15)',
-            border: '1px solid rgba(181,135,58,0.15)',
+            backgroundColor: 'rgba(181,135,58,0.08)',
+            border: '1px solid rgba(181,135,58,0.25)',
             borderRadius: '8px',
             overflow: 'hidden',
+            backdropFilter: 'blur(2px)',
           }}>
             {TERPENES.map((t) => (
               <a
@@ -293,7 +245,6 @@ export default function TerpenesPage() {
                 }}
                 onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.12)')}
                 onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'rgba(22,56,41,0.95)')}
-                className="terpene-grid-cell"
               >
                 <img
                   src={t.image}
@@ -357,7 +308,7 @@ export default function TerpenesPage() {
       </section>
 
       {/* Intro section — cream */}
-      <section className="intro-section" style={{ backgroundColor: COLORS.cream, padding: '64px 48px' }}>
+      <section style={{ backgroundColor: COLORS.cream, padding: '64px 48px' }}>
         <div style={{ maxWidth: '780px', margin: '0 auto' }}>
           <h2 style={{ color: COLORS.green, fontSize: '30px', fontWeight: 'bold', marginBottom: '20px' }}>
             How to read a terpene profile
@@ -379,11 +330,11 @@ export default function TerpenesPage() {
       </section>
 
       {/* Terpene Cards */}
-      <section className="terpene-cards" style={{ padding: '64px 48px' }}>
+      <section style={{ padding: '64px 48px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
             {TERPENES.map((t, i) => (
-              <div key={t.name} id={t.name.toLowerCase()} className={i % 2 === 0 ? 'terpene-card' : 'terpene-card terpene-card-reverse'} style={{
+              <div key={t.name} id={t.name.toLowerCase()} style={{
                 scrollMarginTop: '80px',
                 display: 'flex',
                 flexDirection: i % 2 === 0 ? 'row' : 'row-reverse',
@@ -394,7 +345,7 @@ export default function TerpenesPage() {
                 overflow: 'hidden',
               }}>
                 {/* Image side */}
-                <div className="terpene-card-img" style={{
+                <div style={{
                   width: '280px', minWidth: '280px',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   padding: '32px',
@@ -409,11 +360,11 @@ export default function TerpenesPage() {
                 </div>
 
                 {/* Content side */}
-                <div className="terpene-card-content" style={{ flex: 1, padding: '36px 36px 36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div style={{ flex: 1, padding: '36px 36px 36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
                   {/* Name + headspace tag */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                    <h2 className="terpene-card-title" style={{ color: COLORS.gold, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>
+                    <h2 style={{ color: COLORS.gold, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>
                       {t.name}
                     </h2>
                     <span style={{
@@ -485,7 +436,7 @@ export default function TerpenesPage() {
       </section>
 
       {/* CTA */}
-      <section className="cta-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', textAlign: 'center' }}>
+      <section style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', textAlign: 'center' }}>
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
           <Image src="/photi-emblem.png" alt="Photi" width={80} height={80} style={{ marginBottom: '24px' }} />
           <h2 style={{ color: COLORS.gold, fontSize: '32px', fontWeight: 'bold', marginBottom: '16px' }}>
