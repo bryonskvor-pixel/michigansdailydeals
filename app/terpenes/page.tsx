@@ -250,6 +250,44 @@ export default function TerpenesPage() {
                 </span>
               </a>
             ))}
+            {/* CTA cell — fills the empty 12th spot */}
+            <a
+              href="/chat"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '24px 16px',
+                backgroundColor: 'rgba(181,135,58,0.08)',
+                textDecoration: 'none',
+                transition: 'background-color 0.2s',
+                cursor: 'pointer',
+                gap: '16px',
+                border: '1px dashed rgba(181,135,58,0.3)',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.18)')}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.08)')}
+            >
+              <img
+                src="/photi-emblem.png"
+                alt="Photi"
+                width="80"
+                height="80"
+                style={{ borderRadius: '50%', display: 'block', opacity: 0.9 }}
+              />
+              <span style={{
+                color: COLORS.gold,
+                fontSize: '11px',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                fontFamily: S.font,
+                textAlign: 'center',
+                lineHeight: '1.6',
+              }}>
+                Ask Photi
+              </span>
+            </a>
           </div>
         </div>
       </section>
