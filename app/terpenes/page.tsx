@@ -179,11 +179,9 @@ export default function TerpenesPage() {
             style={{
               width: '300px',
               height: '300px',
-              objectFit: 'cover',
-              objectPosition: 'center top',
               borderRadius: '50%',
               display: 'block',
-              boxShadow: '0 8px 40px rgba(181,135,58,0.3)',
+              boxShadow: '0 8px 40px rgba(181,135,58,0.4)',
             }}
           />
         </div>
@@ -219,7 +217,7 @@ export default function TerpenesPage() {
           pointerEvents: 'none',
         }} />
         <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '32px' }}>
+          <p style={{ color: COLORS.gold, fontSize: '16px', letterSpacing: '4px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '32px', fontWeight: 'bold', textShadow: '0 2px 12px rgba(181,135,58,0.5)' }}>
             Explore the Library
           </p>
 
