@@ -179,7 +179,7 @@ export default function TerpenesPage() {
             style={{
               width: '300px',
               height: '300px',
-              borderRadius: '50%',
+              borderRadius: '12px',
               display: 'block',
               boxShadow: '0 8px 40px rgba(181,135,58,0.4)',
             }}
