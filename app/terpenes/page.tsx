@@ -177,9 +177,11 @@ export default function TerpenesPage() {
             src="/terpenes/cards/card-bouquet.jpg"
             alt="Terpene Bouquet"
             style={{
-              width: '280px',
-              height: '420px',
-              borderRadius: '10px',
+              width: '300px',
+              height: '300px',
+              objectFit: 'cover',
+              objectPosition: 'center top',
+              borderRadius: '50%',
               display: 'block',
               boxShadow: '0 8px 40px rgba(181,135,58,0.3)',
             }}
@@ -260,16 +262,16 @@ export default function TerpenesPage() {
               </a>
             ))}
 
-            {/* Center — light burst open space with bouquet */}
+            {/* Center — open light burst space */}
             <div style={{
-              width: '260px', height: '225px', flexShrink: 0,
+              width: '200px', height: '225px', flexShrink: 0,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <img src="/terpenes/cards/card-bouquet.jpg" alt="Terpene Bouquet"
-                style={{ width: '180px', height: '180px', borderRadius: '50%',
-                  boxShadow: '0 0 40px rgba(181,135,58,0.4)',
-                }}
-              />
+              <div style={{
+                width: '80px', height: '80px', borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(181,135,58,0.6) 0%, rgba(181,135,58,0.1) 50%, transparent 70%)',
+                boxShadow: '0 0 60px rgba(181,135,58,0.3)',
+              }} />
             </div>
 
             {[
