@@ -132,8 +132,9 @@ export default function Home() {
         {/* Desktop nav */}
         <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
           <a href="/about" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '15px', textDecoration: 'none' }}>Who is Photi?</a>
+          <a href="/terpenes" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '15px', textDecoration: 'none' }}>Terpenes</a>
+          <a href="/processes" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '15px', textDecoration: 'none' }}>The Science</a>
           <a href="/deals" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '15px', textDecoration: 'none' }}>Today&apos;s Deals</a>
-          <a href="/terpenes" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '15px', textDecoration: 'none' }}>The Science</a>
           <a href="/chat" style={{
             color: COLORS.green, backgroundColor: COLORS.gold,
             fontFamily: S.font, fontSize: '15px', fontWeight: 'bold',
@@ -164,8 +165,9 @@ export default function Home() {
         gap: '16px',
       }}>
         <a href="/about" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</a>
+        <a href="/terpenes" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '16px', textDecoration: 'none' }}>Terpenes</a>
+        <a href="/processes" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '16px', textDecoration: 'none' }}>The Science</a>
         <a href="/deals" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '16px', textDecoration: 'none' }}>Today&apos;s Deals</a>
-        <a href="/terpenes" style={{ color: COLORS.cream, fontFamily: S.font, fontSize: '16px', textDecoration: 'none' }}>The Science</a>
         <a href="/chat" style={{
           color: COLORS.green, backgroundColor: COLORS.gold,
           fontFamily: S.font, fontSize: '16px', fontWeight: 'bold',
