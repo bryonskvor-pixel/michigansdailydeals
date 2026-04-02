@@ -173,6 +173,14 @@ export default function TerpenesPage() {
           .cta-section { padding: 48px 24px !important; }
           .cta-section h2 { font-size: 26px !important; }
         }
+        @media (max-width: 768px) {
+          .terpene-hero { padding: 32px 20px 32px !important; }
+          .terpene-hero h1 { font-size: 28px !important; margin: 0 0 16px !important; }
+          .terpene-hero p { font-size: 15px !important; max-width: 100% !important; }
+          .terpene-card-row { flex-direction: column !important; }
+          .terpene-card-img { width: 100% !important; min-width: unset !important; padding: 24px 24px 8px !important; }
+          .terpene-card-content { padding: 8px 20px 28px !important; }
+        }
         @media (min-width: 769px) {
           .mobile-menu-btn { display: none !important; }
           .mobile-menu { display: none !important; }
@@ -229,17 +237,18 @@ export default function TerpenesPage() {
       </div>
 
       {/* Hero */}
-      <section style={{ padding: '64px 48px 48px', textAlign: 'center', position: 'relative' }}>
+      <section className="terpene-hero" style={{ padding: '64px 48px 48px', textAlign: 'center', position: 'relative' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
           <img
             src="/terpenes/cards/card-bouquet.jpg"
             alt="Terpene Bouquet"
             style={{
-              width: '300px',
-              height: '300px',
+              width: '260px',
+              height: '260px',
               borderRadius: '12px',
               display: 'block',
               boxShadow: '0 8px 40px rgba(181,135,58,0.4)',
+              objectFit: 'cover',
             }}
           />
         </div>
@@ -353,7 +362,7 @@ export default function TerpenesPage() {
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
             {TERPENES.map((t, i) => (
-              <div key={t.name} id={t.name.toLowerCase()} style={{
+              <div key={t.name} id={t.name.toLowerCase()} className="terpene-card-row" style={{
                 scrollMarginTop: '80px',
                 display: 'flex',
                 flexDirection: i % 2 === 0 ? 'row' : 'row-reverse',
@@ -364,7 +373,7 @@ export default function TerpenesPage() {
                 overflow: 'hidden',
               }}>
                 {/* Image side */}
-                <div style={{
+                <div className="terpene-card-img" style={{
                   width: '280px', minWidth: '280px',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   padding: '32px',
@@ -379,7 +388,7 @@ export default function TerpenesPage() {
                 </div>
 
                 {/* Content side */}
-                <div style={{ flex: 1, padding: '36px 36px 36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div className="terpene-card-content" style={{ flex: 1, padding: '36px 36px 36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
                   {/* Name + headspace tag */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
