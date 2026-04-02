@@ -202,7 +202,7 @@ export default function TerpenesPage() {
       </section>
 
       {/* Terpene Card Universe */}
-      <section style={{
+      <section className="universe-section" style={{
         backgroundColor: COLORS.darkGreen,
         padding: '48px 24px 56px',
         backgroundImage: 'url(/terpene-grid-bg.jpg)',
@@ -222,7 +222,7 @@ export default function TerpenesPage() {
           </p>
 
           {/* Top row — 4 cards */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '16px' }}>
+          <div className="universe-row" style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '16px' }}>
             {[
               { name: 'myrcene', img: '/terpenes/cards/card-myrcene.jpg' },
               { name: 'limonene', img: '/terpenes/cards/card-limonene.jpg' },
@@ -231,7 +231,7 @@ export default function TerpenesPage() {
             ].map(t => (
               <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
                 <img src={t.img} alt={t.name}
-                  style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                  className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
                     transition: 'transform 0.2s, box-shadow 0.2s',
                   }}
@@ -243,14 +243,14 @@ export default function TerpenesPage() {
           </div>
 
           {/* Middle row — 2 cards, open center, 2 cards */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+          <div className="universe-row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
             {[
               { name: 'pinene', img: '/terpenes/cards/card-pinene.jpg' },
               { name: 'terpinolene', img: '/terpenes/cards/card-terpinolene.jpg' },
             ].map(t => (
               <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
                 <img src={t.img} alt={t.name}
-                  style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                  className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
                     transition: 'transform 0.2s, box-shadow 0.2s',
                   }}
@@ -261,7 +261,7 @@ export default function TerpenesPage() {
             ))}
 
             {/* Center — open light burst space */}
-            <div style={{
+            <div className="universe-center" style={{
               width: '200px', height: '225px', flexShrink: 0,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
@@ -278,7 +278,7 @@ export default function TerpenesPage() {
             ].map(t => (
               <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
                 <img src={t.img} alt={t.name}
-                  style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                  className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
                     transition: 'transform 0.2s, box-shadow 0.2s',
                   }}
@@ -290,7 +290,7 @@ export default function TerpenesPage() {
           </div>
 
           {/* Bottom row — 3 cards + Ask Photi */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
+          <div className="universe-row" style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
             {[
               { name: 'bisabolol', img: '/terpenes/cards/card-bisabolol.jpg' },
               { name: 'valencene', img: '/terpenes/cards/card-valencene.jpg' },
@@ -298,7 +298,7 @@ export default function TerpenesPage() {
             ].map(t => (
               <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
                 <img src={t.img} alt={t.name}
-                  style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                  className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
                     transition: 'transform 0.2s, box-shadow 0.2s',
                   }}
@@ -310,7 +310,7 @@ export default function TerpenesPage() {
             {/* Ask Photi card */}
             <a href="/chat" style={{ textDecoration: 'none', flexShrink: 0 }}>
               <img src="/terpenes/cards/card-photi.jpg" alt="Ask Photi"
-                style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
                   boxShadow: '0 4px 20px rgba(181,135,58,0.4)',
                   transition: 'transform 0.2s, box-shadow 0.2s',
                 }}
