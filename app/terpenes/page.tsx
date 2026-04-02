@@ -174,11 +174,15 @@ export default function TerpenesPage() {
       <section style={{ padding: '64px 48px 48px', textAlign: 'center', position: 'relative' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
           <img
-            src="/terpenes/terpene-bouquet.jpg"
+            src="/terpenes/cards/card-bouquet.jpg"
             alt="Terpene Bouquet"
-            width="320"
-            height="320"
-            style={{borderRadius: '50%'}}
+            style={{
+              width: '280px',
+              height: '420px',
+              borderRadius: '10px',
+              display: 'block',
+              boxShadow: '0 8px 40px rgba(181,135,58,0.3)',
+            }}
           />
         </div>
         <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>
@@ -197,117 +201,128 @@ export default function TerpenesPage() {
         </p>
       </section>
 
-      {/* Terpene Navigation Grid */}
+      {/* Terpene Card Universe */}
       <section style={{
         backgroundColor: COLORS.darkGreen,
-        padding: '48px 48px 56px',
+        padding: '48px 24px 56px',
         backgroundImage: 'url(/terpene-grid-bg.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         position: 'relative',
       }}>
-        {/* Dark overlay so grid cells remain readable */}
         <div style={{
           position: 'absolute', inset: 0,
-          backgroundColor: 'rgba(22,56,41,0.55)',
+          backgroundColor: 'rgba(18,44,30,0.45)',
           pointerEvents: 'none',
         }} />
         <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '32px' }}>
             Explore the Library
           </p>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '2px',
-            backgroundColor: 'rgba(181,135,58,0.08)',
-            border: '1px solid rgba(181,135,58,0.25)',
-            borderRadius: '8px',
-            overflow: 'hidden',
-            backdropFilter: 'blur(2px)',
-          }}>
-            {TERPENES.map((t) => (
-              <a
-                key={t.name}
-                href={`#${t.name.toLowerCase()}`}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '24px 16px',
-                  backgroundColor: 'rgba(22,56,41,0.95)',
-                  textDecoration: 'none',
-                  transition: 'background-color 0.2s',
-                  cursor: 'pointer',
-                  gap: '12px',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.12)')}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'rgba(22,56,41,0.95)')}
-              >
-                <img
-                  src={t.image}
-                  alt={t.name}
-                  width="80"
-                  height="80"
-                  style={{ borderRadius: '50%', display: 'block' }}
+
+          {/* Top row — 4 cards */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '16px' }}>
+            {[
+              { name: 'myrcene', img: '/terpenes/cards/card-myrcene.jpg' },
+              { name: 'limonene', img: '/terpenes/cards/card-limonene.jpg' },
+              { name: 'caryophyllene', img: '/terpenes/cards/card-caryophyllene.jpg' },
+              { name: 'linalool', img: '/terpenes/cards/card-linalool.jpg' },
+            ].map(t => (
+              <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
+                <img src={t.img} alt={t.name}
+                  style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                  }}
+                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(0,0,0,0.6)'; }}
+                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)'; }}
                 />
-                <span style={{
-                  color: COLORS.gold,
-                  fontSize: '11px',
-                  letterSpacing: '2px',
-                  textTransform: 'uppercase',
-                  fontFamily: S.font,
-                  textAlign: 'center',
-                }}>
-                  {t.name}
-                </span>
               </a>
             ))}
-            {/* CTA cell — fills the empty 12th spot */}
-            <a
-              href="/chat"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '24px 16px',
-                backgroundColor: 'rgba(181,135,58,0.15)',
-                textDecoration: 'none',
-                transition: 'background-color 0.2s',
-                cursor: 'pointer',
-                gap: '16px',
-                border: '1px dashed rgba(181,135,58,0.4)',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.28)')}
-              onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'rgba(181,135,58,0.15)')}
-            >
-              <img
-                src="/photi-emblem.png"
-                alt="Photi"
-                width="80"
-                height="80"
-                style={{ borderRadius: '50%', display: 'block', opacity: 0.9 }}
+          </div>
+
+          {/* Middle row — 2 cards, open center, 2 cards */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+            {[
+              { name: 'pinene', img: '/terpenes/cards/card-pinene.jpg' },
+              { name: 'terpinolene', img: '/terpenes/cards/card-terpinolene.jpg' },
+            ].map(t => (
+              <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
+                <img src={t.img} alt={t.name}
+                  style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                  }}
+                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(0,0,0,0.6)'; }}
+                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)'; }}
+                />
+              </a>
+            ))}
+
+            {/* Center — light burst open space with bouquet */}
+            <div style={{
+              width: '260px', height: '225px', flexShrink: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <img src="/terpenes/cards/card-bouquet.jpg" alt="Terpene Bouquet"
+                style={{ width: '180px', height: '180px', borderRadius: '50%',
+                  boxShadow: '0 0 40px rgba(181,135,58,0.4)',
+                }}
               />
-              <span style={{
-                color: COLORS.gold,
-                fontSize: '11px',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                fontFamily: S.font,
-                textAlign: 'center',
-                lineHeight: '1.6',
-              }}>
-                Ask Photi
-              </span>
+            </div>
+
+            {[
+              { name: 'humulene', img: '/terpenes/cards/card-humulene.jpg' },
+              { name: 'ocimene', img: '/terpenes/cards/card-ocimene.jpg' },
+            ].map(t => (
+              <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
+                <img src={t.img} alt={t.name}
+                  style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                  }}
+                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(0,0,0,0.6)'; }}
+                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)'; }}
+                />
+              </a>
+            ))}
+          </div>
+
+          {/* Bottom row — 3 cards + Ask Photi */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
+            {[
+              { name: 'bisabolol', img: '/terpenes/cards/card-bisabolol.jpg' },
+              { name: 'valencene', img: '/terpenes/cards/card-valencene.jpg' },
+              { name: 'geraniol', img: '/terpenes/cards/card-geraniol.jpg' },
+            ].map(t => (
+              <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
+                <img src={t.img} alt={t.name}
+                  style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                  }}
+                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(0,0,0,0.6)'; }}
+                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)'; }}
+                />
+              </a>
+            ))}
+            {/* Ask Photi card */}
+            <a href="/chat" style={{ textDecoration: 'none', flexShrink: 0 }}>
+              <img src="/terpenes/cards/card-photi.jpg" alt="Ask Photi"
+                style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                  boxShadow: '0 4px 20px rgba(181,135,58,0.4)',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                }}
+                onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(181,135,58,0.6)'; }}
+                onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(181,135,58,0.4)'; }}
+              />
             </a>
           </div>
         </div>
       </section>
 
-      {/* Intro section — cream */}
+            {/* Intro section — cream */}
       <section style={{ backgroundColor: COLORS.cream, padding: '64px 48px' }}>
         <div style={{ maxWidth: '780px', margin: '0 auto' }}>
           <h2 style={{ color: COLORS.green, fontSize: '30px', fontWeight: 'bold', marginBottom: '20px' }}>
