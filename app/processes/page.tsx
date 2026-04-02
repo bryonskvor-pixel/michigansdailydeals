@@ -39,15 +39,18 @@ export default function ProcessesPage() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
-          .mobile-menu-open { display: flex !important; }
-          .page-hero { padding: 40px 24px !important; }
-          .page-hero h1 { font-size: 32px !important; }
-          .content-section { padding: 40px 24px !important; }
+          .page-hero { padding: 40px 24px 32px !important; }
+          .page-hero h1 { font-size: 30px !important; }
+          .page-hero p { font-size: 15px !important; }
+          .content-section { padding: 40px 20px !important; }
           .content-section h2 { font-size: 26px !important; }
-          .category-grid { grid-template-columns: repeat(3, 1fr) !important; }
-          .section-layout { flex-direction: column !important; }
-          .section-img { min-width: unset !important; margin-bottom: 24px !important; }
+          .content-section p { font-size: 15px !important; }
+          .category-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+          .section-layout { flex-direction: column !important; gap: 24px !important; }
+          .section-img { min-width: unset !important; width: 100% !important; display: flex !important; justify-content: center !important; }
+          .section-img img { width: 160px !important; height: 160px !important; }
           .header-outer { padding: 16px 24px !important; }
+          .nav-guide { padding: 32px 20px 40px !important; }
         }
         @media (min-width: 769px) {
           .mobile-menu-btn { display: none !important; }
@@ -93,7 +96,7 @@ export default function ProcessesPage() {
         </p>
       </section>
 
-      <section style={{ backgroundColor: '#163829', padding: '48px 48px 56px' }}>
+      <section className="nav-guide" style={{ backgroundColor: '#163829', padding: '48px 48px 56px' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <p style={{ color: '#B5873A', fontSize: '16px', letterSpacing: '4px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '32px', fontWeight: 'bold' }}>Explore the Guide</p>
           <div className="category-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '16px' }}>
@@ -132,7 +135,7 @@ export default function ProcessesPage() {
 
       <section id="flower" className="content-section" style={{ padding: '72px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
+          <div className="section-layout" className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
             <div className="section-img" style={{ minWidth: '220px', display: 'flex', justifyContent: 'center' }}>
               <img src="/processes/flower.jpg" alt="Flower" style={{ width: '220px', height: '220px', borderRadius: '50%', display: 'block', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }} />
             </div>
@@ -178,7 +181,7 @@ export default function ProcessesPage() {
 
       <section id="vapes" className="content-section" style={{ padding: '72px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
+          <div className="section-layout" className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
             <div className="section-img" style={{ minWidth: '220px', display: 'flex', justifyContent: 'center' }}>
               <img src="/processes/vapes.jpg" alt="Vapes" style={{ width: '220px', height: '220px', borderRadius: '50%', display: 'block', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }} />
             </div>
@@ -234,7 +237,7 @@ export default function ProcessesPage() {
 
       <section id="consumption" className="content-section" style={{ padding: '72px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
+          <div className="section-layout" className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
             <div className="section-img" style={{ minWidth: '220px', display: 'flex', justifyContent: 'center' }}>
               <img src="/processes/consumption.jpg" alt="How to Consume" style={{ width: '220px', height: '220px', borderRadius: '50%', display: 'block', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }} />
             </div>
