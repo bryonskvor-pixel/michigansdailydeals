@@ -237,7 +237,7 @@ export default function ProcessesPage() {
 
       <section id="consumption" className="content-section" style={{ padding: '72px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div className="section-layout" className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
+          <div className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
             <div className="section-img" style={{ minWidth: '220px', display: 'flex', justifyContent: 'center' }}>
               <img src="/processes/consumption.jpg" alt="How to Consume" style={{ width: '220px', height: '220px', borderRadius: '50%', display: 'block', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }} />
             </div>
