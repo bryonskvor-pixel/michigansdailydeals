@@ -151,6 +151,34 @@ export default function TerpenesPage() {
   return (
     <main style={{ backgroundColor: COLORS.green, minHeight: '100vh', fontFamily: S.font }}>
 
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+          .mobile-menu { display: ${menuOpen ? 'flex' : 'none'} !important; }
+          .header-outer { padding: 16px 24px !important; }
+          .terpene-hero { padding: 40px 24px !important; }
+          .terpene-hero h1 { font-size: 32px !important; }
+          .terpene-hero p { font-size: 15px !important; }
+          .intro-section { padding: 40px 24px !important; }
+          .intro-section h2 { font-size: 24px !important; }
+          .intro-section p { font-size: 15px !important; }
+          .terpene-cards { padding: 32px 16px !important; }
+          .terpene-card { flex-direction: column !important; }
+          .terpene-card-reverse { flex-direction: column !important; }
+          .terpene-card-img { width: 100% !important; padding: 24px 24px 8px !important; }
+          .terpene-card-img img { width: 140px !important; height: 140px !important; }
+          .terpene-card-content { padding: 16px 24px 28px !important; }
+          .terpene-card-title { font-size: 26px !important; }
+          .cta-section { padding: 48px 24px !important; }
+          .cta-section h2 { font-size: 26px !important; }
+        }
+        @media (min-width: 769px) {
+          .mobile-menu-btn { display: none !important; }
+          .mobile-menu { display: none !important; }
+        }
+      `}</style>
+
       {/* Header */}
       <header className="header-outer" style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
