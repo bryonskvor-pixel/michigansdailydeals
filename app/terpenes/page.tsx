@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -146,11 +147,12 @@ const headspaceLabel: Record<string, { label: string; color: string }> = {
 };
 
 export default function TerpenesPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <main style={{ backgroundColor: COLORS.green, minHeight: '100vh', fontFamily: S.font }}>
 
       {/* Header */}
-      <header style={{
+      <header className="header-outer" style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '24px 48px', borderBottom: '1px solid rgba(181,135,58,0.15)',
       }}>
@@ -158,9 +160,10 @@ export default function TerpenesPage() {
           <Image src="/photi-emblem.png" alt="Photi" width={40} height={40} />
           <span style={{ color: COLORS.gold, fontSize: '20px', fontWeight: 'bold' }}>MiQuest</span>
         </Link>
-        <nav style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
           <Link href="/about" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Who is Photi?</Link>
-          <Link href="/terpenes" style={{ color: COLORS.gold, fontSize: '15px', textDecoration: 'none', borderBottom: `1px solid ${COLORS.gold}`, paddingBottom: '2px' }}>The Science</Link>
+          <Link href="/terpenes" style={{ color: COLORS.gold, fontSize: '15px', textDecoration: 'none', borderBottom: `1px solid ${COLORS.gold}`, paddingBottom: '2px' }}>Terpenes</Link>
+          <Link href="/processes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>The Science</Link>
           <Link href="/deals" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
           <Link href="/chat" style={{
             backgroundColor: COLORS.gold, color: COLORS.green,
@@ -168,7 +171,34 @@ export default function TerpenesPage() {
             borderRadius: '20px', textDecoration: 'none',
           }}>Talk to Photi</Link>
         </nav>
+        <button
+          className="mobile-menu-btn"
+          onClick={() => setMenuOpen(!menuOpen)}
+          style={{ display: 'none', flexDirection: 'column', gap: '5px', background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}>
+          {[0,1,2].map(i => (
+            <div key={i} style={{ width: '24px', height: '2px', backgroundColor: COLORS.gold }} />
+          ))}
+        </button>
       </header>
+
+      <div className="mobile-menu" style={{
+        display: 'none', flexDirection: 'column',
+        backgroundColor: COLORS.darkGreen,
+        padding: '16px 24px 24px',
+        borderBottom: `1px solid rgba(181,135,58,0.2)`,
+        gap: '16px',
+      }}>
+        <Link href="/about" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</Link>
+        <Link href="/terpenes" style={{ color: COLORS.gold, fontSize: '16px', textDecoration: 'none' }}>Terpenes</Link>
+        <Link href="/processes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
+        <Link href="/deals" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
+        <Link href="/chat" style={{
+          color: COLORS.green, backgroundColor: COLORS.gold,
+          fontSize: '16px', fontWeight: 'bold',
+          padding: '12px 24px', borderRadius: '50px', textDecoration: 'none',
+          textAlign: 'center',
+        }}>Talk to Photi</Link>
+      </div>
 
       {/* Hero */}
       <section style={{ padding: '64px 48px 48px', textAlign: 'center', position: 'relative' }}>
@@ -202,9 +232,9 @@ export default function TerpenesPage() {
       </section>
 
       {/* Terpene Card Universe */}
-      <section className="universe-section" style={{
+      <section style={{
         backgroundColor: COLORS.darkGreen,
-        padding: '48px 24px 56px',
+        padding: '48px 16px 56px',
         backgroundImage: 'url(/terpene-grid-bg.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -217,105 +247,51 @@ export default function TerpenesPage() {
           pointerEvents: 'none',
         }} />
         <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <p style={{ color: COLORS.gold, fontSize: '16px', letterSpacing: '4px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '32px', fontWeight: 'bold', textShadow: '0 2px 12px rgba(181,135,58,0.5)' }}>
+          <p style={{ color: COLORS.gold, fontSize: '16px', letterSpacing: '4px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '24px', fontWeight: 'bold', textShadow: '0 2px 12px rgba(181,135,58,0.5)' }}>
             Explore the Library
           </p>
 
-          {/* Top row — 4 cards */}
-          <div className="universe-row" style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '16px' }}>
+          {/* Responsive card grid — flex wrap works on all screen sizes */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', maxWidth: '900px', margin: '0 auto' }}>
             {[
               { name: 'myrcene', img: '/terpenes/cards/card-myrcene.jpg' },
               { name: 'limonene', img: '/terpenes/cards/card-limonene.jpg' },
               { name: 'caryophyllene', img: '/terpenes/cards/card-caryophyllene.jpg' },
               { name: 'linalool', img: '/terpenes/cards/card-linalool.jpg' },
-            ].map(t => (
-              <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
-                <img src={t.img} alt={t.name}
-                  className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
-                  }}
-                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(0,0,0,0.6)'; }}
-                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)'; }}
-                />
-              </a>
-            ))}
-          </div>
-
-          {/* Middle row — 2 cards, open center, 2 cards */}
-          <div className="universe-row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
-            {[
               { name: 'pinene', img: '/terpenes/cards/card-pinene.jpg' },
               { name: 'terpinolene', img: '/terpenes/cards/card-terpinolene.jpg' },
-            ].map(t => (
-              <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
-                <img src={t.img} alt={t.name}
-                  className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
-                  }}
-                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(0,0,0,0.6)'; }}
-                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)'; }}
-                />
-              </a>
-            ))}
-
-            {/* Center — open light burst space */}
-            <div className="universe-center" style={{
-              width: '200px', height: '225px', flexShrink: 0,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <div style={{
-                width: '80px', height: '80px', borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(181,135,58,0.6) 0%, rgba(181,135,58,0.1) 50%, transparent 70%)',
-                boxShadow: '0 0 60px rgba(181,135,58,0.3)',
-              }} />
-            </div>
-
-            {[
               { name: 'humulene', img: '/terpenes/cards/card-humulene.jpg' },
               { name: 'ocimene', img: '/terpenes/cards/card-ocimene.jpg' },
-            ].map(t => (
-              <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
-                <img src={t.img} alt={t.name}
-                  className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
-                  }}
-                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(0,0,0,0.6)'; }}
-                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)'; }}
-                />
-              </a>
-            ))}
-          </div>
-
-          {/* Bottom row — 3 cards + Ask Photi */}
-          <div className="universe-row" style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
-            {[
               { name: 'bisabolol', img: '/terpenes/cards/card-bisabolol.jpg' },
               { name: 'valencene', img: '/terpenes/cards/card-valencene.jpg' },
               { name: 'geraniol', img: '/terpenes/cards/card-geraniol.jpg' },
             ].map(t => (
               <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
                 <img src={t.img} alt={t.name}
-                  className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                  style={{
+                    width: 'clamp(80px, 12vw, 140px)',
+                    height: 'clamp(120px, 18vw, 210px)',
+                    borderRadius: '6px',
+                    display: 'block',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
                   }}
-                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(0,0,0,0.6)'; }}
-                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)'; }}
+                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; }}
+                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; }}
                 />
               </a>
             ))}
             {/* Ask Photi card */}
             <a href="/chat" style={{ textDecoration: 'none', flexShrink: 0 }}>
               <img src="/terpenes/cards/card-photi.jpg" alt="Ask Photi"
-                className="universe-card" style={{ width: '150px', height: '225px', borderRadius: '6px', display: 'block',
+                style={{
+                  width: 'clamp(80px, 12vw, 140px)',
+                  height: 'clamp(120px, 18vw, 210px)',
+                  borderRadius: '6px',
+                  display: 'block',
                   boxShadow: '0 4px 20px rgba(181,135,58,0.4)',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
                 }}
-                onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; (e.target as HTMLImageElement).style.boxShadow = '0 12px 32px rgba(181,135,58,0.6)'; }}
-                onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; (e.target as HTMLImageElement).style.boxShadow = '0 4px 20px rgba(181,135,58,0.4)'; }}
+                onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; }}
+                onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; }}
               />
             </a>
           </div>
