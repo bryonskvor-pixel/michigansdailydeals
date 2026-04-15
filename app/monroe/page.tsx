@@ -152,7 +152,7 @@ export default function MonroePage() {
             className="hero-image"
             src="/city/monroe.jpg"
             alt="Monroe Michigan — Lake Erie at dawn"
-            style={{ width: '100%', height: '320px', objectFit: 'cover', display: 'block' }}
+            style={{ width: '100%', height: 'auto', display: 'block' }}
           />
         </div>
 
