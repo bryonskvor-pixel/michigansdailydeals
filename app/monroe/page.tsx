@@ -108,7 +108,7 @@ export default function MonroePage() {
           .card-grid { grid-template-columns: 1fr !important; }
           .two-col { grid-template-columns: 1fr !important; }
           .hero-image { width: 100% !important; height: 220px !important; border-radius: 12px !important; }
-          .section-patch { width: 80px !important; height: 80px !important; }
+          .section-patch { width: 100px !important; height: 100px !important; }
         }
         @media (min-width: 769px) {
           .mobile-menu-btn { display: none !important; }
@@ -219,11 +219,17 @@ export default function MonroePage() {
             ))}
           </div>
           <p style={{ color: COLORS.text, fontSize: '14px', fontStyle: 'italic', opacity: 0.7, textAlign: 'center', marginBottom: '24px' }}>
-            Monroe has 25+ dispensaries. Photi will connect directly to live deals across all of them soon.
+            Monroe has many other dispensaries. Soon Photi will be connecting you to the best products across town that suits you.
           </p>
           <div style={{ textAlign: 'center', padding: '28px', backgroundColor: 'rgba(30,77,53,0.05)', borderRadius: '12px', border: '1px solid rgba(30,77,53,0.1)' }}>
-            <p style={{ color: COLORS.green, fontSize: '16px', marginBottom: '16px' }}>
+            <p style={{ color: COLORS.green, fontSize: '16px', marginBottom: '8px' }}>
               Not sure which dispensary is right for what you need today?
+            </p>
+            <p style={{ color: COLORS.text, fontSize: '14px', marginBottom: '20px', opacity: 0.75 }}>
+              Are you a dispensary that wants to be featured?{' '}
+              <Link href="/featured" style={{ color: COLORS.green, fontWeight: 'bold', textDecoration: 'none', borderBottom: `1px solid ${COLORS.gold}` }}>
+                Learn how it works →
+              </Link>
             </p>
             <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '16px', fontWeight: 'bold', padding: '12px 32px', borderRadius: '50px', textDecoration: 'none', display: 'inline-block' }}>
               Ask Photi
@@ -242,7 +248,7 @@ export default function MonroePage() {
               className="section-patch"
               src="/monroe/coffee.jpg"
               alt="Coffee"
-              style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.3)' }}
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.3)' }}
             />
             <div>
               <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>Start Your Morning</p>
@@ -272,7 +278,7 @@ export default function MonroePage() {
               className="section-patch"
               src="/monroe/food.jpg"
               alt="Eat"
-              style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.2)' }}
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.2)' }}
             />
             <div>
               <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>Eat Something Good</p>
@@ -302,7 +308,7 @@ export default function MonroePage() {
               className="section-patch"
               src="/monroe/explore.jpg"
               alt="Explore"
-              style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.3)' }}
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.3)' }}
             />
             <div>
               <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>While You&apos;re Here</p>
@@ -336,7 +342,7 @@ export default function MonroePage() {
               className="section-patch"
               src="/monroe/events.jpg"
               alt="Events"
-              style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.2)' }}
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.2)' }}
             />
             <div>
               <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>What&apos;s Happening</p>
@@ -364,7 +370,7 @@ export default function MonroePage() {
               className="section-patch"
               src="/monroe/arts.jpg"
               alt="Arts"
-              style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.3)' }}
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.3)' }}
             />
             <div>
               <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>Culture &amp; Music</p>
