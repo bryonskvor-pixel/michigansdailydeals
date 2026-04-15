@@ -121,6 +121,12 @@ const COMING_CITIES = [
     tagline: 'Blue Water region. Between Detroit and the Thumb. Growing fast.',
     dispensaries: '9+',
   },
+  {
+    name: 'Muskegon',
+    eyebrow: 'West Michigan Shore',
+    tagline: 'Lake Michigan halfway point. State parks, dunes, and a market that knows quality.',
+    dispensaries: '12+',
+  },
 ];
 
 export default function CitiesPage() {
