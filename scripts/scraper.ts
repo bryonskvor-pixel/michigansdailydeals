@@ -186,7 +186,7 @@ async function fetchAllProducts(dispensaryId: string, endpoint = DUTCHIE.GRAPHQL
       },
       DUTCHIE.HASHES.FilteredProducts,
       endpoint
-);
+    );
     
     const products   = data?.data?.filteredProducts?.products ?? [];
     const totalCount = data?.data?.filteredProducts?.totalCount ?? 0;
