@@ -123,10 +123,13 @@ async function dutchieQuery(
     },
   });
 
-  if (!res.ok) throw new Error(`Dutchie ${operationName}: ${res.status}`);
-  return res.json();
-}
-
+const text = await res.text();
+  if (!res.ok) throw new Error(`Dutchie ${operationName}: ${res.status} — ${text.slice(0, 200)}`);
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    throw new Error(`Dutchie ${operationName} bad JSON: ${text.slice(0, 200)}`);
+  }
 
 // ============================================================
 // STEP 1: Discover which target brands are stocked
