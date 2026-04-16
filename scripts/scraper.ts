@@ -94,15 +94,14 @@ const DISPENSARIES: Array<{
   // { id: 5,  name: 'Exclusive Monroe',     city: 'Monroe', dutchie_id: '' },
   // { id: 2,  name: 'URB Monroe',           city: 'Monroe', dutchie_id: '' },
 ];
-
 // ============================================================
-// DUTCHIE GRAPHQL CALLER — no auth required
+// DUTCHIE GRAPHQL CALLER — routes through ScrapingBee to bypass Cloudflare
 // ============================================================
 async function dutchieQuery(
   operationName: string,
   variables: Record<string, unknown>,
   hash: string,
-  endpoint = DUTCHIE.GRAPHQL
+  endpoint = DUTCHIE.GRAPHQL_API4
 ): Promise<any> {
   const params = new URLSearchParams({
     operationName,
@@ -110,16 +109,25 @@ async function dutchieQuery(
     extensions: JSON.stringify({ persistedQuery: { version: 1, sha256Hash: hash } }),
   });
 
-  const res = await fetch(`${endpoint}?${params}`, {
+  const dutchieUrl = `${endpoint}?${params}`;
+
+  // Route through ScrapingBee to handle Cloudflare protection
+  const scrapingBeeUrl = new URL('https://app.scrapingbee.com/api/v1/');
+  scrapingBeeUrl.searchParams.set('api_key', process.env.SCRAPINGBEE_API_KEY!);
+  scrapingBeeUrl.searchParams.set('url', dutchieUrl);
+  scrapingBeeUrl.searchParams.set('render_js', 'false');
+  scrapingBeeUrl.searchParams.set('premium_proxy', 'true');
+  scrapingBeeUrl.searchParams.set('custom_google', 'false');
+
+  const res = await fetch(scrapingBeeUrl.toString(), {
     headers: {
-      'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      'Accept':          'application/json',
-      'Referer':         'https://dutchie.com/',
+      'Accept': 'application/json',
     },
   });
 
   if (!res.ok) throw new Error(`Dutchie ${operationName}: ${res.status}`);
   return res.json();
+}
 }
 
 // ============================================================
