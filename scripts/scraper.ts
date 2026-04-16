@@ -70,11 +70,8 @@ async function dutchieQuery(
 
   const dutchieUrl = `${endpoint}?${params}`;
 
-  const scrapingBeeBase = 'https://app.scrapingbee.com/api/v1/';
+ const scrapingBeeBase = 'https://app.scrapingbee.com/api/v1/';
 const fullUrl = `${scrapingBeeBase}?api_key=${process.env.SCRAPINGBEE_API_KEY}&render_js=false&url=${encodeURIComponent(dutchieUrl)}`;
-
-const res = await fetch(fullUrl, {
-  headers: { 'Accept': 'application/json' },
 });
 
   const res = await fetch(fullUrl, {
