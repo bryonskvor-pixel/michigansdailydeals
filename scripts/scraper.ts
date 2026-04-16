@@ -72,7 +72,7 @@ async function dutchieQuery(
 
   const scrapingBeeUrl = new URL('https://app.scrapingbee.com/api/v1/');
   scrapingBeeUrl.searchParams.set('api_key', process.env.SCRAPINGBEE_API_KEY!);
-  scrapingBeeUrl.searchParams.set('url', dutchieUrl);
+  scrapingBeeUrl.searchParams.set('url', encodeURIComponent(dutchieUrl));
   scrapingBeeUrl.searchParams.set('render_js', 'false');
 
   const res = await fetch(scrapingBeeUrl.toString(), {
