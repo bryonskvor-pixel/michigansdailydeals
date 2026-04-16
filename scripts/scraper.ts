@@ -62,15 +62,10 @@ async function dutchieQuery(
   hash: string,
   endpoint = DUTCHIE.GRAPHQL_API4
 ): Promise<any> {
-  const params = new URLSearchParams({
-    operationName,
-    variables:  JSON.stringify(variables),
-    extensions: JSON.stringify({ persistedQuery: { version: 1, sha256Hash: hash } }),
-  });
-
-  const dutchieUrl = `${endpoint}?${params}`;
+  const variablesStr = JSON.stringify(variables);
+  const extensionsStr = JSON.stringify({ persistedQuery: { version: 1, sha256Hash: hash } });
+  const dutchieUrl = `${endpoint}?operationName=${operationName}&variables=${variablesStr}&extensions=${extensionsStr}`;
   const fullUrl = `https://app.scrapingbee.com/api/v1/?api_key=${process.env.SCRAPINGBEE_API_KEY}&render_js=false&premium_proxy=true&url=${encodeURIComponent(dutchieUrl)}`;
-
   const res = await fetch(fullUrl, {
     headers: { 'Accept': 'application/json' },
   });
