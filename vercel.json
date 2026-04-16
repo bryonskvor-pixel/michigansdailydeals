@@ -84,5 +84,8 @@
     { "source": "/", "destination": "https://michigansdailydeals.com/cities", "permanent": true, "has": [{ "type": "host", "value": "michigansbestdispensaries.com" }] },
     { "source": "/", "destination": "https://michigansdailydeals.com/processes", "permanent": true, "has": [{ "type": "host", "value": "michigansbestconcentrates.com" }] },
     { "source": "/", "destination": "https://michigansdailydeals.com", "permanent": false, "has": [{ "type": "host", "value": "ohiosbestweed.com" }] }
-  ]
+  ],
+{ "source": "/", "destination": "https://michigansdailydeals.com", "permanent": false, "has": [{ "type": "host", "value": "ohiosbestweed.com" }] }
+  ],
+  "crons": [{ "path": "/api/cron/scrape", "schedule": "0 13 * * *" }]
 }
