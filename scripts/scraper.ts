@@ -116,8 +116,6 @@ async function dutchieQuery(
   scrapingBeeUrl.searchParams.set('api_key', process.env.SCRAPINGBEE_API_KEY!);
   scrapingBeeUrl.searchParams.set('url', dutchieUrl);
   scrapingBeeUrl.searchParams.set('render_js', 'false');
-  scrapingBeeUrl.searchParams.set('premium_proxy', 'true');
-  scrapingBeeUrl.searchParams.set('custom_google', 'false');
 
   const res = await fetch(scrapingBeeUrl.toString(), {
     headers: {
