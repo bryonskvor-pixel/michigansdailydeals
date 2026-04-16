@@ -155,7 +155,7 @@ function matchTargetBrands(dispensaryBrands: Array<{ id: string; name: string }>
 // ============================================================
 // STEP 2: Fetch all products paginated
 // ============================================================
-async function fetchAllProducts(dispensaryId: string, endpoint = DUTCHIE.GRAPHQL): Promise<any[]> {
+async function fetchAllProducts(dispensaryId: string, endpoint = DUTCHIE.DUTCHIE.GRAPHQL_API4): Promise<any[]> {
   const all: any[] = [];
   let page = 0;
 
