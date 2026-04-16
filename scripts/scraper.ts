@@ -129,10 +129,11 @@ const text = await res.text();
     return JSON.parse(text);
   } catch (e) {
     throw new Error(`Dutchie ${operationName} bad JSON: ${text.slice(0, 200)}`);
+    }
   }
- } 
 }
-// ============================================================
+
+// ===================================
 // STEP 1: Discover which target brands are stocked
 // ============================================================
 async function fetchMenuFilters(dispensaryId: string, endpoint = DUTCHIE.GRAPHQL_API4) {
