@@ -78,6 +78,7 @@ async function dutchieQuery(
     + '&extensions=' + encodeURIComponent(JSON.stringify({ persistedQuery: { version: 1, sha256Hash: hash } }));
 
   sbParams.set('url', dutchieUrl);
+  sbParams.set('render_js', 'true');  // Needed to pass Cloudflare challenge on Dutchie
 
   const sbUrl = `https://app.scrapingbee.com/api/v1/?${sbParams.toString()}`;
   console.log(`[ScrapingBee] ${operationName} GET → length ${dutchieUrl.length}`);
