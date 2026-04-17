@@ -51,9 +51,9 @@ const DISPENSARIES: Array<{
   dutchie_id: string;
   endpoint?: string;
 }> = [
-  { id: 12, name: 'Mint Cannabis Monroe',  city: 'Monroe', dutchie_id: '62058ef65b73e100946b628d' },
-  { id: 10, name: 'Uniq Cannabis Monroe',  city: 'Monroe', dutchie_id: '63fcc07560e361018fe35c11', endpoint: 'https://uniqcannabis.com/api-1/graphql' },
-  { id: 59, name: 'Happy Daze Monroe',     city: 'Monroe', dutchie_id: '69b9d92a3d316b54fad23373' },
+  { id: 12, name: 'Mint Cannabis Monroe', city: 'Monroe', dutchie_id: '62058ef65b73e100946b628d' },
+  // { id: 10, name: 'Uniq Cannabis Monroe', city: 'Monroe', dutchie_id: '63fcc07560e361018fe35c11', endpoint: 'https://uniqcannabis.com/api-1/graphql' },
+  // { id: 59, name: 'Happy Daze Monroe',    city: 'Monroe', dutchie_id: '69b9d92a3d316b54fad23373' },
 ];
 
 async function dutchieQuery(
@@ -78,7 +78,11 @@ async function dutchieQuery(
   sbParams.set('country_code', 'us');
   sbParams.set('forward_headers', 'true');
 
-  const res = await fetch(`https://app.scrapingbee.com/api/v1/?${sbParams.toString()}`, {
+  const sbUrl = `https://app.scrapingbee.com/api/v1/?${sbParams.toString()}`;
+  console.log(`[ScrapingBee] ${operationName} → ${endpoint}`);
+  console.log(`[ScrapingBee] body length: ${body.length}`);
+
+  const res = await fetch(sbUrl, {
     method: 'POST',
     headers: {
       'Spb-Content-Type': 'application/json',
@@ -88,6 +92,8 @@ async function dutchieQuery(
   });
 
   const text = await res.text();
+  console.log(`[ScrapingBee] status: ${res.status}, response length: ${text.length}`);
+  console.log(`[ScrapingBee] response preview: ${text.slice(0, 300)}`);
   if (!res.ok) throw new Error(`Dutchie ${operationName}: ${res.status} — ${text.slice(0, 200)}`);
   try {
     return JSON.parse(text);
