@@ -147,8 +147,9 @@ async function fetchAllProducts(dispensaryId: string, endpoint = DUTCHIE.GRAPHQL
       endpoint
     );
 
-    const products   = data?.data?.filteredProducts?.products ?? [];
-    const totalCount = data?.data?.filteredProducts?.totalCount ?? 0;
+    const productList = data?.data?.filteredProducts;
+    const products   = productList?.products ?? [];
+    const totalCount = productList?.queryInfo?.totalCount ?? productList?.totalCount ?? 0;
     all.push(...products);
 
     const fetched = page * 25 + products.length;
@@ -178,29 +179,38 @@ function normalize(
   specials: any[],
   matchedBrand: string
 ): Record<string, unknown> {
-  const special = specials.find(s => s.menuItems?.some((i: any) => i.id === product.id));
-  const opts      = product.Options ?? product.options ?? [];
-  const opt0      = opts[0] ?? {};
-  const basePrice = opt0.price ?? product.price ?? 0;
-  const salePrice = special ? (opt0.discountedPrice ?? opt0.specialPrice ?? basePrice) : basePrice;
+  // Price: use recPrices[0] for recreational price
+  const basePrice  = product.recPrices?.[0] ?? product.Prices?.[0] ?? 0;
+  // Sale price: recSpecialPrices[0] if on special
+  const onSale     = product.special === true && (product.recSpecialPrices?.length ?? 0) > 0;
+  const salePrice  = onSale ? (product.recSpecialPrices?.[0] ?? basePrice) : basePrice;
+  // Size: Options array e.g. ["1g", "3.5g"]
+  const sizes      = product.Options ?? product.options ?? [];
+  const size       = sizes.length === 1 ? sizes[0] : (sizes.length > 1 ? sizes.join('/') : null);
+  // THC
+  const thc        = product.THCContent?.range?.[0] ?? null;
+  const cbd        = product.CBDContent?.range?.[0] ?? null;
+  // Stock: check POSMetaData children
+  const child      = product.POSMetaData?.children?.[0];
+  const inStock    = (child?.quantityAvailable ?? child?.quantity ?? 1) > 0;
 
   return {
     dispensary_id:      dispensaryDbId,
     brand_name:         product.brand?.name ?? product.brandName ?? matchedBrand,
     matched_brand:      matchedBrand,
     product_name:       product.Name ?? product.name ?? '',
-    category:           (product.type ?? product.Type ?? '').toLowerCase(),
-    subcategory:        (product.subtype ?? product.Subtype ?? '').toLowerCase(),
-    strain:             product.strain?.name ?? product.Strain ?? null,
-    size:               opt0.unit ?? opt0.weight ?? null,
-    price:              basePrice,
-    sale_price:         salePrice,
-    on_sale:            salePrice < basePrice,
-    thc_percent:        product.potencyThc?.formatted ?? null,
-    cbd_percent:        product.potencyCbd?.formatted ?? null,
-    in_stock:           (product.quantityAvailable ?? 1) > 0,
-    dutchie_product_id: product.id ?? null,
-    image_url:          product.Image ?? product.image ?? null,
+    category:           (product.type ?? '').toLowerCase(),
+    subcategory:        (product.subcategory ?? '').toLowerCase(),
+    strain:             product.strainType ?? null,
+    size,
+    price:              Math.round(basePrice * 100) / 100,
+    sale_price:         Math.round(salePrice * 100) / 100,
+    on_sale:            onSale && salePrice < basePrice,
+    thc_percent:        thc ? `${thc}%` : null,
+    cbd_percent:        cbd ? `${cbd}%` : null,
+    in_stock:           inStock,
+    dutchie_product_id: product.id ?? product._id ?? null,
+    image_url:          product.Image ?? null,
     last_scraped:       new Date().toISOString(),
   };
 }
