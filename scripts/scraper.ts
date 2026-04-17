@@ -62,14 +62,7 @@ async function dutchieQuery(
   hash: string,
   endpoint = DUTCHIE.GRAPHQL_API4
 ): Promise<any> {
-  const body = JSON.stringify({
-    operationName,
-    variables,
-    extensions: { persistedQuery: { version: 1, sha256Hash: hash } },
-  });
-
-  // ScrapingBee POST: api_key + url in query params, JSON body forwarded to target
-  // Spb- prefix headers are stripped and forwarded to target site
+  // ScrapingBee GET: api_key + full dutchie URL in query params
   const sbParams = new URLSearchParams();
   sbParams.set('api_key', process.env.SCRAPINGBEE_API_KEY!);
   sbParams.set('url', endpoint);
@@ -78,22 +71,23 @@ async function dutchieQuery(
   sbParams.set('country_code', 'us');
   sbParams.set('forward_headers', 'true');
 
+  // GET: encode everything in the URL (works for shorter queries)
+  const dutchieUrl = endpoint
+    + '?operationName=' + encodeURIComponent(operationName)
+    + '&variables=' + encodeURIComponent(JSON.stringify(variables))
+    + '&extensions=' + encodeURIComponent(JSON.stringify({ persistedQuery: { version: 1, sha256Hash: hash } }));
+
+  sbParams.set('url', dutchieUrl);
+
   const sbUrl = `https://app.scrapingbee.com/api/v1/?${sbParams.toString()}`;
-  console.log(`[ScrapingBee] ${operationName} → ${endpoint}`);
-  console.log(`[ScrapingBee] body length: ${body.length}`);
+  console.log(`[ScrapingBee] ${operationName} GET → length ${dutchieUrl.length}`);
 
   const res = await fetch(sbUrl, {
-    method: 'POST',
-    headers: {
-      'Spb-Content-Type': 'application/json',
-      'Spb-Accept': 'application/json',
-    },
-    body,
+    headers: { 'Accept': 'application/json' },
   });
 
   const text = await res.text();
-  console.log(`[ScrapingBee] status: ${res.status}, response length: ${text.length}`);
-  console.log(`[ScrapingBee] response preview: ${text.slice(0, 300)}`);
+  console.log(`[ScrapingBee] status: ${res.status}, response: ${text.slice(0, 300)}`);
   if (!res.ok) throw new Error(`Dutchie ${operationName}: ${res.status} — ${text.slice(0, 200)}`);
   try {
     return JSON.parse(text);
@@ -140,20 +134,13 @@ async function fetchAllProducts(dispensaryId: string, endpoint = DUTCHIE.GRAPHQL
         includeEnterpriseSpecials: false,
         productsFilter: {
           dispensaryId,
-          pricingType:                         'rec',
-          strainTypes:                         [],
-          subcategories:                       [],
-          Status:                              'Active',
-          types:                               [],
-          useCache:                            true,
-          isDefaultSort:                       true,
-          sortBy:                              'popular',
-          sortDirection:                       1,
-          bypassOnlineThresholds:              false,
-          isKioskMenu:                         false,
-          removeProductsBelowOptionThresholds: true,
-          platformType:                        'ONLINE_MENU',
-          preOrderType:                        null,
+          pricingType:  'rec',
+          Status:       'Active',
+          useCache:     true,
+          isDefaultSort: true,
+          sortBy:       'popular',
+          sortDirection: 1,
+          platformType: 'ONLINE_MENU',
         },
         page,
         perPage: 25,
