@@ -68,22 +68,21 @@ async function dutchieQuery(
     extensions: { persistedQuery: { version: 1, sha256Hash: hash } },
   });
 
-  // Use ScrapingBee to proxy the request through to bypass Cloudflare
-  // Send as POST with JSON body — avoids URL length limits and encoding issues
+  // ScrapingBee POST: api_key + url in query params, JSON body forwarded to target
+  // Spb- prefix headers are stripped and forwarded to target site
   const sbParams = new URLSearchParams();
   sbParams.set('api_key', process.env.SCRAPINGBEE_API_KEY!);
   sbParams.set('url', endpoint);
   sbParams.set('render_js', 'false');
   sbParams.set('premium_proxy', 'true');
   sbParams.set('country_code', 'us');
-  // Forward the request as POST with JSON body
   sbParams.set('forward_headers', 'true');
 
   const res = await fetch(`https://app.scrapingbee.com/api/v1/?${sbParams.toString()}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      'Spb-Content-Type': 'application/json',
+      'Spb-Accept': 'application/json',
     },
     body,
   });
