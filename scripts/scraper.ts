@@ -62,34 +62,23 @@ async function dutchieQuery(
   hash: string,
   endpoint = DUTCHIE.GRAPHQL_API4
 ): Promise<any> {
-  // ScrapingBee GET: api_key + full dutchie URL in query params
-  const sbParams = new URLSearchParams();
-  sbParams.set('api_key', process.env.SCRAPINGBEE_API_KEY!);
-  sbParams.set('url', endpoint);
-  sbParams.set('render_js', 'false');
-  sbParams.set('premium_proxy', 'true');
-  sbParams.set('country_code', 'us');
-  sbParams.set('forward_headers', 'true');
-
-  // GET: encode everything in the URL (works for shorter queries)
   const dutchieUrl = endpoint
     + '?operationName=' + encodeURIComponent(operationName)
     + '&variables=' + encodeURIComponent(JSON.stringify(variables))
     + '&extensions=' + encodeURIComponent(JSON.stringify({ persistedQuery: { version: 1, sha256Hash: hash } }));
 
+  const sbParams = new URLSearchParams();
+  sbParams.set('api_key', process.env.SCRAPINGBEE_API_KEY!);
   sbParams.set('url', dutchieUrl);
-  sbParams.set('render_js', 'true');  // Needed to pass Cloudflare challenge on Dutchie
-  sbParams.set('block_resources', 'false');
+  sbParams.set('render_js', 'false');
+  sbParams.set('premium_proxy', 'true');
+  sbParams.set('country_code', 'us');
 
-  const sbUrl = `https://app.scrapingbee.com/api/v1/?${sbParams.toString()}`;
-  console.log(`[ScrapingBee] ${operationName} GET → length ${dutchieUrl.length}`);
-
-  const res = await fetch(sbUrl, {
+  const res = await fetch(`https://app.scrapingbee.com/api/v1/?${sbParams.toString()}`, {
     headers: { 'Accept': 'application/json' },
   });
 
   const text = await res.text();
-  console.log(`[ScrapingBee] status: ${res.status}, response: ${text.slice(0, 300)}`);
   if (!res.ok) throw new Error(`Dutchie ${operationName}: ${res.status} — ${text.slice(0, 200)}`);
   try {
     return JSON.parse(text);
