@@ -79,6 +79,7 @@ async function dutchieQuery(
 
   sbParams.set('url', dutchieUrl);
   sbParams.set('render_js', 'true');  // Needed to pass Cloudflare challenge on Dutchie
+  sbParams.set('block_resources', 'false');
 
   const sbUrl = `https://app.scrapingbee.com/api/v1/?${sbParams.toString()}`;
   console.log(`[ScrapingBee] ${operationName} GET → length ${dutchieUrl.length}`);
