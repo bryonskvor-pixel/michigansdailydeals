@@ -67,15 +67,20 @@ async function dutchieQuery(
     + '&variables=' + encodeURIComponent(JSON.stringify(variables))
     + '&extensions=' + encodeURIComponent(JSON.stringify({ persistedQuery: { version: 1, sha256Hash: hash } }));
 
-  const sbParams = new URLSearchParams();
-  sbParams.append('api_key', process.env.SCRAPINGBEE_API_KEY!);
-  sbParams.append('url', dutchieUrl);
-  sbParams.append('render_js', 'false');
-  sbParams.append('premium_proxy', 'true');
-  sbParams.append('country_code', 'us');
-
-  const res = await fetch(`https://app.scrapingbee.com/api/v1/?${sbParams}`, {
-    headers: { 'Accept': 'application/json' },
+  // Use ScrapingBee POST API to avoid URL encoding issues with complex query strings
+  const res = await fetch('https://app.scrapingbee.com/api/v1/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      api_key: process.env.SCRAPINGBEE_API_KEY,
+      url: dutchieUrl,
+      render_js: false,
+      premium_proxy: true,
+      country_code: 'us',
+    }),
   });
 
   const text = await res.text();
