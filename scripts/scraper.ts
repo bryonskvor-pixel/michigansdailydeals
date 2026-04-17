@@ -62,20 +62,30 @@ async function dutchieQuery(
   hash: string,
   endpoint = DUTCHIE.GRAPHQL_API4
 ): Promise<any> {
-  const dutchieUrl = endpoint
-    + '?operationName=' + encodeURIComponent(operationName)
-    + '&variables=' + encodeURIComponent(JSON.stringify(variables))
-    + '&extensions=' + encodeURIComponent(JSON.stringify({ persistedQuery: { version: 1, sha256Hash: hash } }));
+  const body = JSON.stringify({
+    operationName,
+    variables,
+    extensions: { persistedQuery: { version: 1, sha256Hash: hash } },
+  });
 
+  // Use ScrapingBee to proxy the request through to bypass Cloudflare
+  // Send as POST with JSON body — avoids URL length limits and encoding issues
   const sbParams = new URLSearchParams();
   sbParams.set('api_key', process.env.SCRAPINGBEE_API_KEY!);
-  sbParams.set('url', dutchieUrl);
+  sbParams.set('url', endpoint);
   sbParams.set('render_js', 'false');
   sbParams.set('premium_proxy', 'true');
   sbParams.set('country_code', 'us');
+  // Forward the request as POST with JSON body
+  sbParams.set('forward_headers', 'true');
 
   const res = await fetch(`https://app.scrapingbee.com/api/v1/?${sbParams.toString()}`, {
-    headers: { 'Accept': 'application/json' },
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body,
   });
 
   const text = await res.text();
