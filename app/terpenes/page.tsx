@@ -172,8 +172,6 @@ export default function TerpenesPage() {
           .terpene-card-title { font-size: 26px !important; }
           .cta-section { padding: 48px 24px !important; }
           .cta-section h2 { font-size: 26px !important; }
-        }
-        @media (max-width: 768px) {
           .terpene-hero { padding: 32px 20px 32px !important; }
           .terpene-hero h1 { font-size: 28px !important; margin: 0 0 16px !important; }
           .terpene-hero p { font-size: 15px !important; max-width: 100% !important; }
@@ -187,7 +185,7 @@ export default function TerpenesPage() {
         }
       `}</style>
 
-      {/* Header */}
+      {/* Header — v2 unified 6-item nav */}
       <header className="header-outer" style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '24px 48px', borderBottom: '1px solid rgba(181,135,58,0.15)',
@@ -196,16 +194,13 @@ export default function TerpenesPage() {
           <Image src="/photi-emblem.png" alt="Photi" width={40} height={40} />
           <span style={{ color: COLORS.gold, fontSize: '20px', fontWeight: 'bold' }}>MiQuest</span>
         </Link>
-        <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', gap: '22px', alignItems: 'center' }}>
           <Link href="/about" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Who is Photi?</Link>
+          <Link href="/cities" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Cities</Link>
+          <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Dispensaries</Link>
           <Link href="/terpenes" style={{ color: COLORS.gold, fontSize: '15px', textDecoration: 'none', borderBottom: `1px solid ${COLORS.gold}`, paddingBottom: '2px' }}>Terpenes</Link>
           <Link href="/processes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>The Science</Link>
-          <Link href="/deals" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
-          <Link href="/chat" style={{
-            backgroundColor: COLORS.gold, color: COLORS.green,
-            fontSize: '15px', fontWeight: 'bold', padding: '8px 20px',
-            borderRadius: '20px', textDecoration: 'none',
-          }}>Talk to Photi</Link>
+          <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '15px', fontWeight: 'bold', padding: '8px 20px', borderRadius: '20px', textDecoration: 'none' }}>Talk to Photi</Link>
         </nav>
         <button
           className="mobile-menu-btn"
@@ -225,15 +220,11 @@ export default function TerpenesPage() {
         gap: '16px',
       }}>
         <Link href="/about" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</Link>
+        <Link href="/cities" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Cities</Link>
+        <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Dispensaries</Link>
         <Link href="/terpenes" style={{ color: COLORS.gold, fontSize: '16px', textDecoration: 'none' }}>Terpenes</Link>
         <Link href="/processes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
-        <Link href="/deals" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
-        <Link href="/chat" style={{
-          color: COLORS.green, backgroundColor: COLORS.gold,
-          fontSize: '16px', fontWeight: 'bold',
-          padding: '12px 24px', borderRadius: '50px', textDecoration: 'none',
-          textAlign: 'center',
-        }}>Talk to Photi</Link>
+        <Link href="/chat" style={{ color: COLORS.green, backgroundColor: COLORS.gold, fontSize: '16px', fontWeight: 'bold', padding: '12px 24px', borderRadius: '50px', textDecoration: 'none', textAlign: 'center' }}>Talk to Photi</Link>
       </div>
 
       {/* Hero */}
@@ -242,14 +233,7 @@ export default function TerpenesPage() {
           <img
             src="/terpenes/cards/card-bouquet.jpg"
             alt="Terpene Bouquet"
-            style={{
-              width: '260px',
-              height: '260px',
-              borderRadius: '12px',
-              display: 'block',
-              boxShadow: '0 8px 40px rgba(181,135,58,0.4)',
-              objectFit: 'cover',
-            }}
+            style={{ width: '260px', height: '260px', borderRadius: '12px', display: 'block', boxShadow: '0 8px 40px rgba(181,135,58,0.4)', objectFit: 'cover' }}
           />
         </div>
         <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>
@@ -278,17 +262,11 @@ export default function TerpenesPage() {
         backgroundRepeat: 'no-repeat',
         position: 'relative',
       }}>
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundColor: 'rgba(18,44,30,0.45)',
-          pointerEvents: 'none',
-        }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(18,44,30,0.45)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <p style={{ color: COLORS.gold, fontSize: '16px', letterSpacing: '4px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '24px', fontWeight: 'bold', textShadow: '0 2px 12px rgba(181,135,58,0.5)' }}>
             Explore the Library
           </p>
-
-          {/* Responsive card grid — flex wrap works on all screen sizes */}
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', maxWidth: '900px', margin: '0 auto' }}>
             {[
               { name: 'myrcene', img: '/terpenes/cards/card-myrcene.jpg' },
@@ -305,13 +283,7 @@ export default function TerpenesPage() {
             ].map(t => (
               <a key={t.name} href={`#${t.name}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
                 <img src={t.img} alt={t.name}
-                  style={{
-                    width: 'clamp(80px, 12vw, 140px)',
-                    height: 'clamp(120px, 18vw, 210px)',
-                    borderRadius: '6px',
-                    display: 'block',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
-                  }}
+                  style={{ width: 'clamp(80px, 12vw, 140px)', height: 'clamp(120px, 18vw, 210px)', borderRadius: '6px', display: 'block', boxShadow: '0 4px 20px rgba(0,0,0,0.5)', transition: 'transform 0.2s ease' }}
                   onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; }}
                   onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; }}
                 />
@@ -320,13 +292,7 @@ export default function TerpenesPage() {
             {/* Ask Photi card */}
             <a href="/chat" style={{ textDecoration: 'none', flexShrink: 0 }}>
               <img src="/terpenes/cards/card-photi.jpg" alt="Ask Photi"
-                style={{
-                  width: 'clamp(80px, 12vw, 140px)',
-                  height: 'clamp(120px, 18vw, 210px)',
-                  borderRadius: '6px',
-                  display: 'block',
-                  boxShadow: '0 4px 20px rgba(181,135,58,0.4)',
-                }}
+                style={{ width: 'clamp(80px, 12vw, 140px)', height: 'clamp(120px, 18vw, 210px)', borderRadius: '6px', display: 'block', boxShadow: '0 4px 20px rgba(181,135,58,0.4)', transition: 'transform 0.2s ease' }}
                 onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'translateY(-6px)'; }}
                 onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'translateY(0)'; }}
               />
@@ -335,7 +301,7 @@ export default function TerpenesPage() {
         </div>
       </section>
 
-            {/* Intro section — cream */}
+      {/* Intro section */}
       <section style={{ backgroundColor: COLORS.cream, padding: '64px 48px' }}>
         <div style={{ maxWidth: '780px', margin: '0 auto' }}>
           <h2 style={{ color: COLORS.green, fontSize: '30px', fontWeight: 'bold', marginBottom: '20px' }}>
@@ -372,82 +338,31 @@ export default function TerpenesPage() {
                 marginBottom: '24px',
                 overflow: 'hidden',
               }}>
-                {/* Image side */}
-                <div className="terpene-card-img" style={{
-                  width: '280px', minWidth: '280px',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  padding: '32px',
-                }}>
-                  <img
-                    src={t.image}
-                    alt={t.name}
-                    width="200"
-                    height="200"
-                    style={{borderRadius: '50%', display: 'block'}}
-                  />
+                <div className="terpene-card-img" style={{ width: '280px', minWidth: '280px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px' }}>
+                  <img src={t.image} alt={t.name} width="200" height="200" style={{ borderRadius: '50%', display: 'block' }} />
                 </div>
-
-                {/* Content side */}
                 <div className="terpene-card-content" style={{ flex: 1, padding: '36px 36px 36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-
-                  {/* Name + headspace tag */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                    <h2 style={{ color: COLORS.gold, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>
-                      {t.name}
-                    </h2>
-                    <span style={{
-                      backgroundColor: 'rgba(181,135,58,0.12)',
-                      color: COLORS.gold,
-                      fontSize: '12px', letterSpacing: '1px',
-                      padding: '4px 12px', borderRadius: '20px',
-                      border: '1px solid rgba(181,135,58,0.3)',
-                      textTransform: 'uppercase',
-                    }}>
+                    <h2 style={{ color: COLORS.gold, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>{t.name}</h2>
+                    <span style={{ backgroundColor: 'rgba(181,135,58,0.12)', color: COLORS.gold, fontSize: '12px', letterSpacing: '1px', padding: '4px 12px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.3)', textTransform: 'uppercase' }}>
                       {headspaceLabel[t.headspace]?.label}
                     </span>
                   </div>
-
-                  {/* Aroma */}
-                  <p style={{ color: COLORS.sage, fontSize: '15px', fontStyle: 'italic', marginBottom: '16px', lineHeight: '1.6' }}>
-                    {t.aroma}
-                  </p>
-
-                  {/* Found in */}
+                  <p style={{ color: COLORS.sage, fontSize: '15px', fontStyle: 'italic', marginBottom: '16px', lineHeight: '1.6' }}>{t.aroma}</p>
                   <div style={{ marginBottom: '12px' }}>
                     <span style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase' }}>Found in — </span>
                     <span style={{ color: COLORS.sage, fontSize: '14px' }}>{t.foundIn}</span>
                   </div>
-
-                  {/* Tendency */}
-                  <p style={{ color: COLORS.cream, fontSize: '15px', lineHeight: '1.7', marginBottom: '20px', opacity: 0.9 }}>
-                    {t.tendency}
-                  </p>
-
-                  {/* Photi quote */}
-                  <div style={{
-                    borderLeft: `3px solid ${COLORS.gold}`,
-                    paddingLeft: '16px',
-                    marginBottom: '20px',
-                  }}>
-                    <p style={{ color: COLORS.sage, fontSize: '14px', lineHeight: '1.7', margin: 0, fontStyle: 'italic' }}>
-                      &ldquo;{t.quote}&rdquo;
-                    </p>
+                  <p style={{ color: COLORS.cream, fontSize: '15px', lineHeight: '1.7', marginBottom: '20px', opacity: 0.9 }}>{t.tendency}</p>
+                  <div style={{ borderLeft: `3px solid ${COLORS.gold}`, paddingLeft: '16px', marginBottom: '20px' }}>
+                    <p style={{ color: COLORS.sage, fontSize: '14px', lineHeight: '1.7', margin: 0, fontStyle: 'italic' }}>&ldquo;{t.quote}&rdquo;</p>
                   </div>
-
-                  {/* Strains placeholder */}
                   <div>
-                    <p style={{ color: COLORS.gold, fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '8px' }}>
-                      Common Michigan Strains
-                    </p>
+                    <p style={{ color: COLORS.gold, fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '8px' }}>Common Michigan Strains</p>
                     {t.strains.length > 0 ? (
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                         {t.strains.map(s => (
-                          <span key={s} style={{
-                            backgroundColor: 'rgba(181,135,58,0.1)',
-                            color: COLORS.sage, fontSize: '13px',
-                            padding: '4px 12px', borderRadius: '20px',
-                            border: '1px solid rgba(181,135,58,0.2)',
-                          }}>{s}</span>
+                          <span key={s} style={{ backgroundColor: 'rgba(181,135,58,0.1)', color: COLORS.sage, fontSize: '13px', padding: '4px 12px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.2)' }}>{s}</span>
                         ))}
                       </div>
                     ) : (
@@ -467,19 +382,11 @@ export default function TerpenesPage() {
       <section style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', textAlign: 'center' }}>
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
           <Image src="/photi-emblem.png" alt="Photi" width={80} height={80} style={{ marginBottom: '24px' }} />
-          <h2 style={{ color: COLORS.gold, fontSize: '32px', fontWeight: 'bold', marginBottom: '16px' }}>
-            Now that you know the science
-          </h2>
+          <h2 style={{ color: COLORS.gold, fontSize: '32px', fontWeight: 'bold', marginBottom: '16px' }}>Now that you know the science</h2>
           <p style={{ color: COLORS.sage, fontSize: '17px', lineHeight: '1.8', marginBottom: '36px' }}>
-            Talk to Photi and find the right terpene profile for your headspace today.
-            The knowledge is interesting. The right product is the point.
+            Talk to Photi and find the right terpene profile for your headspace today. The knowledge is interesting. The right product is the point.
           </p>
-          <Link href="/chat" style={{
-            backgroundColor: COLORS.gold, color: COLORS.green,
-            fontSize: '18px', fontWeight: 'bold',
-            padding: '16px 48px', borderRadius: '50px',
-            textDecoration: 'none', display: 'inline-block',
-          }}>
+          <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '18px', fontWeight: 'bold', padding: '16px 48px', borderRadius: '50px', textDecoration: 'none', display: 'inline-block' }}>
             Talk to Photi
           </Link>
         </div>
@@ -492,15 +399,10 @@ export default function TerpenesPage() {
             <Image src="/photi-emblem.png" alt="Photi" width={28} height={28} />
             <span style={{ color: COLORS.gold, fontSize: '15px', fontWeight: 'bold' }}>MiQuest presents michigansdailydeals.com</span>
           </div>
-          <p style={{ color: COLORS.sage, fontSize: '12px', opacity: 0.6 }}>
-            Photi powered by MiQuest · hello@michigansdailydeals.com
-          </p>
-          <p style={{ color: COLORS.sage, fontSize: '11px', opacity: 0.4, marginTop: '4px' }}>
-            For adults 21 and older. Please consume responsibly.
-          </p>
+          <p style={{ color: COLORS.sage, fontSize: '12px', opacity: 0.6 }}>Photi powered by MiQuest · hello@michigansdailydeals.com</p>
+          <p style={{ color: COLORS.sage, fontSize: '11px', opacity: 0.4, marginTop: '4px' }}>For adults 21 and older. Please consume responsibly.</p>
         </div>
       </footer>
-
     </main>
   );
 }
