@@ -13,7 +13,19 @@ const COLORS = {
 
 const S = { font: 'Georgia, serif' };
 
-const DISPENSARIES = [
+// SPOTLIGHT DISPENSARY — update weekly
+const SPOTLIGHT = {
+  name: 'Levels Cannabis',
+  tagline: "New Buffalo's straight-shooting dispensary just off I-94.",
+  description: "Levels keeps it focused — quality product, fair prices, and staff that cuts through the noise. Sitting right on Holiday Drive near the interstate, it's the first Michigan dispensary most Chicago visitors see and the one locals keep returning to. If you know what you want and you want to walk out with something excellent, Levels delivers every time.",
+  address: '11430 Holiday Dr, New Buffalo, MI 49117',
+  hours: 'Opens 9 AM daily',
+  phone: '(269) 586-5100',
+  url: 'https://levelsmi.com',
+};
+
+// FEATURED DISPENSARIES — clean card structure, no per-dispensary patches
+const FEATURED_DISPENSARIES = [
   {
     name: 'Bloomery Cannabis',
     address: 'New Buffalo, MI',
@@ -35,12 +47,53 @@ const DISPENSARIES = [
     url: 'https://theflowerbowl.com/',
     note: "The Flower Bowl is a Michigan original with genuine craft knowledge behind it. Premium flower selection, strong concentrate game, and daily deals worth checking. One of the best-stocked menus in the Harbor Country area.",
   },
+];
+
+// FEATURED BRANDS — 4 Michigan makers in a 2x2 grid, each with 4 Look For products
+const FEATURED_BRANDS = [
   {
-    name: 'Levels Cannabis',
-    address: 'New Buffalo, MI',
-    hours: '9am–10pm daily',
-    url: 'https://levelscannabis.com/',
-    note: "Levels keeps it straightforward — good product, fair prices, and a staff that cuts through the noise. If you know what you want and want to get in and out with something excellent, Levels delivers every time.",
+    name: 'Common Citizen',
+    description: "Michigan's flower anchor. A vertically-integrated Marshall-based grower operating one of the Midwest's most advanced greenhouses — 70 acres, 60+ strains, and products organized around four human need states: Daily Dose, Sweet Relief, Time to Shine, and Unplug.",
+    url: 'https://commoncitizen.com',
+    lookFor: [
+      { product: 'Time to Shine Pre-Rolls', category: 'Pre-Roll', note: 'Their uplifting line — the one for a morning hike or a wine trail afternoon.' },
+      { product: 'Unplug Flower', category: 'Flower', note: 'Indica-dominant strains for evening on the beach. The quiet one.' },
+      { product: 'Daily Dose Mini Pre-Rolls', category: 'Pre-Roll', note: 'Microdose singles — perfect for a quick moment before the sunset walk.' },
+      { product: 'Sweet Relief', category: 'Flower', note: 'Their body-focused line. What you reach for after a long day in the sand.' },
+    ],
+  },
+  {
+    name: 'Redbud Roots',
+    description: "Michigan's craft cultivator since 2017. Over 30 products across the full spectrum — flower, pre-rolls, Strain Art illustrated editions, and the hash rosin line that extraction obsessives hunt for.",
+    url: 'https://redbudroots.com',
+    lookFor: [
+      { product: 'Strain Art 10pk Pre-Rolls', category: 'Pre-Roll', note: 'Custom strain illustrations by artist Carla Schierling. 28 strains to collect. Worth keeping the tube.' },
+      { product: 'Fruit Stand Vape Cartridges', category: 'Vape', note: 'Botanical terpene-infused carts. Fruit-forward flavors that actually taste like fruit.' },
+      { product: 'Hash House Gummies', category: 'Edible', note: 'Solventless hash rosin gummies. The edible for people who take their hash seriously.' },
+      { product: 'Michigan OG Pre-Roll', category: 'Pre-Roll', note: 'A 1g infused pre-roll that hits like the name promises.' },
+    ],
+  },
+  {
+    name: 'Pleasanteas',
+    description: "Michigan's THC iced tea, made by Emerald Canning Partners. 10mg of nano-emulsified THC per 16oz can. Fast-acting, summer-ready, and at $4–5 a can, the most budget-friendly cannabis beverage in the state.",
+    url: 'https://emeraldcanningpartners.com/pleasanteas/',
+    lookFor: [
+      { product: 'Raspberry Iced Tea 10mg', category: 'Beverage', note: "The chart-topper. The one everyone reaches for first. Tastes like a real iced tea." },
+      { product: 'Peach Iced Tea 10mg', category: 'Beverage', note: 'The summer favorite. Built for a beach cooler.' },
+      { product: 'Lemon Iced Tea 10mg', category: 'Beverage', note: 'The crisp, clean option. Drinks like an Arnold Palmer — with a different finish.' },
+      { product: 'Raspberry High-Dose 30mg', category: 'Beverage', note: 'The seasoned-user option. Same flavor, triple the effect. Share or save it.' },
+    ],
+  },
+  {
+    name: '710 Labs',
+    description: "Award-winning solventless concentrate artists obsessed with quality. Their water hash and Persy Rosin are the benchmarks serious hash consumers measure everything else against. The connoisseur capstone of any Michigan menu.",
+    url: 'https://710labs.com/michigan',
+    lookFor: [
+      { product: 'Persy Water Hash 1g', category: 'Concentrate', note: "90-micron trichome heads. Old-world ice-and-water extraction, uncompromised. What hash is supposed to be." },
+      { product: 'Persy Rosin Badder 1g', category: 'Concentrate', note: 'The premium rosin — single-origin, single-pressing, cold-cured to badder consistency.' },
+      { product: 'First Press Live Rosin 1g', category: 'Concentrate', note: 'Full-spectrum live rosin from fresh-frozen flower. The entry point to the 710 line.' },
+      { product: 'Live Rosin Vape 1g', category: 'Vape', note: 'True solventless rosin in a cart. No distillate, no cuts. The discreet version of the dab.' },
+    ],
   },
 ];
 
@@ -125,16 +178,6 @@ const EXPLORE = [
   },
 ];
 
-// Weekly spotlight — update manually each week
-const SPOTLIGHT = {
-  name: 'Coming Soon',
-  tagline: 'New Buffalo has hidden gems worth finding.',
-  description: "We're curating this week's spotlight — a local business in New Buffalo that deserves your attention. Check back soon, or talk to Photi for personalized recommendations right now.",
-  address: 'New Buffalo, MI',
-  url: '',
-  weekOf: "This Week's Spotlight",
-};
-
 export default function NewBuffaloPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [weather, setWeather] = useState<{ temp: string; condition: string; icon: string } | null>(null);
@@ -168,6 +211,7 @@ export default function NewBuffaloPage() {
           .card-grid { grid-template-columns: 1fr !important; }
           .hero-image { height: 220px !important; border-radius: 12px !important; }
           .section-patch { width: 100px !important; height: 100px !important; }
+          .brand-card { padding: 24px !important; }
         }
         @media (min-width: 769px) {
           .mobile-menu-btn { display: none !important; }
@@ -204,8 +248,6 @@ export default function NewBuffaloPage() {
 
       {/* Hero */}
       <section className="page-hero" style={{ padding: '64px 48px 48px', textAlign: 'center' }}>
-
-        {/* Hero panoramic image */}
         <div style={{ maxWidth: '900px', margin: '0 auto 36px', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 12px 60px rgba(181,135,58,0.25)' }}>
           <img
             className="hero-image"
@@ -223,7 +265,6 @@ export default function NewBuffaloPage() {
           70 miles from Chicago. Lake Michigan sunsets. Sandy dunes, a working harbor, and Michigan&apos;s cannabis market right at the border. The weekend trip that becomes an annual tradition.
         </p>
 
-        {/* Weather */}
         {weather && (
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', backgroundColor: 'rgba(181,135,58,0.1)', border: '1px solid rgba(181,135,58,0.25)', borderRadius: '50px', padding: '8px 20px', marginBottom: '32px' }}>
             <span style={{ fontSize: '18px' }}>{weather.icon}</span>
@@ -235,35 +276,66 @@ export default function NewBuffaloPage() {
           <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none' }}>
             Talk to Photi — Plan Your Day
           </Link>
-          <a href="#dispensaries" style={{ backgroundColor: 'transparent', color: COLORS.gold, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none', border: '2px solid rgba(181,135,58,0.5)' }}>
+          <a href="#spotlight" style={{ backgroundColor: 'transparent', color: COLORS.gold, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none', border: '2px solid rgba(181,135,58,0.5)' }}>
             See the Dispensaries
           </a>
         </div>
       </section>
 
-      {/* Weekly Spotlight */}
-      <section style={{ backgroundColor: COLORS.darkGreen, padding: '48px 48px' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px', textAlign: 'center' }}>{SPOTLIGHT.weekOf}</p>
-          <div style={{ backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.25)', borderRadius: '12px', padding: '32px 36px' }}>
-            <h3 style={{ color: COLORS.gold, fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>{SPOTLIGHT.name}</h3>
-            <p style={{ color: COLORS.cream, fontSize: '15px', fontStyle: 'italic', marginBottom: '12px', opacity: 0.85 }}>{SPOTLIGHT.tagline}</p>
-            <p style={{ color: COLORS.sage, fontSize: '15px', lineHeight: '1.75', marginBottom: '16px' }}>{SPOTLIGHT.description}</p>
-            <p style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.7 }}>{SPOTLIGHT.address}</p>
+      {/* SECTION 1: This Week's Spotlight Dispensary */}
+      <section id="spotlight" className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', scrollMarginTop: '80px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/spotlight.png"
+              alt="Spotlight patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', boxShadow: '0 4px 24px rgba(181,135,58,0.4)', marginBottom: '16px' }}
+            />
+            <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px', textAlign: 'center' }}>This Week&apos;s Spotlight Dispensary</p>
+            <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', margin: 0, textAlign: 'center' }}>Featured Pick of the Week</h2>
+          </div>
+
+          <div style={{ backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.3)', borderRadius: '14px', padding: '36px 40px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', gap: '16px', flexWrap: 'wrap' }}>
+              <h3 style={{ color: COLORS.gold, fontSize: '28px', fontWeight: 'bold', margin: 0 }}>{SPOTLIGHT.name}</h3>
+              <span style={{ backgroundColor: 'rgba(181,135,58,0.15)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 12px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.4)', whiteSpace: 'nowrap' }}>Spotlight</span>
+            </div>
+            <p style={{ color: COLORS.cream, fontSize: '16px', fontStyle: 'italic', marginBottom: '18px', opacity: 0.9 }}>{SPOTLIGHT.tagline}</p>
+            <p style={{ color: COLORS.sage, fontSize: '15px', lineHeight: '1.75', marginBottom: '22px' }}>{SPOTLIGHT.description}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', marginBottom: '24px', paddingBottom: '24px', borderBottom: '1px solid rgba(181,135,58,0.15)' }}>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>📍 {SPOTLIGHT.address}</span>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>🕘 {SPOTLIGHT.hours}</span>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>📞 {SPOTLIGHT.phone}</span>
+            </div>
+            <a href={SPOTLIGHT.url} target="_blank" rel="noopener noreferrer"
+              style={{ display: 'inline-block', backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '15px', fontWeight: 'bold', padding: '12px 32px', borderRadius: '50px', textDecoration: 'none' }}>
+              See the Menu →
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Dispensaries */}
+      {/* SECTION 2: Featured Dispensaries */}
       <section id="dispensaries" className="content-section" style={{ backgroundColor: COLORS.cream, padding: '64px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px' }}>Harbor Country Cannabis</p>
-          <h2 style={{ color: COLORS.green, fontSize: '34px', fontWeight: 'bold', marginBottom: '12px' }}>Where to Shop</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/dispensary.png"
+              alt="Dispensary patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.25)' }}
+            />
+            <div>
+              <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>Harbor Country Cannabis</p>
+              <h2 style={{ color: COLORS.green, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>Featured Dispensaries</h2>
+            </div>
+          </div>
           <p style={{ color: COLORS.text, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '680px' }}>
             New Buffalo sits at the gateway of Michigan&apos;s cannabis market. These are the dispensaries worth knowing — and what makes each one different.
           </p>
           <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '36px' }}>
-            {DISPENSARIES.map((d) => (
+            {FEATURED_DISPENSARIES.map((d) => (
               <div key={d.name} style={{ backgroundColor: 'white', borderRadius: '10px', padding: '24px', border: `2px solid rgba(181,135,58,0.3)`, boxShadow: '0 2px 16px rgba(181,135,58,0.1)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                   <h3 style={{ color: COLORS.green, fontSize: '18px', fontWeight: 'bold', margin: 0 }}>{d.name}</h3>
@@ -293,6 +365,52 @@ export default function NewBuffaloPage() {
             <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '16px', fontWeight: 'bold', padding: '12px 32px', borderRadius: '50px', textDecoration: 'none', display: 'inline-block' }}>
               Ask Photi
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3: Featured Brands (Makers) */}
+      <section id="brands" className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', scrollMarginTop: '80px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/makers.png"
+              alt="Makers patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 24px rgba(181,135,58,0.4)' }}
+            />
+            <div>
+              <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>This Week&apos;s Brands</p>
+              <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>Featured Makers</h2>
+            </div>
+          </div>
+          <p style={{ color: COLORS.sage, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '720px' }}>
+            Every great dispensary is only as good as what they stock. These are four Michigan makers whose products deserve a place on your list this week — growers, processors, and craft producers worth asking for by name.
+          </p>
+          <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+            {FEATURED_BRANDS.map((b) => (
+              <div key={b.name} className="brand-card" style={{ backgroundColor: 'rgba(181,135,58,0.07)', borderRadius: '12px', padding: '28px', border: '1px solid rgba(181,135,58,0.25)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px', gap: '8px' }}>
+                  <h3 style={{ color: COLORS.gold, fontSize: '22px', fontWeight: 'bold', margin: 0 }}>{b.name}</h3>
+                  <span style={{ backgroundColor: 'rgba(181,135,58,0.15)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.35)', whiteSpace: 'nowrap' }}>Featured</span>
+                </div>
+                <p style={{ color: COLORS.sage, fontSize: '14px', lineHeight: '1.75', marginBottom: '20px' }}>{b.description}</p>
+
+                <p style={{ color: COLORS.gold, fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px', opacity: 0.85 }}>Look For</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+                  {b.lookFor.map((p) => (
+                    <div key={p.product} style={{ borderLeft: `2px solid ${COLORS.gold}`, paddingLeft: '14px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px', marginBottom: '3px' }}>
+                        <span style={{ color: COLORS.cream, fontSize: '14px', fontWeight: 'bold' }}>{p.product}</span>
+                        <span style={{ color: COLORS.sage, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', opacity: 0.7, whiteSpace: 'nowrap' }}>{p.category}</span>
+                      </div>
+                      <p style={{ color: COLORS.sage, fontSize: '13px', lineHeight: '1.6', margin: 0, opacity: 0.85 }}>{p.note}</p>
+                    </div>
+                  ))}
+                </div>
+                {b.url && <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.gold, fontSize: '13px', fontWeight: 'bold', textDecoration: 'none' }}>Visit {b.name} →</a>}
+              </div>
+            ))}
           </div>
         </div>
       </section>
