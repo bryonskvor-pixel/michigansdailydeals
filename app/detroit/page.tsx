@@ -13,7 +13,19 @@ const COLORS = {
 
 const S = { font: 'Georgia, serif' };
 
-const DISPENSARIES = [
+// SPOTLIGHT DISPENSARY — update weekly
+const SPOTLIGHT = {
+  name: 'High Club Cannabis',
+  tagline: "Detroit's premium experience on Wyoming Ave — 4.9 stars and 2,700+ reviews don't lie.",
+  description: "High Club brings an elevated experience to the Detroit market — curated selection, presentation that respects the product, and staff that actually take the conversation seriously. With nearly 3,000 customer reviews averaging 4.9 stars, High Club is the rare dispensary where the consensus is as loud as the claim. For the Detroit consumer who wants more than a transaction.",
+  address: '14325 Wyoming Ave, Detroit, MI',
+  hours: 'Open until 10 PM',
+  phone: '(313) 397-2738',
+  url: 'https://highclubcannabis.com/',
+};
+
+// FEATURED DISPENSARIES — 3 remaining after High Club promoted to Spotlight
+const FEATURED_DISPENSARIES = [
   {
     name: 'Simply Loud',
     address: 'Detroit, MI',
@@ -29,32 +41,59 @@ const DISPENSARIES = [
     note: "Green Genie has been part of Detroit's cannabis story since early days. Deep roots, strong menu, and the institutional knowledge that comes from years in a competitive market. A Detroit original worth knowing.",
   },
   {
-    name: 'High Club Cannabis',
-    address: 'Detroit, MI',
-    hours: '9am–10pm daily',
-    url: 'https://highclubcannabis.com/',
-    note: "High Club brings a premium experience to the Detroit market — elevated presentation, curated selection, and a staff that takes the conversation seriously. For the consumer who wants more than a transaction.",
-  },
-  {
     name: 'Leaf & Bud',
     address: 'Detroit, MI',
     hours: '9am–10pm daily',
     url: 'https://leafandbud.com/',
     note: "Leaf & Bud keeps it focused — quality product, fair prices, and a no-nonsense approach that Detroit appreciates. The menu leans into craft producers and the staff actually knows why. Worth having on your list.",
   },
+];
+
+// FEATURED BRANDS — 4 Michigan makers tuned to Detroit's sophisticated concentrate-forward market
+const FEATURED_BRANDS = [
   {
-    name: 'Cloud Cannabis',
-    address: 'Detroit, MI',
-    hours: '9am–10pm daily',
-    url: 'https://cloudcannabis.com/',
-    note: "Cloud Cannabis has built a strong Michigan reputation for consistency and range. Multiple locations, reliable quality, and daily deals that make the value real. One of the state's most dependable dispensary experiences.",
+    name: 'Cannalicious',
+    description: "Michigan-born concentrate legend. Partnered with Trinity Cannabis for small-batch craft cultivation, Cannalicious has won Zalympix honors for their live rosin and built a statewide reputation that serious dabbers measure everything else against. A Detroit shelf anchor.",
+    url: 'https://cannaliciouslabs.com',
+    lookFor: [
+      { product: 'Live Rosin 1g', category: 'Concentrate', note: 'Solventless, fresh-frozen, trichome-isolated. What rosin is supposed to taste like.' },
+      { product: 'RSO Syringe', category: 'Concentrate', note: 'Broad-spectrum full-plant extract. Medicinal, potent, and the benchmark RSO in Michigan.' },
+      { product: 'Live Resin Gummies', category: 'Edible', note: 'Nano-tech encapsulated full-spectrum oil. The edible that actually tastes like the plant it came from.' },
+      { product: 'Live Rosin Disposable', category: 'Vape', note: 'Their solventless extract in a disposable. All the flavor, none of the setup.' },
+    ],
   },
   {
-    name: 'Jars Cannabis',
-    address: 'Detroit, MI',
-    hours: '9am–10pm daily',
-    url: 'https://jarscannabis.com/',
-    note: "Jars is one of Michigan's most recognized cannabis brands — and for good reason. Extensive menu, competitive pricing, and locations across the state that deliver a consistent experience. If you want range and reliability, Jars delivers.",
+    name: '710 Labs',
+    description: "The national benchmark for solventless concentrate. Their water hash and Persy Rosin are what serious connoisseurs measure everything else against. In Detroit, they earn the premium shelf slot not by marketing — by product.",
+    url: 'https://710labs.com/michigan',
+    lookFor: [
+      { product: 'Persy Water Hash 1g', category: 'Concentrate', note: "90-micron trichome heads, ice-and-water only. Old-world hash perfection." },
+      { product: 'Persy Rosin Badder 1g', category: 'Concentrate', note: 'Single-origin, single-pressing, cold-cured. The top of the rosin pyramid.' },
+      { product: 'First Press Live Rosin 1g', category: 'Concentrate', note: 'Full-spectrum live rosin from fresh-frozen flower. Entry point to the 710 experience.' },
+      { product: 'Live Rosin Vape 1g', category: 'Vape', note: 'True solventless rosin in a cart. The discreet version of the dab.' },
+    ],
+  },
+  {
+    name: 'Element',
+    description: "Michigan-made, no-compromise live concentrate. Element runs zero distillate, zero botanical terpenes, zero additives — 100% live concentrate sourced from Michigan's finest cultivators. Detroit's quiet favorite among purists, and the live rosin disposable that reviewers call the best in the state.",
+    url: 'https://elementextractions.com',
+    lookFor: [
+      { product: 'Pure Live Resin Cart 0.5g', category: 'Vape', note: "100% live concentrate — no distillate, no additives, no botanical cuts." },
+      { product: 'Live Rosin Disposable 0.5g', category: 'Vape', note: 'The best live rosin disposable in Michigan according to reviewers who tried them all.' },
+      { product: 'Live Infused Joint', category: 'Pre-Roll', note: 'Award-winning. 50% top-shelf flower, 50% live concentrate, 40%+ total THC.' },
+      { product: 'Live THCA 1g', category: 'Concentrate', note: 'Isolated from their live resin, fine crystalline, mid-to-high 90s THCA. The purist option.' },
+    ],
+  },
+  {
+    name: "Mary's Medicinals",
+    description: "Award-winning transdermal patches, tinctures, and topicals — the brand that brought precision-dose cannabis delivery to the category. Their Relief 1:1 patch won the 2023 Michigan High Times Cup. The wellness anchor for Detroit's most discerning buyer.",
+    url: 'https://marysmedicinals.com',
+    lookFor: [
+      { product: 'Relief 1:1 Transdermal Patch', category: 'Topical', note: '2023 Michigan High Times Cup winner. 8–12 hour systemic relief, discreet, cuttable for microdosing.' },
+      { product: 'Indica Transdermal Patch', category: 'Topical', note: 'Evening relaxation in a patch. For chronic discomfort or sleep support.' },
+      { product: 'CBN Transdermal Patch', category: 'Topical', note: 'Sleep-focused cannabinoid delivered gradually through the night.' },
+      { product: 'THC Tincture', category: 'Tincture', note: 'Full-spectrum, lemon-lime flavor, precise sublingual dosing. The calm-and-measured option.' },
+    ],
   },
 ];
 
@@ -174,16 +213,6 @@ const SPORTS = [
   { name: 'Detroit Pistons', venue: 'Little Caesars Arena', note: "NBA basketball sharing Little Caesars Arena with the Wings. The Bad Boys legacy lives here. Check the schedule — a Pistons game is a good time and tickets are accessible.", url: 'https://www.nba.com/pistons' },
 ];
 
-// Weekly spotlight — update manually each week
-const SPOTLIGHT = {
-  name: 'Coming Soon',
-  tagline: "Detroit has more hidden gems than any city in Michigan.",
-  description: "We're curating this week's Detroit spotlight — a local business, restaurant, or experience that deserves your attention. Check back soon, or talk to Photi for personalized recommendations right now.",
-  address: 'Detroit, MI',
-  url: '',
-  weekOf: "This Week's Spotlight",
-};
-
 export default function DetroitPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [weather, setWeather] = useState<{ temp: string; condition: string; icon: string } | null>(null);
@@ -219,6 +248,7 @@ export default function DetroitPage() {
           .section-patch { width: 100px !important; height: 100px !important; }
           .neighborhood-grid { grid-template-columns: 1fr !important; }
           .sports-grid { grid-template-columns: 1fr !important; }
+          .brand-card { padding: 24px !important; }
         }
         @media (min-width: 769px) {
           .mobile-menu-btn { display: none !important; }
@@ -226,17 +256,17 @@ export default function DetroitPage() {
         }
       `}</style>
 
-      {/* Header */}
+      {/* Header — v2 unified nav */}
       <header className="header-outer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '24px 48px', borderBottom: '1px solid rgba(181,135,58,0.15)' }}>
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
           <img src="/photi-emblem.png" alt="Photi" width={40} height={40} style={{ borderRadius: '50%' }} />
           <span style={{ color: COLORS.gold, fontSize: '20px', fontWeight: 'bold' }}>MiQuest</span>
         </Link>
-        <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', gap: '28px', alignItems: 'center' }}>
           <Link href="/about" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Who is Photi?</Link>
+          <Link href="/cities" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Cities</Link>
+          <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Dispensaries</Link>
           <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Terpenes</Link>
-          <Link href="/processes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>The Science</Link>
-          <Link href="/deals" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
           <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '15px', fontWeight: 'bold', padding: '8px 20px', borderRadius: '20px', textDecoration: 'none' }}>Talk to Photi</Link>
         </nav>
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}
@@ -247,9 +277,9 @@ export default function DetroitPage() {
 
       <div className="mobile-menu" style={{ display: 'none', flexDirection: 'column', backgroundColor: COLORS.darkGreen, padding: '16px 24px 24px', borderBottom: '1px solid rgba(181,135,58,0.2)', gap: '16px' }}>
         <Link href="/about" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</Link>
+        <Link href="/cities" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Cities</Link>
+        <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Dispensaries</Link>
         <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Terpenes</Link>
-        <Link href="/processes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
-        <Link href="/deals" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
         <Link href="/chat" style={{ color: COLORS.green, backgroundColor: COLORS.gold, fontSize: '16px', fontWeight: 'bold', padding: '12px 24px', borderRadius: '50px', textDecoration: 'none', textAlign: 'center' }}>Talk to Photi</Link>
       </div>
 
@@ -283,54 +313,66 @@ export default function DetroitPage() {
           <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none' }}>
             Talk to Photi — Plan Your Day
           </Link>
-          <a href="#dispensaries" style={{ backgroundColor: 'transparent', color: COLORS.gold, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none', border: '2px solid rgba(181,135,58,0.5)' }}>
+          <a href="#spotlight" style={{ backgroundColor: 'transparent', color: COLORS.gold, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none', border: '2px solid rgba(181,135,58,0.5)' }}>
             See the Dispensaries
           </a>
         </div>
       </section>
 
-      {/* Neighborhoods */}
-      <section style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>Know the City</p>
-          <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', marginBottom: '12px', textAlign: 'center' }}>Detroit by Neighborhood</h2>
-          <p style={{ color: COLORS.sage, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '620px', margin: '0 auto 36px', textAlign: 'center' }}>
-            Detroit is a collection of distinct neighborhoods each with their own energy. Here&apos;s how to orient yourself.
-          </p>
-          <div className="neighborhood-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
-            {NEIGHBORHOODS.map((n) => (
-              <div key={n.name} style={{ backgroundColor: 'rgba(181,135,58,0.07)', borderRadius: '10px', padding: '24px', border: '1px solid rgba(181,135,58,0.2)' }}>
-                <h3 style={{ color: COLORS.gold, fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>{n.name}</h3>
-                <p style={{ color: COLORS.sage, fontSize: '14px', lineHeight: '1.75', margin: 0 }}>{n.desc}</p>
-              </div>
-            ))}
+      {/* SECTION 1: This Week's Spotlight Dispensary */}
+      <section id="spotlight" className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', scrollMarginTop: '80px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/spotlight.png"
+              alt="Spotlight patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', boxShadow: '0 4px 24px rgba(181,135,58,0.4)', marginBottom: '16px' }}
+            />
+            <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px', textAlign: 'center' }}>This Week&apos;s Spotlight Dispensary</p>
+            <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', margin: 0, textAlign: 'center' }}>Featured Pick of the Week</h2>
+          </div>
+
+          <div style={{ backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.3)', borderRadius: '14px', padding: '36px 40px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', gap: '16px', flexWrap: 'wrap' }}>
+              <h3 style={{ color: COLORS.gold, fontSize: '28px', fontWeight: 'bold', margin: 0 }}>{SPOTLIGHT.name}</h3>
+              <span style={{ backgroundColor: 'rgba(181,135,58,0.15)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 12px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.4)', whiteSpace: 'nowrap' }}>Spotlight</span>
+            </div>
+            <p style={{ color: COLORS.cream, fontSize: '16px', fontStyle: 'italic', marginBottom: '18px', opacity: 0.9 }}>{SPOTLIGHT.tagline}</p>
+            <p style={{ color: COLORS.sage, fontSize: '15px', lineHeight: '1.75', marginBottom: '22px' }}>{SPOTLIGHT.description}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', marginBottom: '24px', paddingBottom: '24px', borderBottom: '1px solid rgba(181,135,58,0.15)' }}>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>📍 {SPOTLIGHT.address}</span>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>🕘 {SPOTLIGHT.hours}</span>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>📞 {SPOTLIGHT.phone}</span>
+            </div>
+            <a href={SPOTLIGHT.url} target="_blank" rel="noopener noreferrer"
+              style={{ display: 'inline-block', backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '15px', fontWeight: 'bold', padding: '12px 32px', borderRadius: '50px', textDecoration: 'none' }}>
+              See the Menu →
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Weekly Spotlight */}
-      <section style={{ backgroundColor: COLORS.green, padding: '48px 48px' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px', textAlign: 'center' }}>{SPOTLIGHT.weekOf}</p>
-          <div style={{ backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.25)', borderRadius: '12px', padding: '32px 36px' }}>
-            <h3 style={{ color: COLORS.gold, fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>{SPOTLIGHT.name}</h3>
-            <p style={{ color: COLORS.cream, fontSize: '15px', fontStyle: 'italic', marginBottom: '12px', opacity: 0.85 }}>{SPOTLIGHT.tagline}</p>
-            <p style={{ color: COLORS.sage, fontSize: '15px', lineHeight: '1.75', marginBottom: '16px' }}>{SPOTLIGHT.description}</p>
-            <p style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.7 }}>{SPOTLIGHT.address}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Dispensaries */}
+      {/* SECTION 2: Featured Dispensaries */}
       <section id="dispensaries" className="content-section" style={{ backgroundColor: COLORS.cream, padding: '64px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px' }}>Detroit Cannabis</p>
-          <h2 style={{ color: COLORS.green, fontSize: '34px', fontWeight: 'bold', marginBottom: '12px' }}>Where to Shop</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/dispensary.png"
+              alt="Dispensary patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.25)' }}
+            />
+            <div>
+              <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>Detroit Cannabis</p>
+              <h2 style={{ color: COLORS.green, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>Featured Dispensaries</h2>
+            </div>
+          </div>
           <p style={{ color: COLORS.text, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '680px' }}>
-            Detroit has one of Michigan&apos;s most competitive cannabis markets. These six dispensaries represent the range and quality the city has to offer.
+            Detroit has one of Michigan&apos;s most competitive cannabis markets. These dispensaries represent the range and quality the city has to offer.
           </p>
           <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '36px' }}>
-            {DISPENSARIES.map((d) => (
+            {FEATURED_DISPENSARIES.map((d) => (
               <div key={d.name} style={{ backgroundColor: 'white', borderRadius: '10px', padding: '24px', border: `2px solid rgba(181,135,58,0.3)`, boxShadow: '0 2px 16px rgba(181,135,58,0.1)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                   <h3 style={{ color: COLORS.green, fontSize: '18px', fontWeight: 'bold', margin: 0 }}>{d.name}</h3>
@@ -345,7 +387,10 @@ export default function DetroitPage() {
             ))}
           </div>
           <p style={{ color: COLORS.text, fontSize: '14px', fontStyle: 'italic', opacity: 0.7, textAlign: 'center', marginBottom: '24px' }}>
-            Detroit has many more dispensaries across its neighborhoods. Soon Photi will be connecting you to the best products across the city that suit you.
+            Detroit has many more dispensaries across its neighborhoods.{' '}
+            <Link href="/dispensaries/detroit" style={{ color: COLORS.green, fontWeight: 'bold', textDecoration: 'none', borderBottom: `1px solid ${COLORS.gold}` }}>
+              See the full Detroit dispensary directory →
+            </Link>
           </p>
           <div style={{ textAlign: 'center', padding: '28px', backgroundColor: 'rgba(30,77,53,0.05)', borderRadius: '12px', border: '1px solid rgba(30,77,53,0.1)' }}>
             <p style={{ color: COLORS.green, fontSize: '16px', marginBottom: '8px' }}>
@@ -364,8 +409,73 @@ export default function DetroitPage() {
         </div>
       </section>
 
-      {/* Music — its own section */}
-      <section id="music" className="content-section" style={{ padding: '64px 48px', scrollMarginTop: '80px' }}>
+      {/* SECTION 3: Featured Brands (Makers) */}
+      <section id="brands" className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', scrollMarginTop: '80px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/makers.png"
+              alt="Makers patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 24px rgba(181,135,58,0.4)' }}
+            />
+            <div>
+              <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>This Week&apos;s Brands</p>
+              <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>Featured Makers</h2>
+            </div>
+          </div>
+          <p style={{ color: COLORS.sage, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '720px' }}>
+            Detroit has the most sophisticated cannabis buyer in Michigan — and the brand shelf reflects it. These are four Michigan makers whose products deserve a place on your list this week. Craft concentrate at the top, precision wellness at the side, and the live-only purists in between.
+          </p>
+          <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+            {FEATURED_BRANDS.map((b) => (
+              <div key={b.name} className="brand-card" style={{ backgroundColor: 'rgba(181,135,58,0.07)', borderRadius: '12px', padding: '28px', border: '1px solid rgba(181,135,58,0.25)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px', gap: '8px' }}>
+                  <h3 style={{ color: COLORS.gold, fontSize: '22px', fontWeight: 'bold', margin: 0 }}>{b.name}</h3>
+                  <span style={{ backgroundColor: 'rgba(181,135,58,0.15)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.35)', whiteSpace: 'nowrap' }}>Featured</span>
+                </div>
+                <p style={{ color: COLORS.sage, fontSize: '14px', lineHeight: '1.75', marginBottom: '20px' }}>{b.description}</p>
+
+                <p style={{ color: COLORS.gold, fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px', opacity: 0.85 }}>Look For</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+                  {b.lookFor.map((p) => (
+                    <div key={p.product} style={{ borderLeft: `2px solid ${COLORS.gold}`, paddingLeft: '14px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px', marginBottom: '3px' }}>
+                        <span style={{ color: COLORS.cream, fontSize: '14px', fontWeight: 'bold' }}>{p.product}</span>
+                        <span style={{ color: COLORS.sage, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', opacity: 0.7, whiteSpace: 'nowrap' }}>{p.category}</span>
+                      </div>
+                      <p style={{ color: COLORS.sage, fontSize: '13px', lineHeight: '1.6', margin: 0, opacity: 0.85 }}>{p.note}</p>
+                    </div>
+                  ))}
+                </div>
+                {b.url && <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.gold, fontSize: '13px', fontWeight: 'bold', textDecoration: 'none' }}>Visit {b.name} →</a>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Neighborhoods */}
+      <section style={{ backgroundColor: COLORS.green, padding: '64px 48px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>Know the City</p>
+          <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', marginBottom: '12px', textAlign: 'center' }}>Detroit by Neighborhood</h2>
+          <p style={{ color: COLORS.sage, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '620px', margin: '0 auto 36px', textAlign: 'center' }}>
+            Detroit is a collection of distinct neighborhoods each with their own energy. Here&apos;s how to orient yourself.
+          </p>
+          <div className="neighborhood-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+            {NEIGHBORHOODS.map((n) => (
+              <div key={n.name} style={{ backgroundColor: 'rgba(181,135,58,0.07)', borderRadius: '10px', padding: '24px', border: '1px solid rgba(181,135,58,0.2)' }}>
+                <h3 style={{ color: COLORS.gold, fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>{n.name}</h3>
+                <p style={{ color: COLORS.sage, fontSize: '14px', lineHeight: '1.75', margin: 0 }}>{n.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Music */}
+      <section id="music" className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '16px' }}>
             <img
@@ -393,7 +503,6 @@ export default function DetroitPage() {
             ))}
           </div>
 
-          {/* Third Man callout */}
           <div style={{ marginTop: '32px', backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.3)', borderRadius: '12px', padding: '28px 32px' }}>
             <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '10px' }}>Photi&apos;s Pick</p>
             <p style={{ color: COLORS.cream, fontSize: '17px', lineHeight: '1.8', margin: 0 }}>
@@ -431,7 +540,7 @@ export default function DetroitPage() {
       </section>
 
       {/* Explore */}
-      <section id="explore" className="content-section" style={{ padding: '64px 48px', scrollMarginTop: '80px' }}>
+      <section id="explore" className="content-section" style={{ backgroundColor: COLORS.green, padding: '64px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
             <img
@@ -493,7 +602,7 @@ export default function DetroitPage() {
       </section>
 
       {/* Coffee */}
-      <section className="content-section" style={{ padding: '64px 48px' }}>
+      <section className="content-section" style={{ backgroundColor: COLORS.green, padding: '64px 48px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
             <img
