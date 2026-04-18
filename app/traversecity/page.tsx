@@ -13,34 +13,87 @@ const COLORS = {
 
 const S = { font: 'Georgia, serif' };
 
-const DISPENSARIES = [
+// SPOTLIGHT — Lume Cannabis Co.
+const SPOTLIGHT = {
+  name: 'Lume Cannabis Co.',
+  tagline: "Michigan's largest homegrown cannabis company — and Traverse City's premium experience from seed to shelf.",
+  description: "Lume is vertically integrated, which is a fancy way of saying they grow, process, and sell their own cannabis — and it shows in the consistency. Their Traverse City downtown location on West Front Street is 5.0 stars across 390+ reviews. The Munson Avenue location, close to Cherry Capital Airport, makes it easy for visitors to stop before heading north. Their Gold Label Live Rosin line is among the best solventless you'll find anywhere in the state, and their proprietary Jenny Kush strain regularly tests above 30% THC. The upscale, educational atmosphere fits Traverse City perfectly.",
+  address: '401 W Front St, Traverse City, MI 49684 · Second location on Munson Ave',
+  hours: '9am–9pm daily · Sunday 10am–8pm',
+  phone: '(231) 221-0048',
+  url: 'https://www.lume.com/stores/lume-traverse-city-dispensary',
+};
+
+// FEATURED DISPENSARIES — the 3 you specified, each representing a different TC customer
+const FEATURED_DISPENSARIES = [
   {
-    name: 'Lume Cannabis Co.',
-    address: 'Traverse City, MI',
-    hours: '9am–10pm daily',
-    url: 'https://lume.com/',
-    note: "Michigan's largest homegrown cannabis company controls their supply chain from seed to sale — which shows in the consistency. Multiple TC-area locations, extensive menu, and the kind of reliability you want when you're visiting from out of town.",
+    name: 'Olswell Cannabis Co.',
+    address: '728 E Front St, Traverse City',
+    hours: '10am–9pm daily',
+    url: 'https://olswell.com/stores/traverse-city/',
+    note: "Olswell is downtown TC's luxury cannabis boutique — a short walk from the Delamar and Hotel Indigo, steps from Grand Traverse Bay and the Boardman River. They specialize in connoisseur-grade products like RKIVE Reserve, The Limit, and PLAY. As they put it themselves: they don't sell mids. Hand-selected for the TC palate. Award-winning daily deals include $20 ounces and $20 rosin/5G.",
   },
   {
-    name: 'Enjoy Cannabis Company',
-    address: 'Traverse City, MI',
-    hours: '9am–10pm daily',
-    url: 'https://enjoycannabis.com/',
-    note: "Enjoy has built a genuine following in Northern Michigan for a thoughtfully curated menu and staff that knows the difference between a live rosin and a distillate cart. The kind of dispensary that makes first-time Michigan visitors into repeat customers.",
+    name: 'Boss Leaf Cannabis Co.',
+    address: '314 Munson Ave, Traverse City',
+    hours: '8am–10pm daily',
+    url: 'https://www.bossleaftc.com/',
+    note: "Boss Leaf runs a deli-style menu concept — the customer is treated as the boss of their own cannabis experience. Exclusive, flavor-forward flower marketed as the 'Purest Flower' on the market. Open at 8am, which means they catch the Traverse City early-riser crowd before the wine trail opens. A strong flower-forward complement to the concentrate-heavy Olswell.",
   },
   {
-    name: 'Pleasantrees',
-    address: 'Traverse City, MI',
-    hours: '9am–10pm daily',
-    url: 'https://pleasantrees.com/',
-    note: "Pleasantrees brings a premium, design-forward approach to the Traverse City market. Clean store, well-organized menu, and a focus on quality over volume. If you want to understand what Michigan cannabis can be at its best, start here.",
+    name: 'Puff Cannabis Company',
+    address: '1226 S Garfield Ave, Traverse City',
+    hours: '9am–9pm daily',
+    url: 'https://www.shoppuff.com/stores/traverse-city/',
+    note: "Puff is Michigan's value-forward dispensary chain with 9 locations statewide — and their Traverse City spot has earned 4.9 stars across 788 reviews. Price-match guarantee, daily deals, first-time customer perks, and the original home of Platinum Vape. For the customer who wants quality without paying premium pricing — which is a lot of TC visitors.",
+  },
+];
+
+// FEATURED BRANDS — the 4 Michigan makers for the sophisticated TC buyer
+const FEATURED_BRANDS = [
+  {
+    name: 'Lume',
+    description: "Vertically integrated. Lume grows their own Michigan cannabis, extracts their own concentrates, bottles their own vapes, and sells them all exclusively through Lume dispensaries. Their Gold Label Live Rosin line is the brand's crown jewel and deserves the shelf space it gets. Jenny Kush is their flagship proprietary strain. A Michigan cannabis story told vertically.",
+    url: 'https://www.lume.com/',
+    lookFor: [
+      { product: 'Gold Label Live Rosin 1g', category: 'Concentrate', note: 'Solventless, fresh-frozen, small-batch. The top of the Lume house — their own concentrate at its peak.' },
+      { product: 'Jenny Kush 3.5g Flower', category: 'Flower', note: 'Proprietary Lume strain regularly testing 30%+ THC. Sativa-dominant with citrus and diesel notes. A TC favorite.' },
+      { product: 'Rip Live Rosin Pods', category: 'Vape', note: 'Live rosin pod system in Lume\'s proprietary hardware. Solventless concentrate in convenient pod form.' },
+      { product: 'Bubble Hash Infused Pre-Rolls', category: 'Pre-Roll', note: 'Premium flower infused with their own bubble hash. Clean-burning, high-potency, hand-crafted.' },
+    ],
   },
   {
-    name: 'Green Stem',
-    address: 'Traverse City, MI',
-    hours: '9am–10pm daily',
-    url: 'https://greenstemcannabis.com/',
-    note: "Green Stem has earned its place in the Northern Michigan market through consistent quality and a staff that genuinely engages with the products they carry. Good daily deals, strong flower selection, and the local knowledge to back it up.",
+    name: '710 Labs',
+    description: "The national benchmark for solventless concentrate. Their Persy Water Hash and Persy Rosin are what serious connoisseurs measure everything else against. In Traverse City, where the visitor often has tried the best of Colorado and California, 710 Labs is the brand that says Michigan isn't playing catch-up.",
+    url: 'https://710labs.com/michigan',
+    lookFor: [
+      { product: 'Persy Water Hash 1g', category: 'Concentrate', note: "90-micron trichome heads, ice-and-water only. Old-world hash perfection." },
+      { product: 'Persy Rosin Badder 1g', category: 'Concentrate', note: 'Single-origin, single-pressing, cold-cured. The top of the rosin pyramid.' },
+      { product: 'First Press Live Rosin 1g', category: 'Concentrate', note: 'Full-spectrum live rosin from fresh-frozen flower. Entry point to the 710 experience.' },
+      { product: 'Live Rosin Vape 1g', category: 'Vape', note: 'True solventless rosin in a cart. The discreet version of the dab.' },
+    ],
+  },
+  {
+    name: 'Pro Gro',
+    description: "Founded in Lansing by Sam Usman Jr., Pro Gro is one of Michigan's most established craft cultivators — 15+ years in the game, now growing over 10,000 plants in their Martin Luther King Jr. Boulevard facility. Multiple High Times Cannabis Cup wins. Consistently ranked 4th-5th in Michigan flower statewide. The Michigan flower story at the top of the pyramid.",
+    url: 'https://progrocannabis.com/',
+    lookFor: [
+      { product: 'Blue Nerdz 3.5g Flower', category: 'Flower', note: "Pro Gro's most widely-carried strain — found in 16+ Michigan dispensaries. Sweet candy-forward terpenes, balanced effects." },
+      { product: 'Garlic Breath 3.5g Flower', category: 'Flower', note: "High Times Cannabis Cup winner. Pungent, heavy-indica-leaning, savory aroma. A cult favorite." },
+      { product: 'Lunar Lemon 1g Pre-Roll', category: 'Pre-Roll', note: "Award-winning sativa from Archive Seed Bank genetics. Lemon-forward, uplifting, celebratory." },
+      { product: 'Ice Cream Cake 3.5g Flower', category: 'Flower', note: "A Michigan bestseller. Creamy, sweet, sedating. The strain for the end of a long TC day." },
+    ],
+  },
+  {
+    name: 'Legit Labs',
+    description: "Michigan-native concentrate processor crafting cartridges entirely from cannabis-derived terpenes — zero botanicals, zero additives. The Caramel Apple Gelato Cured Resin cart was the #1 selling vape in Michigan in January 2026. A rising Michigan brand for the TC buyer who wants purity without the premium price of 710 Labs.",
+    url: 'https://www.legitlabs.com/',
+    lookFor: [
+      { product: 'Caramel Apple Gelato Cured Resin Cart 1g', category: 'Vape', note: "Michigan's #1 selling vape pen product in January 2026. Sweet, dessert-forward, balanced." },
+      { product: 'Mac #1 Live Resin Cart 1g', category: 'Vape', note: "Full-spectrum live resin from fresh-frozen flower. Bold terpene profile, true-to-plant flavor." },
+      { product: 'Blue Live Resin Disposable 1g', category: 'Vape', note: 'Post-less, no-maintenance disposable for the connoisseur. Loud flavor, balanced effects.' },
+      { product: 'Terp Sugar 1g', category: 'Concentrate', note: 'Crystalline structure with heavy terpene content. For the dabber who wants aroma as much as effect.' },
+    ],
   },
 ];
 
@@ -155,15 +208,6 @@ const HOTELS = [
   },
 ];
 
-const SPOTLIGHT = {
-  name: 'Coming Soon',
-  tagline: 'Traverse City has more hidden gems per square mile than anywhere in Michigan.',
-  description: "We're curating this week's TC spotlight — a local winery, restaurant, or experience worth your attention. Check back soon, or talk to Photi for personalized Northern Michigan recommendations right now.",
-  address: 'Traverse City, MI',
-  url: '',
-  weekOf: "This Week's Spotlight",
-};
-
 export default function TraverseCityPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [weather, setWeather] = useState<{ temp: string; condition: string; icon: string } | null>(null);
@@ -199,6 +243,7 @@ export default function TraverseCityPage() {
           .hero-image { height: 220px !important; }
           .section-patch { width: 100px !important; height: 100px !important; }
           .hike-level { font-size: 11px !important; }
+          .brand-card { padding: 24px !important; }
         }
         @media (min-width: 769px) {
           .mobile-menu-btn { display: none !important; }
@@ -206,17 +251,18 @@ export default function TraverseCityPage() {
         }
       `}</style>
 
-      {/* Header */}
+      {/* Header — v2 unified 6-item nav */}
       <header className="header-outer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '24px 48px', borderBottom: '1px solid rgba(181,135,58,0.15)' }}>
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
           <img src="/photi-emblem.png" alt="Photi" width={40} height={40} style={{ borderRadius: '50%' }} />
           <span style={{ color: COLORS.gold, fontSize: '20px', fontWeight: 'bold' }}>MiQuest</span>
         </Link>
-        <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', gap: '22px', alignItems: 'center' }}>
           <Link href="/about" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Who is Photi?</Link>
+          <Link href="/cities" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Cities</Link>
+          <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Dispensaries</Link>
           <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Terpenes</Link>
           <Link href="/processes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>The Science</Link>
-          <Link href="/deals" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
           <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '15px', fontWeight: 'bold', padding: '8px 20px', borderRadius: '20px', textDecoration: 'none' }}>Talk to Photi</Link>
         </nav>
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}
@@ -227,9 +273,10 @@ export default function TraverseCityPage() {
 
       <div className="mobile-menu" style={{ display: 'none', flexDirection: 'column', backgroundColor: COLORS.darkGreen, padding: '16px 24px 24px', borderBottom: '1px solid rgba(181,135,58,0.2)', gap: '16px' }}>
         <Link href="/about" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</Link>
+        <Link href="/cities" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Cities</Link>
+        <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Dispensaries</Link>
         <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Terpenes</Link>
         <Link href="/processes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
-        <Link href="/deals" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
         <Link href="/chat" style={{ color: COLORS.green, backgroundColor: COLORS.gold, fontSize: '16px', fontWeight: 'bold', padding: '12px 24px', borderRadius: '50px', textDecoration: 'none', textAlign: 'center' }}>Talk to Photi</Link>
       </div>
 
@@ -263,35 +310,66 @@ export default function TraverseCityPage() {
           <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none' }}>
             Talk to Photi — Plan Your Day
           </Link>
-          <a href="#dispensaries" style={{ backgroundColor: 'transparent', color: COLORS.gold, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none', border: '2px solid rgba(181,135,58,0.5)' }}>
+          <a href="#spotlight" style={{ backgroundColor: 'transparent', color: COLORS.gold, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none', border: '2px solid rgba(181,135,58,0.5)' }}>
             See the Dispensaries
           </a>
         </div>
       </section>
 
-      {/* Weekly Spotlight */}
-      <section style={{ backgroundColor: COLORS.darkGreen, padding: '48px 48px' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px', textAlign: 'center' }}>{SPOTLIGHT.weekOf}</p>
-          <div style={{ backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.25)', borderRadius: '12px', padding: '32px 36px' }}>
-            <h3 style={{ color: COLORS.gold, fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>{SPOTLIGHT.name}</h3>
-            <p style={{ color: COLORS.cream, fontSize: '15px', fontStyle: 'italic', marginBottom: '12px', opacity: 0.85 }}>{SPOTLIGHT.tagline}</p>
-            <p style={{ color: COLORS.sage, fontSize: '15px', lineHeight: '1.75', marginBottom: '16px' }}>{SPOTLIGHT.description}</p>
-            <p style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.7 }}>{SPOTLIGHT.address}</p>
+      {/* SECTION 1: This Week's Spotlight Dispensary */}
+      <section id="spotlight" className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', scrollMarginTop: '80px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/spotlight.png"
+              alt="Spotlight patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', boxShadow: '0 4px 24px rgba(181,135,58,0.4)', marginBottom: '16px' }}
+            />
+            <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px', textAlign: 'center' }}>This Week&apos;s Spotlight Dispensary</p>
+            <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', margin: 0, textAlign: 'center' }}>Featured Pick of the Week</h2>
+          </div>
+
+          <div style={{ backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.3)', borderRadius: '14px', padding: '36px 40px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', gap: '16px', flexWrap: 'wrap' }}>
+              <h3 style={{ color: COLORS.gold, fontSize: '28px', fontWeight: 'bold', margin: 0 }}>{SPOTLIGHT.name}</h3>
+              <span style={{ backgroundColor: 'rgba(181,135,58,0.15)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 12px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.4)', whiteSpace: 'nowrap' }}>Spotlight</span>
+            </div>
+            <p style={{ color: COLORS.cream, fontSize: '16px', fontStyle: 'italic', marginBottom: '18px', opacity: 0.9 }}>{SPOTLIGHT.tagline}</p>
+            <p style={{ color: COLORS.sage, fontSize: '15px', lineHeight: '1.75', marginBottom: '22px' }}>{SPOTLIGHT.description}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', marginBottom: '24px', paddingBottom: '24px', borderBottom: '1px solid rgba(181,135,58,0.15)' }}>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>📍 {SPOTLIGHT.address}</span>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>🕘 {SPOTLIGHT.hours}</span>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>📞 {SPOTLIGHT.phone}</span>
+            </div>
+            <a href={SPOTLIGHT.url} target="_blank" rel="noopener noreferrer"
+              style={{ display: 'inline-block', backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '15px', fontWeight: 'bold', padding: '12px 32px', borderRadius: '50px', textDecoration: 'none' }}>
+              See the Menu →
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Dispensaries */}
+      {/* SECTION 2: Featured Dispensaries */}
       <section id="dispensaries" className="content-section" style={{ backgroundColor: COLORS.cream, padding: '64px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px' }}>Northern Michigan Cannabis</p>
-          <h2 style={{ color: COLORS.green, fontSize: '34px', fontWeight: 'bold', marginBottom: '12px' }}>Where to Shop</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/dispensary.png"
+              alt="Dispensary patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.25)' }}
+            />
+            <div>
+              <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>Traverse City Cannabis</p>
+              <h2 style={{ color: COLORS.green, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>Featured Dispensaries</h2>
+            </div>
+          </div>
           <p style={{ color: COLORS.text, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '680px' }}>
-            Traverse City has a strong cannabis market to match its food and wine scene. These dispensaries represent the quality and range the region has to offer.
+            Traverse City draws every kind of cannabis buyer — the downtown boutique shopper, the flower-forward traditionalist, the deal-hunting weekender. These three dispensaries serve those customers well. Pick the one that fits your trip.
           </p>
           <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '36px' }}>
-            {DISPENSARIES.map((d) => (
+            {FEATURED_DISPENSARIES.map((d) => (
               <div key={d.name} style={{ backgroundColor: 'white', borderRadius: '10px', padding: '24px', border: `2px solid rgba(181,135,58,0.3)`, boxShadow: '0 2px 16px rgba(181,135,58,0.1)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                   <h3 style={{ color: COLORS.green, fontSize: '18px', fontWeight: 'bold', margin: 0 }}>{d.name}</h3>
@@ -306,7 +384,10 @@ export default function TraverseCityPage() {
             ))}
           </div>
           <p style={{ color: COLORS.text, fontSize: '14px', fontStyle: 'italic', opacity: 0.7, textAlign: 'center', marginBottom: '24px' }}>
-            Traverse City has many other dispensaries across the region. Soon Photi will be connecting you to the best products that suit you.
+            Traverse City has many more dispensaries across the region.{' '}
+            <Link href="/dispensaries/traversecity" style={{ color: COLORS.green, fontWeight: 'bold', textDecoration: 'none', borderBottom: `1px solid ${COLORS.gold}` }}>
+              See the full Traverse City dispensary directory →
+            </Link>
           </p>
           <div style={{ textAlign: 'center', padding: '28px', backgroundColor: 'rgba(30,77,53,0.05)', borderRadius: '12px', border: '1px solid rgba(30,77,53,0.1)' }}>
             <p style={{ color: COLORS.green, fontSize: '16px', marginBottom: '8px' }}>
@@ -321,6 +402,52 @@ export default function TraverseCityPage() {
             <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '16px', fontWeight: 'bold', padding: '12px 32px', borderRadius: '50px', textDecoration: 'none', display: 'inline-block' }}>
               Ask Photi
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3: Featured Brands (Makers) */}
+      <section id="brands" className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', scrollMarginTop: '80px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/makers.png"
+              alt="Makers patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 24px rgba(181,135,58,0.4)' }}
+            />
+            <div>
+              <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>This Week&apos;s Brands</p>
+              <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>Featured Makers</h2>
+            </div>
+          </div>
+          <p style={{ color: COLORS.sage, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '720px' }}>
+            Traverse City attracts Michigan's most curious cannabis buyer — the weekender who wants to try something they can&apos;t get in Chicago or Indianapolis. These four Michigan makers deserve a place on your list this trip. A vertical operator, a national benchmark, a craft cultivator, and a rising vape specialist.
+          </p>
+          <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+            {FEATURED_BRANDS.map((b) => (
+              <div key={b.name} className="brand-card" style={{ backgroundColor: 'rgba(181,135,58,0.07)', borderRadius: '12px', padding: '28px', border: '1px solid rgba(181,135,58,0.25)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px', gap: '8px' }}>
+                  <h3 style={{ color: COLORS.gold, fontSize: '22px', fontWeight: 'bold', margin: 0 }}>{b.name}</h3>
+                  <span style={{ backgroundColor: 'rgba(181,135,58,0.15)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.35)', whiteSpace: 'nowrap' }}>Featured</span>
+                </div>
+                <p style={{ color: COLORS.sage, fontSize: '14px', lineHeight: '1.75', marginBottom: '20px' }}>{b.description}</p>
+
+                <p style={{ color: COLORS.gold, fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px', opacity: 0.85 }}>Look For</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+                  {b.lookFor.map((p) => (
+                    <div key={p.product} style={{ borderLeft: `2px solid ${COLORS.gold}`, paddingLeft: '14px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px', marginBottom: '3px' }}>
+                        <span style={{ color: COLORS.cream, fontSize: '14px', fontWeight: 'bold' }}>{p.product}</span>
+                        <span style={{ color: COLORS.sage, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', opacity: 0.7, whiteSpace: 'nowrap' }}>{p.category}</span>
+                      </div>
+                      <p style={{ color: COLORS.sage, fontSize: '13px', lineHeight: '1.6', margin: 0, opacity: 0.85 }}>{p.note}</p>
+                    </div>
+                  ))}
+                </div>
+                {b.url && <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.gold, fontSize: '13px', fontWeight: 'bold', textDecoration: 'none' }}>Visit {b.name} →</a>}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -356,10 +483,9 @@ export default function TraverseCityPage() {
         </div>
       </section>
 
-      {/* Sleeping Bear — its own full section with hero */}
+      {/* Sleeping Bear */}
       <section id="sleeping-bear" style={{ scrollMarginTop: '80px' }}>
 
-        {/* Sleeping Bear Hero */}
         <div style={{ position: 'relative', overflow: 'hidden' }}>
           <img
             src="/city/sleepingbear.jpg"
@@ -373,7 +499,6 @@ export default function TraverseCityPage() {
           </div>
         </div>
 
-        {/* Sleeping Bear Content */}
         <div style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px' }}>
           <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
             <p style={{ color: COLORS.sage, fontSize: '17px', lineHeight: '1.85', marginBottom: '48px', maxWidth: '760px' }}>
@@ -405,7 +530,6 @@ export default function TraverseCityPage() {
               ))}
             </div>
 
-            {/* Photi callout for Sleeping Bear */}
             <div style={{ marginTop: '36px', backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.3)', borderRadius: '12px', padding: '28px 32px' }}>
               <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '10px' }}>Photi&apos;s Take</p>
               <p style={{ color: COLORS.cream, fontSize: '17px', lineHeight: '1.8', margin: 0 }}>
