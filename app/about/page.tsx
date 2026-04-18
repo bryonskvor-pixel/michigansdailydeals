@@ -83,7 +83,7 @@ export default function AboutPage() {
         }
       `}</style>
 
-      {/* Header */}
+      {/* Header — v2 unified 6-item nav */}
       <header className="header-outer" style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '24px 48px', borderBottom: '1px solid rgba(181,135,58,0.15)',
@@ -92,15 +92,13 @@ export default function AboutPage() {
           <Image src="/photi-emblem.png" alt="Photi" width={40} height={40} />
           <span style={{ color: COLORS.gold, fontSize: '20px', fontWeight: 'bold' }}>MiQuest</span>
         </Link>
-        <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', gap: '22px', alignItems: 'center' }}>
           <Link href="/about" style={{ color: COLORS.gold, fontSize: '15px', textDecoration: 'none', borderBottom: `1px solid ${COLORS.gold}`, paddingBottom: '2px' }}>Who is Photi?</Link>
-          <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>The Science</Link>
-          <Link href="/deals" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
-          <Link href="/chat" style={{
-            backgroundColor: COLORS.gold, color: COLORS.green,
-            fontSize: '15px', fontWeight: 'bold', padding: '8px 20px',
-            borderRadius: '20px', textDecoration: 'none',
-          }}>Talk to Photi</Link>
+          <Link href="/cities" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Cities</Link>
+          <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Dispensaries</Link>
+          <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Terpenes</Link>
+          <Link href="/processes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>The Science</Link>
+          <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '15px', fontWeight: 'bold', padding: '8px 20px', borderRadius: '20px', textDecoration: 'none' }}>Talk to Photi</Link>
         </nav>
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}
           style={{ display: 'none', flexDirection: 'column', gap: '5px', background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}>
@@ -113,12 +111,11 @@ export default function AboutPage() {
         padding: '16px 24px 24px', borderBottom: `1px solid rgba(181,135,58,0.2)`, gap: '16px',
       }}>
         <Link href="/about" style={{ color: COLORS.gold, fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</Link>
-        <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
-        <Link href="/deals" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
-        <Link href="/chat" style={{
-          color: COLORS.green, backgroundColor: COLORS.gold, fontSize: '16px', fontWeight: 'bold',
-          padding: '12px 24px', borderRadius: '50px', textDecoration: 'none', textAlign: 'center',
-        }}>Talk to Photi</Link>
+        <Link href="/cities" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Cities</Link>
+        <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Dispensaries</Link>
+        <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Terpenes</Link>
+        <Link href="/processes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
+        <Link href="/chat" style={{ color: COLORS.green, backgroundColor: COLORS.gold, fontSize: '16px', fontWeight: 'bold', padding: '12px 24px', borderRadius: '50px', textDecoration: 'none', textAlign: 'center' }}>Talk to Photi</Link>
       </div>
 
       {/* Hero */}
@@ -186,22 +183,11 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="voices-grid" style={{
-            display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px',
-          }}>
+          <div className="voices-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px' }}>
             {VOICES.map((v) => (
-              <div key={v.name} style={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center',
-                textAlign: 'center',
-              }}>
+              <div key={v.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                 <img src={v.image} alt={v.name}
-                  style={{
-                    width: '100%', height: 'auto',
-                    borderRadius: '8px',
-                    marginBottom: '16px',
-                    display: 'block',
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-                  }} />
+                  style={{ width: '100%', height: 'auto', borderRadius: '8px', marginBottom: '16px', display: 'block', boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }} />
                 <p style={{ color: COLORS.sage, fontSize: '13px', lineHeight: '1.75', padding: '0 4px' }}>
                   {v.description}
                 </p>
@@ -240,19 +226,10 @@ export default function AboutPage() {
             border: '1px solid rgba(30,77,53,0.2)', borderRadius: '8px', overflow: 'hidden',
           }}>
             {BEATS.map((b) => (
-              <div key={b.num} className="beat-cell" style={{
-                padding: '24px 20px', backgroundColor: COLORS.cream,
-                borderBottom: '1px solid rgba(30,77,53,0.1)',
-              }}>
-                <div style={{ color: COLORS.gold, fontSize: '22px', fontWeight: 'bold', marginBottom: '6px', opacity: 0.6 }}>
-                  {b.num}
-                </div>
-                <div style={{ color: COLORS.green, fontSize: '15px', fontWeight: 'bold', marginBottom: '6px' }}>
-                  {b.label}
-                </div>
-                <div style={{ color: COLORS.text, fontSize: '13px', lineHeight: '1.6', opacity: 0.8 }}>
-                  {b.desc}
-                </div>
+              <div key={b.num} className="beat-cell" style={{ padding: '24px 20px', backgroundColor: COLORS.cream, borderBottom: '1px solid rgba(30,77,53,0.1)' }}>
+                <div style={{ color: COLORS.gold, fontSize: '22px', fontWeight: 'bold', marginBottom: '6px', opacity: 0.6 }}>{b.num}</div>
+                <div style={{ color: COLORS.green, fontSize: '15px', fontWeight: 'bold', marginBottom: '6px' }}>{b.label}</div>
+                <div style={{ color: COLORS.text, fontSize: '13px', lineHeight: '1.6', opacity: 0.8 }}>{b.desc}</div>
               </div>
             ))}
           </div>
@@ -276,11 +253,7 @@ export default function AboutPage() {
             Not your preferences. A promise.
           </p>
 
-          <div style={{
-            backgroundColor: 'rgba(181,135,58,0.08)',
-            border: `1px solid rgba(181,135,58,0.25)`,
-            borderRadius: '12px', padding: '32px 36px', marginBottom: '28px',
-          }}>
+          <div style={{ backgroundColor: 'rgba(181,135,58,0.08)', border: `1px solid rgba(181,135,58,0.25)`, borderRadius: '12px', padding: '32px 36px', marginBottom: '28px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               {[
                 "Promise me you're stretching after.",
@@ -290,10 +263,7 @@ export default function AboutPage() {
                 "Promise me you've got water nearby and something genuinely good to eat.",
               ].map((p, i) => (
                 <div key={i} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                  <div style={{
-                    width: '6px', height: '6px', borderRadius: '50%',
-                    backgroundColor: COLORS.gold, marginTop: '8px', flexShrink: 0,
-                  }} />
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: COLORS.gold, marginTop: '8px', flexShrink: 0 }} />
                   <p style={{ color: COLORS.cream, fontSize: '16px', lineHeight: '1.7', margin: 0, fontStyle: 'italic' }}>
                     &ldquo;{p}&rdquo;
                   </p>
@@ -313,10 +283,7 @@ export default function AboutPage() {
             what tonight looks like for you.
           </p>
 
-          <div style={{
-            textAlign: 'center', padding: '28px',
-            backgroundColor: COLORS.darkGreen, borderRadius: '12px',
-          }}>
+          <div style={{ textAlign: 'center', padding: '28px', backgroundColor: COLORS.darkGreen, borderRadius: '12px' }}>
             <p style={{ color: COLORS.sage, fontSize: '14px', marginBottom: '10px', opacity: 0.8 }}>
               And when the Daily Dose arrives in your inbox the next morning,
               the subject line says exactly one thing:
@@ -342,15 +309,11 @@ export default function AboutPage() {
               { title: 'No medical advice.', body: 'Photi can share terpene tendencies and what people report experiencing. They cannot diagnose, prescribe, or claim any product will treat any condition.' },
               { title: 'No therapy.', body: 'Photi is a wise companion who cares deeply — not a therapist. They hold space, ask good questions, and gently point toward real support when needed.' },
               { title: 'No shaming any method.', body: 'Flower, edibles, concentrates, vapes — every consumption method gets equal dignity. No hierarchy. No subtle signals that one way is more sophisticated than another.' },
-              { title: 'Moderation always.', body: 'Photi never encourages overconsumption. Start low, go slow is not a slogan — it is Photi\'s genuine philosophy.' },
-              { title: 'Honesty over commission.', body: 'Featured products are featured. But if someone\'s needs clearly point elsewhere, Photi goes there. The moment they become a shill they lose everything that makes them worth anything.' },
-              { title: 'Honest about their nature.', body: 'If someone sincerely asks whether they\'re talking to an AI, Photi tells the truth with warmth. "I\'m an AI companion — but I\'m built to actually care about getting this right for you."' },
+              { title: 'Moderation always.', body: "Photi never encourages overconsumption. Start low, go slow is not a slogan — it is Photi's genuine philosophy." },
+              { title: 'Honesty over commission.', body: "Featured products are featured. But if someone's needs clearly point elsewhere, Photi goes there. The moment they become a shill they lose everything that makes them worth anything." },
+              { title: 'Honest about their nature.', body: "If someone sincerely asks whether they're talking to an AI, Photi tells the truth with warmth. \"I'm an AI companion — but I'm built to actually care about getting this right for you.\"" },
             ].map((g, i) => (
-              <div key={i} style={{
-                display: 'flex', gap: '16px', padding: '20px 24px',
-                backgroundColor: 'rgba(30,77,53,0.05)', borderRadius: '8px',
-                borderLeft: `3px solid ${COLORS.gold}`,
-              }}>
+              <div key={i} style={{ display: 'flex', gap: '16px', padding: '20px 24px', backgroundColor: 'rgba(30,77,53,0.05)', borderRadius: '8px', borderLeft: `3px solid ${COLORS.gold}` }}>
                 <div>
                   <span style={{ color: COLORS.green, fontSize: '15px', fontWeight: 'bold' }}>{g.title} </span>
                   <span style={{ color: COLORS.text, fontSize: '15px', lineHeight: '1.7' }}>{g.body}</span>
@@ -372,12 +335,7 @@ export default function AboutPage() {
             One conversation. The right product. A thought for the day.
             And a promise worth keeping.
           </p>
-          <Link href="/chat" style={{
-            backgroundColor: COLORS.gold, color: COLORS.green,
-            fontSize: '18px', fontWeight: 'bold',
-            padding: '16px 48px', borderRadius: '50px',
-            textDecoration: 'none', display: 'inline-block',
-          }}>
+          <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '18px', fontWeight: 'bold', padding: '16px 48px', borderRadius: '50px', textDecoration: 'none', display: 'inline-block' }}>
             Talk to Photi
           </Link>
         </div>
@@ -388,16 +346,10 @@ export default function AboutPage() {
         <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Image src="/photi-emblem.png" alt="Photi" width={28} height={28} />
-            <span style={{ color: COLORS.gold, fontFamily: S.font, fontSize: '15px', fontWeight: 'bold' }}>
-              MiQuest presents michigansdailydeals.com
-            </span>
+            <span style={{ color: COLORS.gold, fontFamily: S.font, fontSize: '15px', fontWeight: 'bold' }}>MiQuest presents michigansdailydeals.com</span>
           </div>
-          <p style={{ color: COLORS.sage, fontSize: '13px' }}>
-            Photi powered by MiQuest &middot; hello@michigansdailydeals.com
-          </p>
-          <p style={{ color: COLORS.sage, fontSize: '11px', opacity: 0.4, marginTop: '4px' }}>
-            For adults 21 and older. Please consume responsibly.
-          </p>
+          <p style={{ color: COLORS.sage, fontSize: '13px' }}>Photi powered by MiQuest &middot; hello@michigansdailydeals.com</p>
+          <p style={{ color: COLORS.sage, fontSize: '11px', opacity: 0.4, marginTop: '4px' }}>For adults 21 and older. Please consume responsibly.</p>
         </div>
       </footer>
 
