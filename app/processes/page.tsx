@@ -11,8 +11,6 @@ const COLORS = {
   text: '#3D3D3A',
 };
 
-const S = { font: 'Georgia, serif' };
-
 const CATEGORIES = [
   { id: 'the-plant', label: 'The Plant', image: '/processes/the-plant.jpg' },
   { id: 'flower', label: 'Flower', image: '/processes/flower.jpg' },
@@ -24,9 +22,7 @@ const CATEGORIES = [
 
 const Quote = ({ children }: { children: React.ReactNode }) => (
   <div style={{ borderLeft: '3px solid #B5873A', paddingLeft: '20px', margin: '24px 0' }}>
-    <p style={{ color: '#1E4D35', fontSize: '16px', lineHeight: '1.8', fontStyle: 'italic', margin: 0 }}>
-      {children}
-    </p>
+    <p style={{ color: '#1E4D35', fontSize: '16px', lineHeight: '1.8', fontStyle: 'italic', margin: 0 }}>{children}</p>
   </div>
 );
 
@@ -39,6 +35,7 @@ export default function ProcessesPage() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+          .mobile-menu { display: ${menuOpen ? 'flex' : 'none'} !important; }
           .page-hero { padding: 40px 24px 32px !important; }
           .page-hero h1 { font-size: 30px !important; }
           .page-hero p { font-size: 15px !important; }
@@ -54,19 +51,22 @@ export default function ProcessesPage() {
         }
         @media (min-width: 769px) {
           .mobile-menu-btn { display: none !important; }
+          .mobile-menu { display: none !important; }
         }
       `}</style>
 
+      {/* Header — v2 unified 6-item nav */}
       <header className="header-outer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '24px 48px', borderBottom: '1px solid rgba(181,135,58,0.15)' }}>
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
           <img src="/photi-emblem.png" alt="Photi" width={40} height={40} style={{ borderRadius: '50%' }} />
           <span style={{ color: '#B5873A', fontSize: '20px', fontWeight: 'bold' }}>MiQuest</span>
         </Link>
-        <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', gap: '22px', alignItems: 'center' }}>
           <Link href="/about" style={{ color: '#F5F0E8', fontSize: '15px', textDecoration: 'none' }}>Who is Photi?</Link>
+          <Link href="/cities" style={{ color: '#F5F0E8', fontSize: '15px', textDecoration: 'none' }}>Cities</Link>
+          <Link href="/dispensaries" style={{ color: '#F5F0E8', fontSize: '15px', textDecoration: 'none' }}>Dispensaries</Link>
           <Link href="/terpenes" style={{ color: '#F5F0E8', fontSize: '15px', textDecoration: 'none' }}>Terpenes</Link>
           <Link href="/processes" style={{ color: '#B5873A', fontSize: '15px', textDecoration: 'none', borderBottom: '1px solid #B5873A', paddingBottom: '2px' }}>The Science</Link>
-          <Link href="/deals" style={{ color: '#F5F0E8', fontSize: '15px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
           <Link href="/chat" style={{ backgroundColor: '#B5873A', color: '#1E4D35', fontSize: '15px', fontWeight: 'bold', padding: '8px 20px', borderRadius: '20px', textDecoration: 'none' }}>Talk to Photi</Link>
         </nav>
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}
@@ -75,15 +75,14 @@ export default function ProcessesPage() {
         </button>
       </header>
 
-      {menuOpen && (
-        <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#163829', padding: '16px 24px 24px', borderBottom: '1px solid rgba(181,135,58,0.2)', gap: '16px' }}>
-          <Link href="/about" style={{ color: '#F5F0E8', fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</Link>
-          <Link href="/terpenes" style={{ color: '#F5F0E8', fontSize: '16px', textDecoration: 'none' }}>Terpenes</Link>
-          <Link href="/processes" style={{ color: '#B5873A', fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
-          <Link href="/deals" style={{ color: '#F5F0E8', fontSize: '16px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
-          <Link href="/chat" style={{ color: '#1E4D35', backgroundColor: '#B5873A', fontSize: '16px', fontWeight: 'bold', padding: '12px 24px', borderRadius: '50px', textDecoration: 'none', textAlign: 'center' }}>Talk to Photi</Link>
-        </div>
-      )}
+      <div className="mobile-menu" style={{ display: 'none', flexDirection: 'column', backgroundColor: '#163829', padding: '16px 24px 24px', borderBottom: '1px solid rgba(181,135,58,0.2)', gap: '16px' }}>
+        <Link href="/about" style={{ color: '#F5F0E8', fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</Link>
+        <Link href="/cities" style={{ color: '#F5F0E8', fontSize: '16px', textDecoration: 'none' }}>Cities</Link>
+        <Link href="/dispensaries" style={{ color: '#F5F0E8', fontSize: '16px', textDecoration: 'none' }}>Dispensaries</Link>
+        <Link href="/terpenes" style={{ color: '#F5F0E8', fontSize: '16px', textDecoration: 'none' }}>Terpenes</Link>
+        <Link href="/processes" style={{ color: '#B5873A', fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
+        <Link href="/chat" style={{ color: '#1E4D35', backgroundColor: '#B5873A', fontSize: '16px', fontWeight: 'bold', padding: '12px 24px', borderRadius: '50px', textDecoration: 'none', textAlign: 'center' }}>Talk to Photi</Link>
+      </div>
 
       <section className="page-hero" style={{ padding: '64px 48px', textAlign: 'center' }}>
         <p style={{ color: '#B5873A', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>The Science</p>
@@ -135,7 +134,7 @@ export default function ProcessesPage() {
 
       <section id="flower" className="content-section" style={{ padding: '72px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
+          <div className="section-layout" style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', flexDirection: 'row-reverse' }}>
             <div className="section-img" style={{ minWidth: '220px', display: 'flex', justifyContent: 'center' }}>
               <img src="/processes/flower.jpg" alt="Flower" style={{ width: '220px', height: '220px', borderRadius: '50%', display: 'block', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }} />
             </div>
