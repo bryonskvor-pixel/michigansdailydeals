@@ -54,6 +54,14 @@ const LIVE_CITIES = [
     tagline: 'Where America\'s cannabis conversation started in 1972. Still leading it.',
     badge: 'Live Now',
   },
+  {
+    name: 'Lansing',
+    slug: '/lansing',
+    image: '/city/lansing.jpg',
+    eyebrow: 'Michigan\'s Capital City',
+    tagline: 'Lansterdam. Where Michigan cannabis is made — legally and literally.',
+    badge: 'Live Now',
+  },
 ];
 
 const COMING_CITIES = [
@@ -75,12 +83,7 @@ const COMING_CITIES = [
     tagline: 'Nine Mile Road. Independent scene. Michigan\'s most creative suburb.',
     dispensaries: '10+',
   },
-  {
-    name: 'Lansing',
-    eyebrow: 'State Capital',
-    tagline: 'Where Michigan\'s cannabis laws were written. Where the market runs deep.',
-    dispensaries: '20+',
-  },
+
   {
     name: 'Ypsilanti',
     eyebrow: 'Washtenaw County',
@@ -204,7 +207,7 @@ export default function CitiesPage() {
         </h1>
         <p style={{ color: COLORS.sage, fontSize: '18px', lineHeight: '1.8', maxWidth: '600px', margin: '0 auto 48px' }}>
           Photi covers Michigan from the Ohio border to the Sleeping Bear Dunes — 
-          five cities live now, a dozen more coming. Find your city, talk to Photi, 
+          six cities live now, a dozen more coming. Find your city, talk to Photi, 
           walk in knowing exactly what you want.
         </p>
 
@@ -213,7 +216,7 @@ export default function CitiesPage() {
           {[
             { num: '17', label: 'Cities' },
             { num: '57', label: 'Dispensaries mapped' },
-            { num: '5', label: 'Live now' },
+            { num: '6', label: 'Live now' },
             { num: '1', label: 'Photi' },
           ].map(s => (
             <div key={s.label} style={{ textAlign: 'center' }}>
