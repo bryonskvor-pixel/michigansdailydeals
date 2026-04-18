@@ -46,15 +46,17 @@ const LIVE_CITIES = [
     tagline: 'Wine trail. Sleeping Bear Dunes. Cherry capital of the world.',
     badge: 'Live Now',
   },
+  {
+    name: 'Ann Arbor',
+    slug: '/annarbor',
+    image: '/city/annarbor.jpg',
+    eyebrow: 'University City',
+    tagline: 'Where America\'s cannabis conversation started in 1972. Still leading it.',
+    badge: 'Live Now',
+  },
 ];
 
 const COMING_CITIES = [
-  {
-    name: 'Ann Arbor',
-    eyebrow: 'University City',
-    tagline: 'Big Ten energy. Independent spirit. One of Michigan\'s best food scenes.',
-    dispensaries: '20+',
-  },
   {
     name: 'Grand Rapids',
     eyebrow: 'West Michigan',
@@ -162,18 +164,18 @@ export default function CitiesPage() {
         }
       `}</style>
 
-      {/* Header */}
+      {/* Header — v2 unified 6-item nav */}
       <header className="header-outer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '24px 48px', borderBottom: '1px solid rgba(181,135,58,0.15)' }}>
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
           <img src="/photi-emblem.png" alt="Photi" width={40} height={40} style={{ borderRadius: '50%' }} />
           <span style={{ color: COLORS.gold, fontSize: '20px', fontWeight: 'bold' }}>MiQuest</span>
         </Link>
-        <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', gap: '22px', alignItems: 'center' }}>
           <Link href="/about" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Who is Photi?</Link>
           <Link href="/cities" style={{ color: COLORS.gold, fontSize: '15px', textDecoration: 'none', borderBottom: `1px solid ${COLORS.gold}`, paddingBottom: '2px' }}>Cities</Link>
+          <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Dispensaries</Link>
           <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Terpenes</Link>
           <Link href="/processes" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>The Science</Link>
-          <Link href="/deals" style={{ color: COLORS.cream, fontSize: '15px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
           <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '15px', fontWeight: 'bold', padding: '8px 20px', borderRadius: '20px', textDecoration: 'none' }}>Talk to Photi</Link>
         </nav>
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}
@@ -185,9 +187,9 @@ export default function CitiesPage() {
       <div className="mobile-menu" style={{ display: 'none', flexDirection: 'column', backgroundColor: COLORS.darkGreen, padding: '16px 24px 24px', borderBottom: '1px solid rgba(181,135,58,0.2)', gap: '16px' }}>
         <Link href="/about" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Who is Photi?</Link>
         <Link href="/cities" style={{ color: COLORS.gold, fontSize: '16px', textDecoration: 'none' }}>Cities</Link>
+        <Link href="/dispensaries" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Dispensaries</Link>
         <Link href="/terpenes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Terpenes</Link>
         <Link href="/processes" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>The Science</Link>
-        <Link href="/deals" style={{ color: COLORS.cream, fontSize: '16px', textDecoration: 'none' }}>Today&apos;s Deals</Link>
         <Link href="/chat" style={{ color: COLORS.green, backgroundColor: COLORS.gold, fontSize: '16px', fontWeight: 'bold', padding: '12px 24px', borderRadius: '50px', textDecoration: 'none', textAlign: 'center' }}>Talk to Photi</Link>
       </div>
 
@@ -202,16 +204,16 @@ export default function CitiesPage() {
         </h1>
         <p style={{ color: COLORS.sage, fontSize: '18px', lineHeight: '1.8', maxWidth: '600px', margin: '0 auto 48px' }}>
           Photi covers Michigan from the Ohio border to the Sleeping Bear Dunes — 
-          four cities live now, a dozen more coming. Find your city, talk to Photi, 
+          five cities live now, a dozen more coming. Find your city, talk to Photi, 
           walk in knowing exactly what you want.
         </p>
 
         {/* Michigan stat bar */}
         <div style={{ display: 'flex', gap: '40px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
           {[
-            { num: '16', label: 'Cities' },
+            { num: '17', label: 'Cities' },
             { num: '57', label: 'Dispensaries mapped' },
-            { num: '4', label: 'Live now' },
+            { num: '5', label: 'Live now' },
             { num: '1', label: 'Photi' },
           ].map(s => (
             <div key={s.label} style={{ textAlign: 'center' }}>
