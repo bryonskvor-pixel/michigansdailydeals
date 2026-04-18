@@ -13,14 +13,18 @@ const COLORS = {
 
 const S = { font: 'Georgia, serif' };
 
-const DISPENSARIES = [
-  {
-    name: 'Quality Roots',
-    address: '1121 S Monroe St',
-    hours: '9am–10pm daily',
-    url: 'https://getqualityroots.com/locations/monroe/',
-    note: "Monroe's most trusted dispensary. Loyalty rewards, daily rotating deals, and staff that genuinely knows their product. Located on S Monroe St — easy to find, easy to love. The place Photi sends people first.",
-  },
+// SPOTLIGHT DISPENSARY — update weekly
+const SPOTLIGHT = {
+  name: 'Quality Roots',
+  tagline: "Monroe's most trusted dispensary, right on S Monroe Street.",
+  description: "Quality Roots is the one Photi sends people to first. Loyalty rewards, daily rotating deals, and staff that genuinely knows their product — not just what's in stock, but why you should pick one thing over another. Easy to find, easy to love. The Monroe regular's regular.",
+  address: '1121 S Monroe St, Monroe, MI',
+  hours: '9am–10pm daily',
+  url: 'https://getqualityroots.com/locations/monroe/',
+};
+
+// FEATURED DISPENSARIES — 3 remaining after Quality Roots promoted to Spotlight
+const FEATURED_DISPENSARIES = [
   {
     name: 'Joyology',
     address: 'Monroe, MI',
@@ -44,6 +48,54 @@ const DISPENSARIES = [
   },
 ];
 
+// FEATURED BRANDS — 4 Michigan makers tuned to Monroe's border-town, value-conscious audience
+const FEATURED_BRANDS = [
+  {
+    name: 'Common Citizen',
+    description: "Michigan's flower anchor. A vertically-integrated Marshall-based grower operating one of the Midwest's most advanced greenhouses — 70 acres, 60+ strains, and products organized around four human need states: Daily Dose, Sweet Relief, Time to Shine, and Unplug.",
+    url: 'https://commoncitizen.com',
+    lookFor: [
+      { product: 'Daily Dose Mini Pre-Rolls', category: 'Pre-Roll', note: 'Microdose singles. The smart way to keep a stash without overcommitting.' },
+      { product: 'Unplug Flower', category: 'Flower', note: "Indica-dominant strains for the end of the workday. What you reach for to actually relax." },
+      { product: 'Time to Shine Pre-Rolls', category: 'Pre-Roll', note: 'Their uplifting line. Morning fishing trip, afternoon at Sterling State Park.' },
+      { product: 'Sweet Relief', category: 'Flower', note: 'Body-focused line for aches and the kind of tired that earns it.' },
+    ],
+  },
+  {
+    name: 'Pro Gro',
+    description: "Lansing-born, craft-grown, consistently ranked in Michigan's top three flower brands. Pro Gro started with founder Sam Usman Jr.'s work in the state's medical program and built out a precision facility in Lansing's old Pro Bowl building. Premium quality at an accessible price.",
+    url: 'https://progrocannabis.com',
+    lookFor: [
+      { product: 'OG Kush Small Buds', category: 'Flower', note: "Classic OG Kush at a value-buyer's price. One of their top sellers for a reason." },
+      { product: 'Cherry Pop Rocks', category: 'Flower', note: 'A standout strain — dense, flavorful, and the kind of repeat-buy flower Pro Gro built its name on.' },
+      { product: 'Banana Split Live Resin Vape', category: 'Vape', note: 'All-in-one live resin disposable. Smooth and portable — built for the road.' },
+      { product: 'Guava Runtz', category: 'Flower', note: 'Candy-forward hybrid. Consistent, terpene-rich, and one of Pro Gro\'s most-requested SKUs.' },
+    ],
+  },
+  {
+    name: 'Mary Jones',
+    description: "The cannabis version of Jones Soda. Produced right here in Michigan by Emerald Canning Partners in Mt. Clemens — classic Jones Soda flavors, infused with THC. The gateway beverage for anyone who remembers collecting the photo-label bottles.",
+    url: 'https://maryjonescannabis.com',
+    lookFor: [
+      { product: 'Root Beer 10mg', category: 'Beverage', note: 'The crossover hit. Tastes exactly like the Jones root beer you remember. Single-serve 12oz bottle.' },
+      { product: 'MF Grape 10mg', category: 'Beverage', note: 'The flavor Jones fans demanded back. Nostalgic, punchy, exactly right.' },
+      { product: 'Berry Lemonade 100mg', category: 'Beverage', note: 'The share-size multi-serve can. For groups, sunsets at Sterling, or pacing over an evening.' },
+      { product: 'Orange & Cream 10mg', category: 'Beverage', note: 'Creamsicle in a bottle. The warm-weather reach for Lake Erie afternoons.' },
+    ],
+  },
+  {
+    name: 'Mitten Extracts',
+    description: "Metro Detroit's vape and extract brand, locally produced in small batches. Five-times-distilled cannabis oil, no fillers, and a lineup that runs from 1g cartridges to 2g disposables. Michigan's top cart brand by volume — and not by accident.",
+    url: 'https://mittenextracts.com',
+    lookFor: [
+      { product: 'Premium 1g Cartridge', category: 'Vape', note: "5x-distilled oil with proprietary terp blends. Clean pulls, real flavor, no burn." },
+      { product: 'Mitten + PLUS 2G Disposable', category: 'Vape', note: 'The all-day, rechargeable disposable. Distillate plus live resin terpenes.' },
+      { product: 'Infused Pre-Rolls', category: 'Pre-Roll', note: 'Indoor flower infused with liquid diamonds, coated in kief, ceramic tip. An event in a pre-roll.' },
+      { product: '10mg Gummies 10-Pack', category: 'Edible', note: 'Gluten-free, low-fat, real fruit flavor. Green Apple, Lush Watermelon, Grape, Strawberry.' },
+    ],
+  },
+];
+
 const COFFEE = [
   { name: 'Fresh Start CoffeeHouse', address: 'Just off I-75 Exit 11', hours: 'Early morning daily', note: "Voted best in Monroe. Nonprofit employing formerly incarcerated folks. Ron's Famous Biscuits & Gravy. Stuffed hashbrowns. Paula's Perfect Latte with pistachio, coconut, and cinnamon. Stop here first.", url: 'https://www.freshstartcoffee.house/' },
   { name: 'River Raisin Trading Post', address: '8 N Monroe St (Downtown)', hours: 'Mon–Sat from 7:30am', note: 'Riverfront patio. Canoe lighting fixtures. Locally sourced. Panini with rosemary garlic aioli. The most beautiful spot for a morning coffee in Monroe.', url: '' },
@@ -64,16 +116,6 @@ const EXPLORE = [
   { name: 'River Raisin Heritage Trail', desc: 'Scenic trail connecting Sterling State Park through downtown along the river. Great for walking or biking.', tip: 'Start downtown near the Trading Post, grab coffee, then walk the trail toward the battlefield.', url: '' },
   { name: 'Michigan Museum of Horror', desc: 'Weird, wonderful, and nobody expects it. Local legends, true crime artifacts, Michigan horror history. A conversation starter.', tip: 'Pairs well with something creative from the dispensary.', url: '' },
 ];
-
-// Weekly spotlight — update this manually each week
-const SPOTLIGHT = {
-  name: 'River Raisin Trading Post',
-  tagline: 'The riverfront coffee shop Monroe has been keeping to itself.',
-  description: 'Tucked in a nearly 100-year-old building in downtown Monroe, the River Raisin Trading Post has a riverside patio, canoe lighting fixtures, and locally-sourced coffee that regulars describe as a hidden gem. The kind of place you stumble onto and then tell everyone about.',
-  address: '8 N Monroe St, Monroe MI',
-  url: '',
-  weekOf: "This Week's Spotlight",
-};
 
 export default function MonroePage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -109,6 +151,7 @@ export default function MonroePage() {
           .two-col { grid-template-columns: 1fr !important; }
           .hero-image { width: 100% !important; height: 220px !important; border-radius: 12px !important; }
           .section-patch { width: 100px !important; height: 100px !important; }
+          .brand-card { padding: 24px !important; }
         }
         @media (min-width: 769px) {
           .mobile-menu-btn { display: none !important; }
@@ -145,8 +188,6 @@ export default function MonroePage() {
 
       {/* Hero */}
       <section className="page-hero" style={{ padding: '64px 48px 48px', textAlign: 'center' }}>
-
-        {/* Hero panoramic image */}
         <div style={{ maxWidth: '900px', margin: '0 auto 36px', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 12px 60px rgba(181,135,58,0.25)' }}>
           <img
             className="hero-image"
@@ -164,7 +205,6 @@ export default function MonroePage() {
           45 minutes from Toledo. 30 minutes from the Ohio border. Over 25 dispensaries. Great coffee, real food, Lake Erie on one side and War of 1812 history on the other.
         </p>
 
-        {/* Weather */}
         {weather && (
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', backgroundColor: 'rgba(181,135,58,0.1)', border: '1px solid rgba(181,135,58,0.25)', borderRadius: '50px', padding: '8px 20px', marginBottom: '32px' }}>
             <span style={{ fontSize: '18px' }}>{weather.icon}</span>
@@ -176,39 +216,69 @@ export default function MonroePage() {
           <Link href="/chat" style={{ backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none' }}>
             Talk to Photi — Plan Your Day
           </Link>
-          <a href="#dispensaries" style={{ backgroundColor: 'transparent', color: COLORS.gold, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none', border: '2px solid rgba(181,135,58,0.5)' }}>
+          <a href="#spotlight" style={{ backgroundColor: 'transparent', color: COLORS.gold, fontSize: '17px', fontWeight: 'bold', padding: '16px 40px', borderRadius: '50px', textDecoration: 'none', border: '2px solid rgba(181,135,58,0.5)' }}>
             See the Dispensaries
           </a>
         </div>
       </section>
 
-      {/* Weekly Spotlight */}
-      <section style={{ backgroundColor: COLORS.darkGreen, padding: '48px 48px' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px', textAlign: 'center' }}>{SPOTLIGHT.weekOf}</p>
-          <div style={{ backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.25)', borderRadius: '12px', padding: '32px 36px' }}>
-            <h3 style={{ color: COLORS.gold, fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>{SPOTLIGHT.name}</h3>
-            <p style={{ color: COLORS.cream, fontSize: '15px', fontStyle: 'italic', marginBottom: '12px', opacity: 0.85 }}>{SPOTLIGHT.tagline}</p>
-            <p style={{ color: COLORS.sage, fontSize: '15px', lineHeight: '1.75', marginBottom: '16px' }}>{SPOTLIGHT.description}</p>
-            <p style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.7 }}>{SPOTLIGHT.address}</p>
+      {/* SECTION 1: This Week's Spotlight Dispensary */}
+      <section id="spotlight" className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', scrollMarginTop: '80px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/spotlight.png"
+              alt="Spotlight patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', boxShadow: '0 4px 24px rgba(181,135,58,0.4)', marginBottom: '16px' }}
+            />
+            <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px', textAlign: 'center' }}>This Week&apos;s Spotlight Dispensary</p>
+            <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', margin: 0, textAlign: 'center' }}>Featured Pick of the Week</h2>
+          </div>
+
+          <div style={{ backgroundColor: 'rgba(181,135,58,0.08)', border: '1px solid rgba(181,135,58,0.3)', borderRadius: '14px', padding: '36px 40px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', gap: '16px', flexWrap: 'wrap' }}>
+              <h3 style={{ color: COLORS.gold, fontSize: '28px', fontWeight: 'bold', margin: 0 }}>{SPOTLIGHT.name}</h3>
+              <span style={{ backgroundColor: 'rgba(181,135,58,0.15)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 12px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.4)', whiteSpace: 'nowrap' }}>Spotlight</span>
+            </div>
+            <p style={{ color: COLORS.cream, fontSize: '16px', fontStyle: 'italic', marginBottom: '18px', opacity: 0.9 }}>{SPOTLIGHT.tagline}</p>
+            <p style={{ color: COLORS.sage, fontSize: '15px', lineHeight: '1.75', marginBottom: '22px' }}>{SPOTLIGHT.description}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', marginBottom: '24px', paddingBottom: '24px', borderBottom: '1px solid rgba(181,135,58,0.15)' }}>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>📍 {SPOTLIGHT.address}</span>
+              <span style={{ color: COLORS.sage, fontSize: '13px', opacity: 0.8 }}>🕘 {SPOTLIGHT.hours}</span>
+            </div>
+            <a href={SPOTLIGHT.url} target="_blank" rel="noopener noreferrer"
+              style={{ display: 'inline-block', backgroundColor: COLORS.gold, color: COLORS.green, fontSize: '15px', fontWeight: 'bold', padding: '12px 32px', borderRadius: '50px', textDecoration: 'none' }}>
+              See the Menu →
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Dispensaries */}
+      {/* SECTION 2: Featured Dispensaries */}
       <section id="dispensaries" className="content-section" style={{ backgroundColor: COLORS.cream, padding: '64px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px' }}>25+ Dispensaries in Monroe</p>
-          <h2 style={{ color: COLORS.green, fontSize: '34px', fontWeight: 'bold', marginBottom: '12px' }}>Where to Shop</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/dispensary.png"
+              alt="Dispensary patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 20px rgba(181,135,58,0.25)' }}
+            />
+            <div>
+              <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>25+ Dispensaries in Monroe</p>
+              <h2 style={{ color: COLORS.green, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>Featured Dispensaries</h2>
+            </div>
+          </div>
           <p style={{ color: COLORS.text, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '680px' }}>
             Monroe has more dispensaries per square mile than almost anywhere in Michigan. These are the ones worth knowing about — and what makes each one different.
           </p>
           <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '36px' }}>
-            {DISPENSARIES.map((d) => (
+            {FEATURED_DISPENSARIES.map((d) => (
               <div key={d.name} style={{ backgroundColor: 'white', borderRadius: '10px', padding: '24px', border: `2px solid rgba(181,135,58,0.3)`, boxShadow: '0 2px 16px rgba(181,135,58,0.1)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                   <h3 style={{ color: COLORS.green, fontSize: '18px', fontWeight: 'bold', margin: 0 }}>{d.name}</h3>
-                  <span style={{ backgroundColor: 'rgba(181,135,58,0.1)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.3)' }}>Featured</span>
+                  <span style={{ backgroundColor: 'rgba(181,135,58,0.1)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.3)', whiteSpace: 'nowrap', marginLeft: '8px' }}>Featured</span>
                 </div>
                 <p style={{ color: COLORS.text, fontSize: '14px', lineHeight: '1.75', marginBottom: '16px' }}>{d.note}</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -238,11 +308,55 @@ export default function MonroePage() {
         </div>
       </section>
 
+      {/* SECTION 3: Featured Brands (Makers) */}
+      <section id="brands" className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px', scrollMarginTop: '80px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
+            <img
+              className="section-patch"
+              src="/patches/makers.png"
+              alt="Makers patch"
+              style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0, boxShadow: '0 4px 24px rgba(181,135,58,0.4)' }}
+            />
+            <div>
+              <p style={{ color: COLORS.gold, fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '6px' }}>This Week&apos;s Brands</p>
+              <h2 style={{ color: COLORS.cream, fontSize: '34px', fontWeight: 'bold', margin: 0 }}>Featured Makers</h2>
+            </div>
+          </div>
+          <p style={{ color: COLORS.sage, fontSize: '16px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '720px' }}>
+            Every great dispensary is only as good as what they stock. These are four Michigan makers whose products deserve a place on your list this week — growers, processors, and craft producers worth asking for by name.
+          </p>
+          <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+            {FEATURED_BRANDS.map((b) => (
+              <div key={b.name} className="brand-card" style={{ backgroundColor: 'rgba(181,135,58,0.07)', borderRadius: '12px', padding: '28px', border: '1px solid rgba(181,135,58,0.25)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px', gap: '8px' }}>
+                  <h3 style={{ color: COLORS.gold, fontSize: '22px', fontWeight: 'bold', margin: 0 }}>{b.name}</h3>
+                  <span style={{ backgroundColor: 'rgba(181,135,58,0.15)', color: COLORS.gold, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '20px', border: '1px solid rgba(181,135,58,0.35)', whiteSpace: 'nowrap' }}>Featured</span>
+                </div>
+                <p style={{ color: COLORS.sage, fontSize: '14px', lineHeight: '1.75', marginBottom: '20px' }}>{b.description}</p>
+
+                <p style={{ color: COLORS.gold, fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px', opacity: 0.85 }}>Look For</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+                  {b.lookFor.map((p) => (
+                    <div key={p.product} style={{ borderLeft: `2px solid ${COLORS.gold}`, paddingLeft: '14px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px', marginBottom: '3px' }}>
+                        <span style={{ color: COLORS.cream, fontSize: '14px', fontWeight: 'bold' }}>{p.product}</span>
+                        <span style={{ color: COLORS.sage, fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', opacity: 0.7, whiteSpace: 'nowrap' }}>{p.category}</span>
+                      </div>
+                      <p style={{ color: COLORS.sage, fontSize: '13px', lineHeight: '1.6', margin: 0, opacity: 0.85 }}>{p.note}</p>
+                    </div>
+                  ))}
+                </div>
+                {b.url && <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.gold, fontSize: '13px', fontWeight: 'bold', textDecoration: 'none' }}>Visit {b.name} →</a>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Coffee */}
       <section id="coffee" className="content-section" style={{ padding: '64px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-
-          {/* Section header with patch */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
             <img
               className="section-patch"
@@ -271,8 +385,6 @@ export default function MonroePage() {
       {/* Eat */}
       <section id="eat" className="content-section" style={{ backgroundColor: COLORS.cream, padding: '64px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-
-          {/* Section header with patch */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
             <img
               className="section-patch"
@@ -301,8 +413,6 @@ export default function MonroePage() {
       {/* Explore */}
       <section id="explore" className="content-section" style={{ padding: '64px 48px', scrollMarginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-
-          {/* Section header with patch */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px' }}>
             <img
               className="section-patch"
@@ -335,8 +445,6 @@ export default function MonroePage() {
       {/* Events */}
       <section className="content-section" style={{ backgroundColor: COLORS.cream, padding: '64px 48px' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-
-          {/* Section header with patch */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '28px' }}>
             <img
               className="section-patch"
@@ -360,11 +468,9 @@ export default function MonroePage() {
         </div>
       </section>
 
-      {/* Arts — separate section using arts patch */}
+      {/* Arts */}
       <section className="content-section" style={{ backgroundColor: COLORS.darkGreen, padding: '64px 48px' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-
-          {/* Section header with patch */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '28px' }}>
             <img
               className="section-patch"
